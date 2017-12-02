@@ -1,6 +1,6 @@
 {
   "name": "common-services",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "description": "A module to gather very common services and their mocks.",
   "main": "src/index.js",
   "author": "Nicolas Froidure",
