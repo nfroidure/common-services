@@ -11,12 +11,15 @@ The delay service is `setTimeout` like I would like it
  to be.
 */
 
-module.exports = initializer({
-  name: 'delay',
-  type: 'provider',
-  inject: ['?log'],
-  options: { singleton: true },
-}, initDelayService);
+module.exports = initializer(
+  {
+    name: 'delay',
+    type: 'provider',
+    inject: ['?log'],
+    options: { singleton: true },
+  },
+  initDelayService
+);
 
 /**
  * Instantiate the delay service
@@ -91,7 +94,7 @@ function initDelayService({ log = noop }) {
    * // Prints: Cancelled!
    */
   function clear(promise) {
-    if(!pendingPromises.has(promise)) {
+    if (!pendingPromises.has(promise)) {
       return Promise.reject(new YError('E_BAD_DELAY'));
     }
     const { timeoutId, reject } = pendingPromises.get(promise);
@@ -104,7 +107,7 @@ function initDelayService({ log = noop }) {
   }
 
   function dispose() {
-    return new Promise((resolve, reject) => {
+    return new Promise(resolve => {
       log('debug', 'Cancelling pending timeouts:', pendingPromises.size);
       resolve(Promise.all([...pendingPromises.keys()].map(clear)));
     });

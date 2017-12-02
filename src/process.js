@@ -15,21 +15,35 @@ It returns nothing and should be injected only for its
  side effects.
 */
 
-module.exports = initializer({
-  name: 'process',
-  type: 'service',
-  inject: [
-    '$destroy', '$fatalError',
-    'ENV', '?PROCESS_NAME', '?SIGNALS', '?NODE_ENVS',
-    '?log', 'exit',
-  ],
-  options: { singleton: true },
-}, initProcessService);
+module.exports = initializer(
+  {
+    name: 'process',
+    type: 'service',
+    inject: [
+      '$destroy',
+      '$fatalError',
+      'ENV',
+      '?PROCESS_NAME',
+      '?SIGNALS',
+      '?NODE_ENVS',
+      '?log',
+      'exit',
+    ],
+    options: { singleton: true },
+  },
+  initProcessService
+);
 
 function initProcessService({
-  ENV, PROCESS_NAME, SIGNALS, NODE_ENVS,
-  log = noop, exit,
-  $destroy, $fatalError }) {
+  ENV,
+  PROCESS_NAME,
+  SIGNALS,
+  NODE_ENVS,
+  log = noop,
+  exit,
+  $destroy,
+  $fatalError,
+}) {
   let shuttingDown = null;
 
   /* Architecture Note #1.5.1: Node environment filtering
@@ -39,14 +53,14 @@ function initProcessService({
    your own list of valid environments by injecting the
    `SIGNALS` optional dependency.
   */
-  if(!(NODE_ENVS || DEFAULT_NODE_ENVS).includes(ENV.NODE_ENV)) {
+  if (!(NODE_ENVS || DEFAULT_NODE_ENVS).includes(ENV.NODE_ENV)) {
     return Promise.reject(new YError('E_NODE_ENV', ENV.NODE_ENV));
   }
 
   log('debug', `Running in "${ENV.NODE_ENV}" environment.`);
 
-  global.process.title = (PROCESS_NAME || global.process.title) +
-    ' - ' + ENV.NODE_ENV;
+  global.process.title =
+    (PROCESS_NAME || global.process.title) + ' - ' + ENV.NODE_ENV;
 
   /* Architecture Note #1.5.2: Signals handling
 
@@ -55,7 +69,7 @@ function initProcessService({
    to handle can be customized by injecting the `SIGNALS`
    optional dependencies.
   */
-  (SIGNALS || DEFAULT_SIGNALS).forEach((signal) => {
+  (SIGNALS || DEFAULT_SIGNALS).forEach(signal => {
     global.process.on(signal, terminate.bind(null, signal));
   });
 
@@ -64,7 +78,7 @@ function initProcessService({
   If an error occurs it attempts to gracefully exit
   to give it a chance to finish properly.
   */
-  $fatalError.promise.catch((err) => {
+  $fatalError.promise.catch(err => {
     log('error', 'Fatal error:', err.stack || err);
     terminate('FATAL');
   });
@@ -75,13 +89,13 @@ function initProcessService({
    gracefully exit since a process should never be kept
    alive when an uncaught exception is raised.
   */
-  global.process.on('uncaughtException', (err) => {
+  global.process.on('uncaughtException', err => {
     log('error', 'Uncaught Exception:', err.stack || err);
     terminate('ERR');
   });
 
   function terminate(signal) {
-    if(shuttingDown) {
+    if (shuttingDown) {
       log('debug', `${signal} received again, shutdown now.`);
       exit(1);
     } else {
@@ -94,14 +108,14 @@ function initProcessService({
     shuttingDown = true;
     log('info', 'Shutting down now 🙏...');
     $destroy()
-    .then(() => {
-      log('info', 'Gracefull shutdown sucessfully done 😎!');
-      exit(code || 0);
-    })
-    .catch((err) => {
-      log('error', 'Could not gracefully shutdown 🤔.', err.stack);
-      exit(1);
-    });
+      .then(() => {
+        log('info', 'Gracefull shutdown sucessfully done 😎!');
+        exit(code || 0);
+      })
+      .catch(err => {
+        log('error', 'Could not gracefully shutdown 🤔.', err.stack);
+        exit(1);
+      });
   }
 
   log('debug', 'Process service initialized.');

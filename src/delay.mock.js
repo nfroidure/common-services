@@ -49,7 +49,7 @@ function initDelayMock() {
     },
   });
 
-  function create(delay) {
+  function create() {
     let _resolve;
     let _reject;
     const promise = new Promise((resolve, reject) => {
@@ -70,11 +70,10 @@ function initDelayMock() {
       pendingPromise => pendingPromise.promise === promise
     );
 
-    if(-1 === pendingPromiseIndex) {
+    if (-1 === pendingPromiseIndex) {
       return Promise.reject(new YError('E_BAD_DELAY'));
     }
-    pendingPromises[pendingPromiseIndex]
-    .reject(new YError('E_DELAY_CLEARED'));
+    pendingPromises[pendingPromiseIndex].reject(new YError('E_DELAY_CLEARED'));
     pendingPromises.splice(pendingPromiseIndex, 1);
     return Promise.resolve();
   }
@@ -84,12 +83,11 @@ function initDelayMock() {
       pendingPromise => pendingPromise.promise === promise
     );
 
-    if(!pendingPromise) {
+    if (!pendingPromise) {
       return Promise.reject(new YError('E_BAD_DELAY'));
     }
     pendingPromise.resolve();
-    return Promise.resolve()
-    .then(__delete.bind(null, promise));
+    return Promise.resolve().then(__delete.bind(null, promise));
   }
 
   function __resolveAll() {
@@ -103,18 +101,15 @@ function initDelayMock() {
       pendingPromise => pendingPromise.promise === promise
     );
 
-    if(!pendingPromise) {
+    if (!pendingPromise) {
       return Promise.reject(new YError('E_BAD_DELAY'));
     }
     pendingPromise.reject(new YError('E_DELAY_CLEARED'));
-    return Promise.resolve()
-    .then(__delete.bind(null, promise));
+    return Promise.resolve().then(__delete.bind(null, promise));
   }
 
   function __rejectAll() {
-    return Promise.all(
-      pendingPromises.map(({ promise }) => __reject(promise))
-    );
+    return Promise.all(pendingPromises.map(({ promise }) => __reject(promise)));
   }
 
   function __delete(promise) {

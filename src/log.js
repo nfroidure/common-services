@@ -14,12 +14,15 @@ If provided, I route debug messages to the `debug`
 
 */
 
-module.exports = initializer({
-  name: 'log',
-  type: 'service',
-  inject: ['?logger', '?debug'],
-  options: { singleton: true },
-}, initLogService);
+module.exports = initializer(
+  {
+    name: 'log',
+    type: 'service',
+    inject: ['?logger', '?debug'],
+    options: { singleton: true },
+  },
+  initLogService
+);
 
 /**
  * Instantiate the logging service
@@ -33,7 +36,6 @@ module.exports = initializer({
  * const log = await initLogService({ debug: require('debug')('myapp') });
  */
 function initLogService({ logger = console, debug }) {
-
   log('debug', 'Logging service initialized.');
 
   return Promise.resolve(log);
@@ -47,7 +49,7 @@ function initLogService({ logger = console, debug }) {
    * log('debug', 'Luke, I am your father!')
    */
   function log(type, ...args) {
-    if(debug && ('debug' === type || 'stack' === type)) {
+    if (debug && ('debug' === type || 'stack' === type)) {
       debug(...args);
       return;
     }

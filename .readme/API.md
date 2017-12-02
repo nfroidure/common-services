@@ -15,10 +15,10 @@
 ## Functions
 
 <dl>
-<dt><a href="#initDelayService">initDelayService(services)</a> ⇒ <code>Promise.&lt;function()&gt;</code></dt>
+<dt><a href="#initDelayService">initDelayService(services)</a> ⇒ <code>Promise.&lt;Object&gt;</code></dt>
 <dd><p>Instantiate the delay service</p>
 </dd>
-<dt><a href="#initDelayMock">initDelayMock()</a> ⇒ <code>Promise.&lt;function()&gt;</code></dt>
+<dt><a href="#initDelayMock">initDelayMock()</a> ⇒ <code>Promise.&lt;Object&gt;</code></dt>
 <dd><p>Instantiate the delay service mock</p>
 </dd>
 <dt><a href="#initLogService">initLogService(services)</a> ⇒ <code>Promise.&lt;function()&gt;</code></dt>
@@ -77,16 +77,16 @@ $.register(
 ```
 <a name="initDelayService"></a>
 
-## initDelayService(services) ⇒ <code>Promise.&lt;function()&gt;</code>
+## initDelayService(services) ⇒ <code>Promise.&lt;Object&gt;</code>
 Instantiate the delay service
 
 **Kind**: global function  
-**Returns**: <code>Promise.&lt;function()&gt;</code> - A promise of the logging function  
+**Returns**: <code>Promise.&lt;Object&gt;</code> - A promise of the delay service  
 
 | Param | Type | Description |
 | --- | --- | --- |
 | services | <code>Object</code> | The services to inject |
-| [services.log] | <code>Object</code> | A logging function |
+| [services.log] | <code>function</code> | A logging function |
 
 **Example**  
 ```js
@@ -97,7 +97,7 @@ const delay = await initDelayService({
 });
 ```
 
-* [initDelayService(services)](#initDelayService) ⇒ <code>Promise.&lt;function()&gt;</code>
+* [initDelayService(services)](#initDelayService) ⇒ <code>Promise.&lt;Object&gt;</code>
     * [~create(delay)](#initDelayService..create) ⇒ <code>Promise</code>
     * [~clear(promise)](#initDelayService..clear) ⇒ <code>Promise</code>
 
@@ -107,8 +107,8 @@ const delay = await initDelayService({
 Create a new delay
 
 **Kind**: inner method of [<code>initDelayService</code>](#initDelayService)  
-**Returns**: <code>Promise</code> - A promise to be reolved
- after that delay or rejected if it is cancelled.  
+**Returns**: <code>Promise</code> - A promise to be resolved after that delay
+or rejected if it is cancelled.  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -127,8 +127,7 @@ delay.create(1000)
 Cancel an earlier created delay
 
 **Kind**: inner method of [<code>initDelayService</code>](#initDelayService)  
-**Returns**: <code>Promise</code> - A promise resolved when
- cancellation is done.  
+**Returns**: <code>Promise</code> - A promise resolved when cancellation is done.  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -144,12 +143,11 @@ clear(delayed)
 ```
 <a name="initDelayMock"></a>
 
-## initDelayMock() ⇒ <code>Promise.&lt;function()&gt;</code>
+## initDelayMock() ⇒ <code>Promise.&lt;Object&gt;</code>
 Instantiate the delay service mock
 
 **Kind**: global function  
-**Returns**: <code>Promise.&lt;function()&gt;</code> - A promise of the mocked
- delay service  
+**Returns**: <code>Promise.&lt;Object&gt;</code> - A promise of the mocked delay service  
 **Example**  
 ```js
 import initDelayMock from 'common-services/src/delay.mock';

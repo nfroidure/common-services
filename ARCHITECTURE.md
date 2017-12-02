@@ -117,7 +117,7 @@ The random service is just proxying [`Math.random`
 ](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Math/random)
  in a stubbable manner.
 
-[See in context](./src/random.js#L5-L10)
+[See in context](./src/random.js#L7-L12)
 
 
 
@@ -135,7 +135,7 @@ The random mock uses the [`sinon`](https://github.com/sinonjs/sinon/)
 The delay service is `setTimeout` like I would like it
  to be.
 
-[See in context](./src/delay.js#L6-L10)
+[See in context](./src/delay.js#L8-L12)
 
 
 
@@ -170,7 +170,7 @@ It also forces NODE_ENV to be set to avoid unintentionnal
  your own list of valid environments by injecting the
  `SIGNALS` optional dependency.
 
-[See in context](./src/process.js#L35-L41)
+[See in context](./src/process.js#L49-L55)
 
 
 
@@ -181,7 +181,7 @@ It also handle SIGINT and SIGTERM signals to allow to
  to handle can be customized by injecting the `SIGNALS`
  optional dependencies.
 
-[See in context](./src/process.js#L51-L57)
+[See in context](./src/process.js#L65-L71)
 
 
 
@@ -190,7 +190,7 @@ It also handle SIGINT and SIGTERM signals to allow to
 If an error occurs it attempts to gracefully exit
 to give it a chance to finish properly.
 
-[See in context](./src/process.js#L62-L66)
+[See in context](./src/process.js#L76-L80)
 
 
 
@@ -200,5 +200,5 @@ If an uncaught exeption occurs it also attempts to
  gracefully exit since a process should never be kept
  alive when an uncaught exception is raised.
 
-[See in context](./src/process.js#L72-L77)
+[See in context](./src/process.js#L86-L91)
 

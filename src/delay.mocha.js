@@ -13,20 +13,18 @@ describe('initDelayService', () => {
     log.reset();
   });
 
-  it('should work', (done) => {
+  it('should work', done => {
     initDelayService({
       log,
     })
-    .then((delay) => {
-      assert('function' === typeof delay.service.create);
-      assert('function' === typeof delay.service.clear);
-      assert('function' === typeof delay.dispose);
-      assert.deepEqual(log.args, [[
-        'debug', 'Delay service initialized.',
-      ]]);
-    })
-    .then(() => done())
-    .catch(done);
+      .then(delay => {
+        assert('function' === typeof delay.service.create);
+        assert('function' === typeof delay.service.clear);
+        assert('function' === typeof delay.dispose);
+        assert.deepEqual(log.args, [['debug', 'Delay service initialized.']]);
+      })
+      .then(() => done())
+      .catch(done);
   });
 
   describe('delay.create', () => {
@@ -40,29 +38,27 @@ describe('initDelayService', () => {
       setTimeoutStub.restore();
     });
 
-    it('should work', (done) => {
+    it('should work', done => {
       initDelayService({
         log,
       })
-      .then(({ service: delay }) => {
-        let delayPromise;
+        .then(({ service: delay }) => {
+          let delayPromise;
 
-        log.reset();
-        setTimeoutStub.returns({});
+          log.reset();
+          setTimeoutStub.returns({});
 
-        delayPromise = delay.create(1000);
-        assert.equal(setTimeoutStub.args.length, 1);
-        assert.equal(setTimeoutStub.args[0][1], 1000);
-        assert.deepEqual(log.args, [[
-          'debug', 'Created a delay:', 1000,
-        ]]);
-        // Run set callback
-        setTimeoutStub.args[0][0]();
+          delayPromise = delay.create(1000);
+          assert.equal(setTimeoutStub.args.length, 1);
+          assert.equal(setTimeoutStub.args[0][1], 1000);
+          assert.deepEqual(log.args, [['debug', 'Created a delay:', 1000]]);
+          // Run set callback
+          setTimeoutStub.args[0][0]();
 
-        return delayPromise;
-      })
-      .then(() => done())
-      .catch(done);
+          return delayPromise;
+        })
+        .then(() => done())
+        .catch(done);
     });
   });
 
@@ -81,61 +77,54 @@ describe('initDelayService', () => {
       clearTimeoutStub.restore();
     });
 
-    it('should fail with bad promise', (done) => {
+    it('should fail with bad promise', done => {
       initDelayService({
         log,
       })
-      .then(({ service: delay }) => {
-        log.reset();
+        .then(({ service: delay }) => {
+          log.reset();
 
-        return delay.clear(Promise.resolve())
-        .catch((err) => {
-          assert.equal(err.code, 'E_BAD_DELAY');
-        });
-      })
-      .then(() => done())
-      .catch(done);
+          return delay.clear(Promise.resolve()).catch(err => {
+            assert.equal(err.code, 'E_BAD_DELAY');
+          });
+        })
+        .then(() => done())
+        .catch(done);
     });
 
-    it('should work', (done) => {
+    it('should work', done => {
       initDelayService({
         log,
       })
-      .then(({ service: delay }) => {
-        const delayPromise = delay.create(1000);
+        .then(({ service: delay }) => {
+          const delayPromise = delay.create(1000);
 
-        log.reset();
+          log.reset();
 
-        return Promise.all([
-          delay.clear(delayPromise),
-          delayPromise
-          .catch((err) => {
-            assert.equal(err.code, 'E_DELAY_CLEARED');
-          }),
-        ])
-        .then(() => {
-          assert.deepEqual(log.args, [[
-            'debug', 'Cleared a delay',
-          ]]);
-        });
-      })
-      .then(() => done())
-      .catch(done);
+          return Promise.all([
+            delay.clear(delayPromise),
+            delayPromise.catch(err => {
+              assert.equal(err.code, 'E_DELAY_CLEARED');
+            }),
+          ]).then(() => {
+            assert.deepEqual(log.args, [['debug', 'Cleared a delay']]);
+          });
+        })
+        .then(() => done())
+        .catch(done);
     });
   });
 
-  it('should work with Knifecycle', (done) => {
+  it('should work with Knifecycle', done => {
     new Knifecycle()
-    .register(initDelayService)
-    .constant('log', log)
-    .run(['delay'])
-    .then(({ delay }) => {
-      assert.deepEqual(log.args, [[
-        'debug',
-        'Delay service initialized.',
-      ]]);
-    })
-    .then(() => done())
-    .catch(done);
+      .register(initDelayService)
+      .constant('log', log)
+      .run(['delay'])
+      .then(({ delay }) => {
+        assert(delay);
+        assert.deepEqual(log.args, [['debug', 'Delay service initialized.']]);
+      })
+      .then(() => done())
+      .catch(done);
   });
 });

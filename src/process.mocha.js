@@ -15,7 +15,7 @@ describe('Process service', () => {
   let fatalErrorDeferred;
 
   beforeEach(() => {
-    exitPromise = new Promise((resolve) => {
+    exitPromise = new Promise(resolve => {
       exit = sinon.spy(resolve);
     });
     processListenerStub.reset();
@@ -27,7 +27,7 @@ describe('Process service', () => {
   });
 
   describe('', () => {
-    beforeEach((done) => {
+    beforeEach(done => {
       initProcessService({
         ENV: { NODE_ENV: 'development' },
         PROCESS_NAME: 'Kikooolol',
@@ -40,20 +40,18 @@ describe('Process service', () => {
           }),
         },
       })
-      .then(() => done())
-      .catch(done);
+        .then(() => done())
+        .catch(done);
     });
 
     it('should work', () => {
       assert.deepEqual(
-      log.args, [[
-        'debug',
-        'Running in "development" environment.',
-      ], [
-        'debug',
-        'Process service initialized.',
-      ]],
-      'Process initialization information'
+        log.args,
+        [
+          ['debug', 'Running in "development" environment.'],
+          ['debug', 'Process service initialized.'],
+        ],
+        'Process initialization information'
       );
       assert.equal(global.process.title, 'Kikooolol - development');
       assert.deepEqual(
@@ -63,66 +61,62 @@ describe('Process service', () => {
       );
     });
 
-    it('should handle fatal errors', (done) => {
+    it('should handle fatal errors', done => {
       fatalErrorDeferred.reject(new YError('E_AOUCH'));
 
       exitPromise
-      .then(() => {
-        assert.deepEqual(exit.args, [[1]]);
-      })
-      .then(() => done())
-      .catch(done);
+        .then(() => {
+          assert.deepEqual(exit.args, [[1]]);
+        })
+        .then(() => done())
+        .catch(done);
     });
 
-    it('should handle uncaught exceptions', (done) => {
-      processListenerStub.args
-      .find(call => 'uncaughtException' === call[0])[1](
-        (new YError('E_AOUCH'))
+    it('should handle uncaught exceptions', done => {
+      processListenerStub.args.find(call => 'uncaughtException' === call[0])[1](
+        new YError('E_AOUCH')
       );
 
       exitPromise
-      .then(() => {
-        assert.deepEqual(exit.args, [[1]]);
-      })
-      .then(() => done())
-      .catch(done);
+        .then(() => {
+          assert.deepEqual(exit.args, [[1]]);
+        })
+        .then(() => done())
+        .catch(done);
     });
 
-    ['SIGINT', 'SIGTERM']
-    .forEach(signal => it('should handle `signal`', (done) => {
-      processListenerStub.args
-      .find(call => signal === call[0])[1](
-        (new YError('E_AOUCH'))
-      );
+    ['SIGINT', 'SIGTERM'].forEach(signal =>
+      it('should handle `signal`', done => {
+        processListenerStub.args.find(call => signal === call[0])[1](
+          new YError('E_AOUCH')
+        );
 
-      exitPromise
-      .then(() => {
-        assert.deepEqual(exit.args, [[0]]);
+        exitPromise
+          .then(() => {
+            assert.deepEqual(exit.args, [[0]]);
+          })
+          .then(() => done())
+          .catch(done);
       })
-      .then(() => done())
-      .catch(done);
-    }));
+    );
   });
 
-  it('should work with Knifecycle', (done) => {
+  it('should work with Knifecycle', done => {
     new Knifecycle()
-    .register(initProcessService)
-    .constant('log', log)
-    .constant('ENV', {
-      NODE_ENV: 'production',
-    })
-    .constant('exit', exit)
-    .run(['process'])
-    .then(({ process }) => {
-      assert.deepEqual(log.args, [[
-        'debug',
-        'Running in "production" environment.',
-      ], [
-        'debug',
-        'Process service initialized.',
-      ]]);
-    })
-    .then(() => done())
-    .catch(done);
+      .register(initProcessService)
+      .constant('log', log)
+      .constant('ENV', {
+        NODE_ENV: 'production',
+      })
+      .constant('exit', exit)
+      .run(['process'])
+      .then(() => {
+        assert.deepEqual(log.args, [
+          ['debug', 'Running in "production" environment.'],
+          ['debug', 'Process service initialized.'],
+        ]);
+      })
+      .then(() => done())
+      .catch(done);
   });
 });

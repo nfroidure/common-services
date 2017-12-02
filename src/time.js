@@ -2,8 +2,6 @@
 
 const { initializer } = require('knifecycle/dist');
 
-function noop() {}
-
 /* Architecture Note #1.2: Time
 
 The time service is just proxying [`Date.now`
@@ -11,12 +9,15 @@ The time service is just proxying [`Date.now`
  in a stubbable manner.
 */
 
-module.exports = initializer({
-  name: 'time',
-  type: 'service',
-  inject: ['?log'],
-  options: { singleton: true },
-}, initTimeService);
+module.exports = initializer(
+  {
+    name: 'time',
+    type: 'service',
+    inject: ['?log'],
+    options: { singleton: true },
+  },
+  initTimeService
+);
 
 /**
  * Instantiate the time service
@@ -31,7 +32,6 @@ module.exports = initializer({
  * });
  */
 function initTimeService({ log }) {
-
   log('debug', 'Time service initialized.');
 
   return Promise.resolve(time);

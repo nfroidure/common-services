@@ -4,10 +4,10 @@ const assert = require('assert');
 const initProcessMock = require('./process.mock');
 
 describe('initProcessMock', () => {
-  it('should work', (done) => {
+  it('should work', done => {
     initProcessMock()
-    .then(service => assert('undefined' === typeof service))
-    .then(() => done())
-    .catch(done);
+      .then(service => assert('undefined' === typeof service))
+      .then(() => done())
+      .catch(done);
   });
 });

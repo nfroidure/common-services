@@ -11,12 +11,15 @@ The random service is just proxying [`Math.random`
  in a stubbable manner.
 */
 
-module.exports = initializer({
-  name: 'random',
-  type: 'service',
-  inject: ['?log'],
-  options: { singleton: true },
-}, initRandomService);
+module.exports = initializer(
+  {
+    name: 'random',
+    type: 'service',
+    inject: ['?log'],
+    options: { singleton: true },
+  },
+  initRandomService
+);
 
 /**
  * Instantiate the random service
@@ -31,7 +34,6 @@ module.exports = initializer({
  * });
  */
 function initRandomService({ log = noop }) {
-
   log('debug', 'Random service initialized.');
 
   return Promise.resolve(random);
