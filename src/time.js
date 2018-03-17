@@ -16,7 +16,7 @@ module.exports = initializer(
     inject: ['?log'],
     options: { singleton: true },
   },
-  initTimeService
+  initTimeService,
 );
 
 /**

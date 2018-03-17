@@ -18,7 +18,7 @@ module.exports = initializer(
     inject: ['?log'],
     options: { singleton: true },
   },
-  initDelayService
+  initDelayService,
 );
 
 /**

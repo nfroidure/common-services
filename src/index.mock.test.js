@@ -8,7 +8,7 @@ const services = require('./index.mock.js');
 describe('index.mock', () => {
   let files;
 
-  before(done => {
+  beforeAll(done => {
     fs.readdir(__dirname, (err, _files_) => {
       if (err) {
         done(err);
@@ -19,12 +19,12 @@ describe('index.mock', () => {
     });
   });
 
-  it('should import all mocks of the src folder', done => {
+  test('should import all mocks of the src folder', done => {
     Promise.all(
       files
         .filter(file => !['index.mock.js'].includes(file))
         .filter(file => file.endsWith('.mock.js'))
-        .map(file => require(path.join(__dirname, file))) // eslint-disable-line
+        .map(file => require(path.join(__dirname, file))), // eslint-disable-line
     )
       .then(modules => {
         assert.deepEqual(
@@ -32,7 +32,7 @@ describe('index.mock', () => {
           modules
             .map(module => module.name)
             .map(name => name.replace('bound ', ''))
-            .sort()
+            .sort(),
         );
       })
       .then(() => done())

@@ -12,7 +12,7 @@ describe('initTimeService', () => {
     log.reset();
   });
 
-  it('should work', done => {
+  test('should work', done => {
     initTimeService({
       log,
     })
@@ -25,7 +25,7 @@ describe('initTimeService', () => {
   });
 
   describe('time', () => {
-    it('should work', done => {
+    test('should work', done => {
       initTimeService({
         log,
       })
@@ -40,7 +40,7 @@ describe('initTimeService', () => {
     });
   });
 
-  it('should work with Knifecycle', done => {
+  test('should work with Knifecycle', done => {
     new Knifecycle()
       .register(initTimeService)
       .constant('log', log)

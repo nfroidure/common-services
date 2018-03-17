@@ -31,7 +31,7 @@ module.exports = initializer(
     ],
     options: { singleton: true },
   },
-  initProcessService
+  initProcessService,
 );
 
 function initProcessService({

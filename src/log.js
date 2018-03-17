@@ -34,7 +34,7 @@ module.exports = initializer(
     inject: ['?logger', '?debug'],
     options: { singleton: true },
   },
-  initLogService
+  initLogService,
 );
 
 /**

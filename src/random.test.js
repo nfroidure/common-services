@@ -12,7 +12,7 @@ describe('initRandomService', () => {
     log.reset();
   });
 
-  it('should work', done => {
+  test('should work', done => {
     initRandomService({
       log,
     })
@@ -25,7 +25,7 @@ describe('initRandomService', () => {
   });
 
   describe('random', () => {
-    it('should work', done => {
+    test('should work', done => {
       initRandomService({
         log,
       })
@@ -42,7 +42,7 @@ describe('initRandomService', () => {
     });
   });
 
-  it('should work with Knifecycle', done => {
+  test('should work with Knifecycle', done => {
     new Knifecycle()
       .register(initRandomService)
       .constant('log', log)

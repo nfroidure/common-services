@@ -1,11 +1,11 @@
 'use strict';
 
 const assert = require('assert');
-const initTimeMock = require('./time.mock');
+const initRandomMock = require('./random.mock');
 
-describe('initTimeMock', () => {
-  it('should work', done => {
-    initTimeMock()
+describe('initRandomMock', () => {
+  test('should work', done => {
+    initRandomMock()
       .then(fn => assert('function' === typeof fn))
       .then(() => done())
       .catch(done);

@@ -44,24 +44,24 @@ describe('Process service', () => {
         .catch(done);
     });
 
-    it('should work', () => {
+    test('should work', () => {
       assert.deepEqual(
         log.args,
         [
           ['debug', 'Running in "development" environment.'],
           ['debug', 'Process service initialized.'],
         ],
-        'Process initialization information'
+        'Process initialization information',
       );
       assert.equal(global.process.title, 'Kikooolol - development');
       assert.deepEqual(
         processListenerStub.args.length,
         3,
-        'Process fail/signals listened'
+        'Process fail/signals listened',
       );
     });
 
-    it('should handle fatal errors', done => {
+    test('should handle fatal errors', done => {
       fatalErrorDeferred.reject(new YError('E_AOUCH'));
 
       exitPromise
@@ -72,9 +72,9 @@ describe('Process service', () => {
         .catch(done);
     });
 
-    it('should handle uncaught exceptions', done => {
+    test('should handle uncaught exceptions', done => {
       processListenerStub.args.find(call => 'uncaughtException' === call[0])[1](
-        new YError('E_AOUCH')
+        new YError('E_AOUCH'),
       );
 
       exitPromise
@@ -86,9 +86,9 @@ describe('Process service', () => {
     });
 
     ['SIGINT', 'SIGTERM'].forEach(signal =>
-      it('should handle `signal`', done => {
+      test('should handle `signal`', done => {
         processListenerStub.args.find(call => signal === call[0])[1](
-          new YError('E_AOUCH')
+          new YError('E_AOUCH'),
         );
 
         exitPromise
@@ -97,11 +97,11 @@ describe('Process service', () => {
           })
           .then(() => done())
           .catch(done);
-      })
+      }),
     );
   });
 
-  it('should work with Knifecycle', done => {
+  test('should work with Knifecycle', done => {
     new Knifecycle()
       .register(initProcessService)
       .constant('log', log)

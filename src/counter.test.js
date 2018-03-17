@@ -12,7 +12,7 @@ describe('initCounterService', () => {
     log.reset();
   });
 
-  it('should work', done => {
+  test('should work', done => {
     initCounterService({
       log,
     })
@@ -25,7 +25,7 @@ describe('initCounterService', () => {
   });
 
   describe('counter', () => {
-    it('should work', done => {
+    test('should work', done => {
       initCounterService({
         log,
       })
@@ -38,7 +38,7 @@ describe('initCounterService', () => {
     });
   });
 
-  it('should work with Knifecycle', done => {
+  test('should work with Knifecycle', done => {
     new Knifecycle()
       .register(initCounterService)
       .constant('log', log)

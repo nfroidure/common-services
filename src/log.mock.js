@@ -19,7 +19,7 @@ import myTestedFunction from 'mylib';
 describe('my test', () => {
   let log;
 
-  before((done) => {
+  beforeAll((done) => {
     initLogMock()
     .then((_log_) => {
       log = _log_;
@@ -32,7 +32,7 @@ describe('my test', () => {
     log.reset();
   });
 
-  it('should not log when no arg', () => {
+  test('should not log when no arg', () => {
     myTestedFunction();
 
     // Here I could use `callCount` or other `sinon`
@@ -44,7 +44,7 @@ describe('my test', () => {
     assert.deepEqual(logs.args, [], 'No log');
   });
 
-  it('should log its args', () => {
+  test('should log its args', () => {
     myTestedFunction('wadup', 'kikoo', 'lol');
 
     assert.deepEqual(logs.args, [[

@@ -18,7 +18,7 @@ describe('initLogService', () => {
     logger.error.reset();
   });
 
-  it('should work', done => {
+  test('should work', done => {
     initLogService({
       debug,
       logger,
@@ -34,7 +34,7 @@ describe('initLogService', () => {
   });
 
   describe('log', () => {
-    it('should work', done => {
+    test('should work', done => {
       initLogService({
         debug,
         logger,
@@ -54,7 +54,7 @@ describe('initLogService', () => {
     });
   });
 
-  it('should work with Knifecycle', done => {
+  test('should work with Knifecycle', done => {
     new Knifecycle()
       .register(initLogService)
       .constant('debug', debug)

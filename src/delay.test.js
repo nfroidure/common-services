@@ -13,7 +13,7 @@ describe('initDelayService', () => {
     log.reset();
   });
 
-  it('should work', done => {
+  test('should work', done => {
     initDelayService({
       log,
     })
@@ -38,7 +38,7 @@ describe('initDelayService', () => {
       setTimeoutStub.restore();
     });
 
-    it('should work', done => {
+    test('should work', done => {
       initDelayService({
         log,
       })
@@ -77,7 +77,7 @@ describe('initDelayService', () => {
       clearTimeoutStub.restore();
     });
 
-    it('should fail with bad promise', done => {
+    test('should fail with bad promise', done => {
       initDelayService({
         log,
       })
@@ -92,7 +92,7 @@ describe('initDelayService', () => {
         .catch(done);
     });
 
-    it('should work', done => {
+    test('should work', done => {
       initDelayService({
         log,
       })
@@ -115,7 +115,7 @@ describe('initDelayService', () => {
     });
   });
 
-  it('should work with Knifecycle', done => {
+  test('should work with Knifecycle', done => {
     new Knifecycle()
       .register(initDelayService)
       .constant('log', log)

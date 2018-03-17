@@ -8,7 +8,7 @@ const services = require('./index.js');
 describe('index', () => {
   let files;
 
-  before(done => {
+  beforeAll(done => {
     fs.readdir(__dirname, (err, _files_) => {
       if (err) {
         done(err);
@@ -19,13 +19,13 @@ describe('index', () => {
     });
   });
 
-  it('should import all services of the src folder', done => {
+  test('should import all services of the src folder', done => {
     Promise.all(
       files
         .filter(file => !['.', '..', 'index.js'].includes(file))
-        .filter(file => !file.endsWith('.mocha.js'))
+        .filter(file => !file.endsWith('.test.js'))
         .filter(file => !file.endsWith('.mock.js'))
-        .map(file => require(path.join(__dirname, file))) // eslint-disable-line
+        .map(file => require(path.join(__dirname, file))), // eslint-disable-line
     )
       .then(modules => {
         assert.deepEqual(
@@ -33,7 +33,7 @@ describe('index', () => {
           modules
             .map(module => module.name)
             .map(name => name.replace('bound ', ''))
-            .sort()
+            .sort(),
         );
       })
       .then(() => done())

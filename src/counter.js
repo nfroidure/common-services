@@ -23,7 +23,7 @@ module.exports = initializer(
     inject: ['?log'],
     options: { singleton: true },
   },
-  initCounterService
+  initCounterService,
 );
 
 /**
