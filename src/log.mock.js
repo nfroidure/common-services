@@ -56,7 +56,7 @@ describe('my test', () => {
 ```
 */
 
-module.exports = reuseSpecialProps(initLogService, initLogMock);
+export default reuseSpecialProps(initLogService, initLogMock);
 
 /**
  * Instantiate the logging mock

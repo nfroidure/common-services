@@ -1,6 +1,5 @@
-'use strict';
+import { initializer } from 'knifecycle';
 
-const { initializer } = require('knifecycle/dist');
 const DEFAULT_COUNTER = {
   log: false,
   firstCount: 1,
@@ -16,7 +15,7 @@ The count are returned asynchronously in order
  if needed later.
 */
 
-module.exports = initializer(
+export default initializer(
   {
     name: 'counter',
     type: 'service',

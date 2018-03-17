@@ -1,7 +1,5 @@
-'use strict';
-
-const assert = require('assert');
-const initTimeMock = require('./time.mock');
+import assert from 'assert';
+import initTimeMock from './time.mock';
 
 describe('initTimeMock', () => {
   test('should work', done => {

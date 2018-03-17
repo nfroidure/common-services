@@ -1,8 +1,6 @@
-'use strict';
-
-const YError = require('yerror');
-const initDelayService = require('./delay');
-const { reuseSpecialProps } = require('knifecycle/dist/util');
+import YError from 'yerror';
+import initDelayService from './delay';
+import { reuseSpecialProps } from 'knifecycle/dist/util';
 
 /* Architecture Note #1.4.1: Mocking delays
 
@@ -14,7 +12,7 @@ This mock is largely inspired by the `$timeout` one of
  to what would happen in actual code.
 */
 
-module.exports = reuseSpecialProps(initDelayService, initDelayMock);
+export default reuseSpecialProps(initDelayService, initDelayMock);
 
 /**
  * Instantiate the delay service mock

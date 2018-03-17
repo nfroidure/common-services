@@ -1,9 +1,7 @@
-'use strict';
-
-const assert = require('assert');
-const fs = require('fs');
-const path = require('path');
-const services = require('./index.mock.js');
+import assert from 'assert';
+import fs from 'fs';
+import path from 'path';
+import services from './index.mock.js';
 
 describe('index.mock', () => {
   let files;
@@ -24,7 +22,7 @@ describe('index.mock', () => {
       files
         .filter(file => !['index.mock.js'].includes(file))
         .filter(file => file.endsWith('.mock.js'))
-        .map(file => require(path.join(__dirname, file))), // eslint-disable-line
+        .map(file => require(path.join(__dirname, file)).default), // eslint-disable-line
     )
       .then(modules => {
         assert.deepEqual(

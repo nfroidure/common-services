@@ -1,7 +1,5 @@
-'use strict';
-
-const assert = require('assert');
-const initRandomMock = require('./random.mock');
+import assert from 'assert';
+import initRandomMock from './random.mock';
 
 describe('initRandomMock', () => {
   test('should work', done => {

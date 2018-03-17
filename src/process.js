@@ -1,7 +1,5 @@
-'use strict';
-
-const YError = require('yerror');
-const { initializer } = require('knifecycle/dist');
+import YError from 'yerror';
+import { initializer } from 'knifecycle';
 
 const DEFAULT_NODE_ENVS = ['development', 'test', 'production'];
 const DEFAULT_SIGNALS = ['SIGTERM', 'SIGINT'];
@@ -15,7 +13,7 @@ It returns nothing and should be injected only for its
  side effects.
 */
 
-module.exports = initializer(
+export default initializer(
   {
     name: 'process',
     type: 'service',

@@ -1,9 +1,9 @@
 'use strict';
 
-const assert = require('assert');
-const sinon = require('sinon');
-const { Knifecycle } = require('knifecycle/dist');
-const initRandomService = require('./random');
+import assert from 'assert';
+import sinon from 'sinon';
+import { Knifecycle } from 'knifecycle/dist';
+import initRandomService from './random';
 
 describe('initRandomService', () => {
   const log = sinon.stub();

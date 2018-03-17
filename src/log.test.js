@@ -1,9 +1,9 @@
 'use strict';
 
-const assert = require('assert');
-const sinon = require('sinon');
-const { Knifecycle } = require('knifecycle/dist');
-const initLogService = require('./log');
+import assert from 'assert';
+import sinon from 'sinon';
+import { Knifecycle } from 'knifecycle/dist';
+import initLogService from './log';
 
 describe('initLogService', () => {
   const debug = sinon.stub();

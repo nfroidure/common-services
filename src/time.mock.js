@@ -1,8 +1,6 @@
-'use strict';
-
-const sinon = require('sinon');
-const initTimeService = require('./time');
-const { reuseSpecialProps } = require('knifecycle/dist/util');
+import sinon from 'sinon';
+import initTimeService from './time';
+import { reuseSpecialProps } from 'knifecycle/dist/util';
 
 /* Architecture Note #1.2.1: Mocking time
 
@@ -10,7 +8,7 @@ The time mock uses the [`sinon`](https://github.com/sinonjs/sinon/)
  module under the hood like for the logging mock.
 */
 
-module.exports = reuseSpecialProps(initTimeService, initTimeMock);
+export default reuseSpecialProps(initTimeService, initTimeMock);
 
 /**
  * Instantiate the time service mock

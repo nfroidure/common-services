@@ -1,6 +1,4 @@
-'use strict';
-
-const { initializer } = require('knifecycle/dist');
+import { initializer } from 'knifecycle';
 
 /* Architecture Note #1.2: Time
 
@@ -9,7 +7,7 @@ The time service is just proxying [`Date.now`
  in a stubbable manner.
 */
 
-module.exports = initializer(
+export default initializer(
   {
     name: 'time',
     type: 'service',

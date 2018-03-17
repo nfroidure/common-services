@@ -1,10 +1,8 @@
-'use strict';
-
 const assert = require('assert');
 const sinon = require('sinon');
 const YError = require('yerror');
 const { Knifecycle } = require('knifecycle/dist');
-const initProcessService = require('./process');
+import initProcessService from './process';
 
 describe('Process service', () => {
   const log = sinon.stub();

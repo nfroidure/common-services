@@ -1,7 +1,7 @@
 'use strict';
 
-const assert = require('assert');
-const initLogMock = require('./log.mock');
+import assert from 'assert';
+import initLogMock from './log.mock';
 
 describe('initLogMock', () => {
   test('should work', done => {

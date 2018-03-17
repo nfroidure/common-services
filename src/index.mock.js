@@ -1,10 +1,8 @@
-'use strict';
-
-const initLogMock = require('./log.mock');
-const initTimeMock = require('./time.mock');
-const initRandomMock = require('./random.mock');
-const initDelayMock = require('./delay.mock');
-const initProcessMock = require('./process.mock');
+import initLogMock from './log.mock';
+import initTimeMock from './time.mock';
+import initRandomMock from './random.mock';
+import initDelayMock from './delay.mock';
+import initProcessMock from './process.mock';
 
 /**
  * All mocks of the `common-services` module as

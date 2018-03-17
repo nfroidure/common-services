@@ -1,6 +1,4 @@
-'use strict';
-
-const { initializer } = require('knifecycle/dist');
+import { initializer } from 'knifecycle';
 
 function noop() {}
 
@@ -11,7 +9,7 @@ The random service is just proxying [`Math.random`
  in a stubbable manner.
 */
 
-module.exports = initializer(
+export default initializer(
   {
     name: 'random',
     type: 'service',

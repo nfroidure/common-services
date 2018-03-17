@@ -1,10 +1,8 @@
 /* eslint max-nested-callbacks:0 */
-'use strict';
-
-const assert = require('assert');
-const sinon = require('sinon');
-const { Knifecycle } = require('knifecycle/dist');
-const initDelayService = require('./delay');
+import assert from 'assert';
+import sinon from 'sinon';
+import { Knifecycle } from 'knifecycle/dist';
+import initDelayService from './delay';
 
 describe('initDelayService', () => {
   const log = sinon.stub();

@@ -1,5 +1,3 @@
-'use strict';
-
 /* Architecture Note #1: Services
 
 Since the services in this module are very common, we
@@ -13,12 +11,12 @@ Their goal is to encapsulate unpredictible states and
  but should be usable with any DI system or even rawly.
 */
 
-const initLogService = require('./log');
-const initTimeService = require('./time');
-const initRandomService = require('./random');
-const initDelayService = require('./delay');
-const initProcessService = require('./process');
-const initCounterService = require('./counter');
+import initLogService from './log';
+import initTimeService from './time';
+import initRandomService from './random';
+import initDelayService from './delay';
+import initProcessService from './process';
+import initCounterService from './counter';
 
 /**
  * All services of the `common-services` module as
@@ -43,4 +41,4 @@ const COMMON_SERVICES = {
   initCounterService,
 };
 
-module.exports = COMMON_SERVICES;
+export default COMMON_SERVICES;

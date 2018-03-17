@@ -1,6 +1,4 @@
-'use strict';
-
-const { initializer } = require('knifecycle/dist');
+import { initializer } from 'knifecycle';
 
 function noop() {}
 
@@ -27,7 +25,7 @@ If provided, I route debug messages to the `debug`
 
 */
 
-module.exports = initializer(
+export default initializer(
   {
     name: 'log',
     type: 'service',

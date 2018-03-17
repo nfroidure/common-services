@@ -1,9 +1,7 @@
 /* eslint max-nested-callbacks:0 */
-'use strict';
-
-const assert = require('assert');
-const YError = require('yerror');
-const initDelayMock = require('./delay.mock');
+import assert from 'assert';
+import YError from 'yerror';
+import initDelayMock from './delay.mock';
 
 describe('initDelayMock', () => {
   test('should work', done => {

@@ -1,7 +1,5 @@
-'use strict';
-
-const YError = require('yerror');
-const { initializer } = require('knifecycle/dist');
+import YError from 'yerror';
+import { initializer } from 'knifecycle';
 
 function noop() {}
 
@@ -11,7 +9,7 @@ The delay service is `setTimeout` like I would like it
  to be.
 */
 
-module.exports = initializer(
+export default initializer(
   {
     name: 'delay',
     type: 'provider',

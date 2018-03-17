@@ -1,8 +1,6 @@
-'use strict';
-
-const sinon = require('sinon');
-const initRandomService = require('./random');
-const { reuseSpecialProps } = require('knifecycle/dist/util');
+import sinon from 'sinon';
+import initRandomService from './random';
+import { reuseSpecialProps } from 'knifecycle/dist/util';
 
 /* Architecture Note #1.3.1: Mocking randomness
 
@@ -10,7 +8,7 @@ The random mock uses the [`sinon`](https://github.com/sinonjs/sinon/)
  module under the hood like for the logging mock.
 */
 
-module.exports = reuseSpecialProps(initRandomService, initRandomMock);
+export default reuseSpecialProps(initRandomService, initRandomMock);
 
 /**
  * Instantiate the random service mock

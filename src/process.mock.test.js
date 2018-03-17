@@ -1,7 +1,7 @@
 'use strict';
 
-const assert = require('assert');
-const initProcessMock = require('./process.mock');
+import assert from 'assert';
+import initProcessMock from './process.mock';
 
 describe('initProcessMock', () => {
   test('should work', done => {
