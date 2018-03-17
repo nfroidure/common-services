@@ -31,6 +31,9 @@
 ## Functions
 
 <dl>
+<dt><a href="#initCounterService">initCounterService(services)</a> ⇒ <code>Promise.&lt;function()&gt;</code></dt>
+<dd><p>Instantiate the counter service</p>
+</dd>
 <dt><a href="#initDelayService">initDelayService(services)</a> ⇒ <code>Promise.&lt;Object&gt;</code></dt>
 <dd><p>Instantiate the delay service</p>
 </dd>
@@ -90,6 +93,45 @@ $.register(
   ...Object.keys(COMMON_MOCKS)
   .map(serviceName => COMMON_MOCKS[serviceName])
  );
+```
+<a name="initCounterService"></a>
+
+## initCounterService(services) ⇒ <code>Promise.&lt;function()&gt;</code>
+Instantiate the counter service
+
+**Kind**: global function  
+**Returns**: <code>Promise.&lt;function()&gt;</code> - A promise of the counter function  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| services | <code>Object</code> | The services to inject |
+| [services.COUNTER] | <code>Object</code> | An optional configuration object |
+| [services.log] | <code>Object</code> | An optional logging function |
+
+**Example**  
+```js
+import initCounterService from 'common-services/src/counter';
+
+const counter = await initCounterService({
+  COUNTER: { firstCount: 1 },
+  log: console.log.bind(console),
+});
+```
+<a name="initCounterService..counter"></a>
+
+### initCounterService~counter() ⇒ <code>Promise.&lt;number&gt;</code>
+Returns the current count and increment the counter
+
+**Kind**: inner method of [<code>initCounterService</code>](#initCounterService)  
+**Returns**: <code>Promise.&lt;number&gt;</code> - A promise of the current count  
+**Example**  
+```js
+console.log([
+  counter(),
+  counter(),
+  counter(),
+]);
+// Prints: 1,2,3
 ```
 <a name="initDelayService"></a>
 
@@ -191,14 +233,17 @@ Instantiate the logging service
 | Param | Type | Default | Description |
 | --- | --- | --- | --- |
 | services | <code>Object</code> |  | The services to inject |
-| [services.logger] | <code>Object</code> | <code>console</code> | The logger to use |
-| [services.debug] | <code>function</code> |  | A debugging function |
+| [services.logger] | <code>Object</code> |  | The logger to use |
+| [services.debug] | <code>function</code> | <code>noop</code> | A debugging function |
 
 **Example**  
 ```js
 import initLogService from 'common-services/src/log';
 
-const log = await initLogService({ debug: require('debug')('myapp') });
+const log = await initLogService({
+  logger: require('winston'),
+  debug: require('debug')('myapp'),
+ });
 ```
 <a name="initLogService..log"></a>
 

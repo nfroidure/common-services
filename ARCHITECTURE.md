@@ -201,3 +201,17 @@ If an uncaught exeption occurs it also attempts to
  alive when an uncaught exception is raised.
 
 [See in context](./src/process.js#L86-L91)
+
+
+
+### Counter
+
+The counter service provide a simple local and
+ stubbable counter.
+
+The count are returned asynchronously in order
+ to be easily maintained across several instances
+ if needed later.
+
+[See in context](./src/counter.js#L9-L17)
+

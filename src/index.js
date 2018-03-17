@@ -18,6 +18,7 @@ const initTimeService = require('./time');
 const initRandomService = require('./random');
 const initDelayService = require('./delay');
 const initProcessService = require('./process');
+const initCounterService = require('./counter');
 
 /**
  * All services of the `common-services` module as
@@ -39,6 +40,7 @@ const COMMON_SERVICES = {
   initRandomService,
   initDelayService,
   initProcessService,
+  initCounterService,
 };
 
 module.exports = COMMON_SERVICES;
