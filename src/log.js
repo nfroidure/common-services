@@ -2,6 +2,19 @@
 
 const { initializer } = require('knifecycle/dist');
 
+function noop() {}
+
+// Fallbacking to silent logs making logging
+// opt-in. It appears to be the best default
+// since logs are easy to get but won't disturb
+// tests.
+const DEFAULT_LOGGER = {
+  debug: noop, // eslint-disable-line
+  error: noop, // eslint-disable-line
+  info: noop, // eslint-disable-line
+  warning: noop, // eslint-disable-line
+};
+
 /* Architecture Note #1.1: Logging
 
 I prefer using a unique function with the log type
@@ -26,33 +39,44 @@ module.exports = initializer(
 
 /**
  * Instantiate the logging service
- * @param  {Object}   services           The services to inject
- * @param  {Object}   [services.logger=console]   The logger to use
- * @param  {Function} [services.debug]              A debugging function
- * @return {Promise<Function>}           A promise of the logging function
+ * @param  {Object}   services
+ * The services to inject
+ * @param  {Object}   [services.logger]
+ * The logger to use
+ * @param  {Function} [services.debug = noop]
+ * A debugging function
+ * @return {Promise<Function>}
+ * A promise of the logging function
  * @example
  * import initLogService from 'common-services/src/log';
  *
- * const log = await initLogService({ debug: require('debug')('myapp') });
+ * const log = await initLogService({
+ *   logger: require('winston'),
+ *   debug: require('debug')('myapp'),
+ *  });
  */
-function initLogService({ logger = console, debug }) {
+function initLogService({ logger = DEFAULT_LOGGER, debug = noop }) {
   log('debug', 'Logging service initialized.');
 
   return Promise.resolve(log);
 
   /**
    * Logging function
-   * @param  {String}  type   Log type
-   * @param  {...*}       args   Log contents
+   * @param  {String}  type
+   * Log type
+   * @param  {...*}    args
+   * Log contents
    * @return {void}
    * @example
    * log('debug', 'Luke, I am your father!')
    */
   function log(type, ...args) {
+    // The stack type allows to filter logs in testing
+    // since the stack files paths vary between systems
     if (debug && ('debug' === type || 'stack' === type)) {
       debug(...args);
       return;
     }
-    logger[type](...args);
+    logger[logger[type] ? type : 'error'](...args);
   }
 }

@@ -31,7 +31,7 @@ describe('initRandomService', () => {
       })
         .then(random => {
           log.reset();
-          const num = random('debug', 'debug test');
+          const num = random();
 
           assert.deepEqual(log.args, [
             ['debug', 'Created a random number:', num],

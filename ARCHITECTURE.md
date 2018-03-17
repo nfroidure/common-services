@@ -33,7 +33,7 @@ I prefer using a unique function with the log type
 If provided, I route debug messages to the `debug`
  node module.
 
-[See in context](./src/log.js#L5-L15)
+[See in context](./src/log.js#L18-L28)
 
 
 
@@ -201,4 +201,3 @@ If an uncaught exeption occurs it also attempts to
  alive when an uncaught exception is raised.
 
 [See in context](./src/process.js#L86-L91)
-

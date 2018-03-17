@@ -31,7 +31,7 @@ describe('initTimeService', () => {
       })
         .then(time => {
           log.reset();
-          const now = time('debug', 'debug test');
+          const now = time();
 
           assert.deepEqual(log.args, [['debug', 'Picked a timestamp:', now]]);
         })
