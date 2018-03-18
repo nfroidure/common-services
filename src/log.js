@@ -53,10 +53,10 @@ export default initializer(
  *   debug: require('debug')('myapp'),
  *  });
  */
-function initLogService({ logger = DEFAULT_LOGGER, debug = noop }) {
+async function initLogService({ logger = DEFAULT_LOGGER, debug = noop }) {
   log('debug', 'Logging service initialized.');
 
-  return Promise.resolve(log);
+  return log;
 
   /**
    * Logging function

@@ -34,18 +34,18 @@ export default initializer(
  *   log: console.log.bind(console)
  * });
  */
-function initDelayService({ log = noop }) {
+async function initDelayService({ log = noop }) {
   const pendingPromises = new Map();
 
   log('debug', 'Delay service initialized.');
 
-  return Promise.resolve({
+  return {
     service: {
       create,
       clear,
     },
     dispose,
-  });
+  };
 
   /**
    * Create a new delay
@@ -91,7 +91,7 @@ function initDelayService({ log = noop }) {
    * clear(delayed)
    * // Prints: Cancelled!
    */
-  function clear(promise) {
+  async function clear(promise) {
     if (!pendingPromises.has(promise)) {
       return Promise.reject(new YError('E_BAD_DELAY'));
     }
@@ -101,10 +101,9 @@ function initDelayService({ log = noop }) {
     reject(new YError('E_DELAY_CLEARED'));
     pendingPromises.delete(promise);
     log('debug', 'Cleared a delay');
-    return Promise.resolve();
   }
 
-  function dispose() {
+  async function dispose() {
     return new Promise(resolve => {
       log('debug', 'Cancelling pending timeouts:', pendingPromises.size);
       resolve(Promise.all([...pendingPromises.keys()].map(clear)));

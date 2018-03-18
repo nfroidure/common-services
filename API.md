@@ -1,17 +1,4 @@
 # API
-## Constants
-
-<dl>
-<dt><a href="#COMMON_SERVICES">COMMON_SERVICES</a> : <code>Object</code></dt>
-<dd><p>All services of the <code>common-services</code> module as
- properties.</p>
-</dd>
-<dt><a href="#COMMON_MOCKS">COMMON_MOCKS</a> : <code>Object</code></dt>
-<dd><p>All mocks of the <code>common-services</code> module as
- properties.</p>
-</dd>
-</dl>
-
 ## Functions
 
 <dl>
@@ -44,40 +31,6 @@
 </dd>
 </dl>
 
-<a name="COMMON_SERVICES"></a>
-
-## COMMON_SERVICES : <code>Object</code>
-All services of the `common-services` module as
- properties.
-
-**Kind**: global constant  
-**Example**  
-```js
-import COMMON_SERVICES from 'common-services';
-import $ from 'knifecycle/instance';
-
-$.register(
-  ...Object.keys(COMMON_SERVICES)
-  .map(serviceName => COMMON_SERVICES[serviceName])
- );
-```
-<a name="COMMON_MOCKS"></a>
-
-## COMMON_MOCKS : <code>Object</code>
-All mocks of the `common-services` module as
- properties.
-
-**Kind**: global constant  
-**Example**  
-```js
-import COMMON_MOCKS from 'common-services';
-import $ from 'knifecycle/instance';
-
-$.register(
-  ...Object.keys(COMMON_MOCKS)
-  .map(serviceName => COMMON_MOCKS[serviceName])
- );
-```
 <a name="initCounterService"></a>
 
 ## initCounterService(services) ⇒ <code>Promise.&lt;function()&gt;</code>

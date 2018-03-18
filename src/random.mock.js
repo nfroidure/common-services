@@ -29,6 +29,6 @@ export default reuseSpecialProps(initRandomService, initRandomMock);
  *
  * assert.deepEqual(random.args, []);
  */
-function initRandomMock() {
-  return Promise.resolve(sinon.stub());
+async function initRandomMock() {
+  return sinon.stub();
 }

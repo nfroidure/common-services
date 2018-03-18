@@ -31,10 +31,10 @@ export default initializer(
  *   log: console.log.bind(console),
  * });
  */
-function initRandomService({ log = noop }) {
+async function initRandomService({ log = noop }) {
   log('debug', 'Random service initialized.');
 
-  return Promise.resolve(random);
+  return random;
 
   /**
    * Returns a new random number

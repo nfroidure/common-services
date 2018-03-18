@@ -29,10 +29,10 @@ export default initializer(
  *   log: console.log.bind(console),
  * });
  */
-function initTimeService({ log }) {
+async function initTimeService({ log }) {
   log('debug', 'Time service initialized.');
 
-  return Promise.resolve(time);
+  return time;
 
   /**
    * Returns the current timestamp

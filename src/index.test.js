@@ -1,7 +1,7 @@
 import assert from 'assert';
 import fs from 'fs';
 import path from 'path';
-import services from './index.js';
+import * as services from './index.js';
 
 describe('index', () => {
   let files;

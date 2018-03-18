@@ -1,7 +1,7 @@
-const assert = require('assert');
-const sinon = require('sinon');
-const YError = require('yerror');
-const { Knifecycle } = require('knifecycle/dist');
+import assert from 'assert';
+import sinon from 'sinon';
+import YError from 'yerror';
+import { Knifecycle } from 'knifecycle/dist';
 import initProcessService from './process';
 
 describe('Process service', () => {

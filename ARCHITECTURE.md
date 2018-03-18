@@ -88,7 +88,7 @@ describe('my test', () => {
 });
 ```
 
-[See in context](./src/log.mock.js#L7-L57)
+[See in context](./src/log.mock.js#L5-L55)
 
 
 

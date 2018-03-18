@@ -31,6 +31,6 @@ export default reuseSpecialProps(initTimeService, initTimeMock);
  *
  * assert.deepEqual(time.args, []);
  */
-function initTimeMock() {
-  return Promise.resolve(sinon.stub());
+async function initTimeMock() {
+  return sinon.stub();
 }

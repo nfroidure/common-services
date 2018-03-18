@@ -32,7 +32,7 @@ export default initializer(
   initProcessService,
 );
 
-function initProcessService({
+async function initProcessService({
   ENV,
   PROCESS_NAME,
   SIGNALS,
@@ -52,7 +52,7 @@ function initProcessService({
    `SIGNALS` optional dependency.
   */
   if (!(NODE_ENVS || DEFAULT_NODE_ENVS).includes(ENV.NODE_ENV)) {
-    return Promise.reject(new YError('E_NODE_ENV', ENV.NODE_ENV));
+    throw new YError('E_NODE_ENV', ENV.NODE_ENV);
   }
 
   log('debug', `Running in "${ENV.NODE_ENV}" environment.`);
@@ -102,21 +102,19 @@ function initProcessService({
     }
   }
 
-  function shutdown(code) {
+  async function shutdown(code) {
     shuttingDown = true;
     log('info', 'Shutting down now 🙏...');
-    $destroy()
-      .then(() => {
-        log('info', 'Gracefull shutdown sucessfully done 😎!');
-        exit(code || 0);
-      })
-      .catch(err => {
-        log('error', 'Could not gracefully shutdown 🤔.', err.stack);
-        exit(1);
-      });
+    await $destroy();
+
+    try {
+      log('info', 'Gracefull shutdown sucessfully done 😎!');
+      exit(code || 0);
+    } catch (err) {
+      log('error', 'Could not gracefully shutdown 🤔.', err.stack);
+      exit(1);
+    }
   }
 
   log('debug', 'Process service initialized.');
-
-  return Promise.resolve();
 }

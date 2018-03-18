@@ -10,42 +10,36 @@ describe('initCounterService', () => {
     log.reset();
   });
 
-  test('should work', done => {
-    initCounterService({
+  test('should work', async () => {
+    const counter = await initCounterService({
       log,
-    })
-      .then(counter => {
-        assert('function' === typeof counter);
-        assert.deepEqual(log.args, [['debug', 'Counter service initialized.']]);
-      })
-      .then(() => done())
-      .catch(done);
+    });
+
+    assert('function' === typeof counter);
+    assert.deepEqual(log.args, [['debug', 'Counter service initialized.']]);
   });
 
   describe('counter', () => {
-    test('should work', done => {
-      initCounterService({
+    test('should work', async () => {
+      const counter = await initCounterService({
         log,
-      })
-        .then(counter => (log.reset(), counter()))
-        .then(num => {
-          assert.deepEqual(log.args, [['debug', 'Picked a count:', num]]);
-        })
-        .then(() => done())
-        .catch(done);
+      });
+
+      log.reset();
+
+      const num = await counter();
+
+      assert.deepEqual(log.args, [['debug', 'Picked a count:', num]]);
     });
   });
 
-  test('should work with Knifecycle', done => {
-    new Knifecycle()
+  test('should work with Knifecycle', async () => {
+    const { counter } = await new Knifecycle()
       .register(initCounterService)
       .constant('log', log)
-      .run(['counter'])
-      .then(({ counter }) => {
-        assert(counter);
-        assert.deepEqual(log.args, [['debug', 'Counter service initialized.']]);
-      })
-      .then(() => done())
-      .catch(done);
+      .run(['counter']);
+
+    assert(counter);
+    assert.deepEqual(log.args, [['debug', 'Counter service initialized.']]);
   });
 });

@@ -10,7 +10,7 @@ import initProcessMock from './process.mock';
  * @constant
  * @type {Object}
  * @example
- * import COMMON_MOCKS from 'common-services';
+ * import * as COMMON_MOCKS from 'common-services';
  * import $ from 'knifecycle/instance';
  *
  * $.register(
@@ -18,12 +18,11 @@ import initProcessMock from './process.mock';
  *   .map(serviceName => COMMON_MOCKS[serviceName])
  *  );
  */
-const COMMON_MOCKS = {
+
+export {
   initLogMock,
   initTimeMock,
   initRandomMock,
   initDelayMock,
   initProcessMock,
 };
-
-module.exports = COMMON_MOCKS;

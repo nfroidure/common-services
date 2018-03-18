@@ -1,8 +1,6 @@
-'use strict';
-
-const sinon = require('sinon');
-const initLogService = require('./log');
-const { reuseSpecialProps } = require('knifecycle/dist/util');
+import sinon from 'sinon';
+import initLogService from './log';
+import { reuseSpecialProps } from 'knifecycle/dist/util';
 
 /* Architecture Note #1.1.1: Mocking logs
 
@@ -81,6 +79,6 @@ export default reuseSpecialProps(initLogService, initLogMock);
  *
  * assert.deepEqual(log.args, []);
  */
-function initLogMock() {
-  return Promise.resolve(sinon.stub());
+async function initLogMock() {
+  return sinon.stub();
 }

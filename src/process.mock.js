@@ -1,10 +1,8 @@
 'use strict';
 
-const initProcessService = require('./delay');
-const { reuseSpecialProps } = require('knifecycle/dist/util');
+import initProcessService from './delay';
+import { reuseSpecialProps } from 'knifecycle/dist/util';
 
 export default reuseSpecialProps(initProcessService, initProcessMock);
 
-function initProcessMock() {
-  return Promise.resolve();
-}
+async function initProcessMock() {}

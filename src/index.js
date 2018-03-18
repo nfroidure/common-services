@@ -24,7 +24,7 @@ import initCounterService from './counter';
  * @constant
  * @type {Object}
  * @example
- * import COMMON_SERVICES from 'common-services';
+ * import * as COMMON_SERVICES from 'common-services';
  * import $ from 'knifecycle/instance';
  *
  * $.register(
@@ -32,7 +32,7 @@ import initCounterService from './counter';
  *   .map(serviceName => COMMON_SERVICES[serviceName])
  *  );
  */
-const COMMON_SERVICES = {
+export {
   initLogService,
   initTimeService,
   initRandomService,
@@ -40,5 +40,3 @@ const COMMON_SERVICES = {
   initProcessService,
   initCounterService,
 };
-
-export default COMMON_SERVICES;

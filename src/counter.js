@@ -43,12 +43,12 @@ export default initializer(
  *   log: console.log.bind(console),
  * });
  */
-function initCounterService({ COUNTER = DEFAULT_COUNTER, log }) {
+async function initCounterService({ COUNTER = DEFAULT_COUNTER, log }) {
   let currentCount = COUNTER.firstCount || DEFAULT_COUNTER.firstCount;
 
   log('debug', 'Counter service initialized.');
 
-  return Promise.resolve(counter);
+  return counter;
 
   /**
    * Returns the current count and increment the counter
@@ -62,8 +62,8 @@ function initCounterService({ COUNTER = DEFAULT_COUNTER, log }) {
    * ]);
    * // Prints: 1,2,3
    */
-  function counter() {
+  async function counter() {
     log('debug', 'Picked a count:', currentCount);
-    return Promise.resolve(currentCount++);
+    return currentCount++;
   }
 }
