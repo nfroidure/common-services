@@ -1,6 +1,6 @@
 {
   "name": "common-services",
-  "version": "3.0.0",
+  "version": "3.0.1",
   "description": "A module to gather very common services and their mocks.",
   "main": "dist/index.js",
   "author": "Nicolas Froidure",
@@ -8,7 +8,9 @@
   "metapak": {
     "data": {
       "files": "src/*.js",
-      "ignore": ["dist"]
+      "ignore": [
+        "dist"
+      ]
     },
     "configs": [
       "jsdocs",

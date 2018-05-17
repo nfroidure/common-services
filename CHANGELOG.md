@@ -1,3 +1,13 @@
+<a name="3.0.1"></a>
+## [3.0.1](https://github.com/nfroidure/common-services/compare/v3.0.0...v3.0.1) (2018-05-17)
+
+
+### Bug Fixes
+
+* **Build:** Update Babel build ([c786630](https://github.com/nfroidure/common-services/commit/c786630))
+
+
+
 <a name="3.0.0"></a>
 # [3.0.0](https://github.com/nfroidure/common-services/compare/v2.0.0...v3.0.0) (2018-03-18)
 
