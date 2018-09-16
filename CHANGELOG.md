@@ -1,3 +1,13 @@
+<a name="3.1.0"></a>
+# [3.1.0](https://github.com/nfroidure/common-services/compare/v3.0.1...v3.1.0) (2018-09-16)
+
+
+### Features
+
+* **Code generator service:** Add a service to generate random human readable codes ([799bcb2](https://github.com/nfroidure/common-services/commit/799bcb2))
+
+
+
 <a name="3.0.1"></a>
 ## [3.0.1](https://github.com/nfroidure/common-services/compare/v3.0.0...v3.0.1) (2018-05-17)
 
