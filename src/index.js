@@ -17,6 +17,7 @@ import initRandomService from './random';
 import initDelayService from './delay';
 import initProcessService from './process';
 import initCounterService from './counter';
+import initCodeGeneratorService from './codeGenerator';
 
 /**
  * All services of the `common-services` module as
@@ -39,4 +40,5 @@ export {
   initDelayService,
   initProcessService,
   initCounterService,
+  initCodeGeneratorService,
 };

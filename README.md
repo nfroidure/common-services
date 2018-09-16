@@ -27,6 +27,9 @@ This module contains various common injectable
 ## Functions
 
 <dl>
+<dt><a href="#initCodeGeneratorService">initCodeGeneratorService(services)</a> ⇒ <code>Promise.&lt;function()&gt;</code> | <code>Promise.&lt;function()&gt;</code></dt>
+<dd><p>Instantiate the codeGenerator service</p>
+</dd>
 <dt><a href="#initCounterService">initCounterService(services)</a> ⇒ <code>Promise.&lt;function()&gt;</code></dt>
 <dd><p>Instantiate the counter service</p>
 </dd>
@@ -56,6 +59,49 @@ This module contains various common injectable
 </dd>
 </dl>
 
+<a name="initCodeGeneratorService"></a>
+
+## initCodeGeneratorService(services) ⇒ <code>Promise.&lt;function()&gt;</code> \| <code>Promise.&lt;function()&gt;</code>
+Instantiate the codeGenerator service
+
+**Kind**: global function  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| services | <code>Object</code> | The services to inject |
+| [services.CHARS_SET] | <code>Object</code> | An optional char set to pick cars into |
+| [services.random] | <code>Object</code> | An optional random function to replace the `Math.random` one used by default |
+| [services.log] | <code>Object</code> | An optional logging function |
+
+**Example**  
+```js
+import initCodeGeneratorService from 'common-services/src/codeGenerator';
+
+const codeGenerator = await initCodeGeneratorService({
+  log: console.log.bind(console),
+});
+```
+<a name="initCodeGeneratorService..codeGenerator"></a>
+
+### initCodeGeneratorService~codeGenerator([length]) ⇒ <code>Promise.&lt;String&gt;</code>
+Returns a random code
+
+**Kind**: inner method of [<code>initCodeGeneratorService</code>](#initCodeGeneratorService)  
+**Returns**: <code>Promise.&lt;String&gt;</code> - A promise of the generated code  
+
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| [length] | <code>Number</code> | <code>6</code> | An optional custon code length (defaults to 6) |
+
+**Example**  
+```js
+console.log([
+  codeGenerator(),
+  codeGenerator(),
+  codeGenerator(),
+]);
+// Prints: ABCDEF,GHJKMN,PRSTUV
+```
 <a name="initCounterService"></a>
 
 ## initCounterService(services) ⇒ <code>Promise.&lt;function()&gt;</code>

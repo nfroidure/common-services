@@ -7,12 +7,13 @@ const DEFAULT_COUNTER = {
 
 /* Architecture Note #1.6: Counter
 
-The counter service provide a simple local and
+The `counter` service provide a simple local and
  stubbable counter.
 
 The count are returned asynchronously in order
  to be easily maintained across several instances
- if needed later.
+ if needed later via another service with the same
+ surface API.
 */
 
 export default initializer(

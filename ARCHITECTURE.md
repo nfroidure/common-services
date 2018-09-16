@@ -206,12 +206,24 @@ If an uncaught exeption occurs it also attempts to
 
 ### Counter
 
-The counter service provide a simple local and
+The `counter` service provide a simple local and
  stubbable counter.
 
 The count are returned asynchronously in order
  to be easily maintained across several instances
- if needed later.
+ if needed later via another service with the same
+ surface API.
 
-[See in context](./src/counter.js#L8-L16)
+[See in context](./src/counter.js#L8-L17)
+
+
+
+### Code generator
+
+The `codeGenerator` service provide a service
+ that generate random strings composed of
+ a character set that avoid recognition
+ mistake by humans.
+
+[See in context](./src/codeGenerator.js#L5-L11)
 
