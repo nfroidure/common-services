@@ -41,7 +41,7 @@
     "jsarch": "^1.3.0",
     "jsdoc-to-markdown": "^4.0.1",
     "metapak": "^1.0.3",
-    "metapak-nfroidure": "^6.1.5",
+    "metapak-nfroidure": "^6.3.0",
     "prettier": "^1.14.2",
     "sinon": "^6.3.3"
   },
@@ -85,7 +85,7 @@
     }
   },
   "dependencies": {
-    "knifecycle": "^2.5.2",
+    "knifecycle": "^2.5.3",
     "yerror": "^2.1.3"
   },
   "greenkeeper": {
