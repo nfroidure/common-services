@@ -14,6 +14,7 @@
 [![Coverage Status](https://coveralls.io/repos/nfroidure/common-services/badge.svg?branch=master)](https://coveralls.io/r/nfroidure/common-services?branch=master)
 [![Code Climate](https://codeclimate.com/github/nfroidure/common-services.svg)](https://codeclimate.com/github/nfroidure/common-services)
 [![Dependency Status](https://dependencyci.com/github/nfroidure/common-services/badge)](https://dependencyci.com/github/nfroidure/common-services)
+[![Package Quality](http://npm.packagequality.com/shield/common-services.svg)](http://packagequality.com/#?package=common-services)
 
 
 [//]: # (::contents:start)
@@ -413,6 +414,9 @@ time.reset();
 
 assert.deepEqual(time.args, []);
 ```
+
+# Authors
+- [Nicolas Froidure](http://insertafter.com/en/index.html)
 
 # License
 [MIT](https://github.com/nfroidure/common-services/blob/master/LICENSE)
