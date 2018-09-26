@@ -39,14 +39,14 @@ export default initializer(
  * Instantiate the logging service
  * @param  {Object}   services
  * The services to inject
- * @param  {Object}   [services.logger]
+ * @param  {Object}   [services.logger = DEFAULT_LOGGER]
  * The logger to use
  * @param  {Function} [services.debug = noop]
  * A debugging function
  * @return {Promise<Function>}
  * A promise of the logging function
  * @example
- * import initLogService from 'common-services/src/log';
+ * import initLogService from 'common-services/dist/log';
  *
  * const log = await initLogService({
  *   logger: require('winston'),

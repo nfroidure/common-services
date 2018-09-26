@@ -23,12 +23,12 @@ export default initializer(
  * Instantiate the delay service
  * @param  {Object}     services
  * The services to inject
- * @param  {Function}   [services.log]
+ * @param  {Function}   [services.log=noop]
  * A logging function
  * @return {Promise<Object>}
  * A promise of the delay service
  * @example
- * import initDelayService from 'common-services/src/delay';
+ * import initDelayService from 'common-services/dist/delay';
  *
  * const delay = await initDelayService({
  *   log: console.log.bind(console)
@@ -54,10 +54,8 @@ async function initDelayService({ log = noop }) {
    * A promise to be resolved after that delay
    * or rejected if it is cancelled.
    * @example
-   * delay.create(1000)
-   * .then(() => console.log('1000 ms elapsed!'))
-   * .catch(() => console.log('Cancelled!'));
-   * // Prints: 1000 ms elapsed!
+   * await delay.create(1000);
+   * console.log('1000 ms elapsed!');
    */
   function create(delay) {
     let timeoutId;
@@ -85,10 +83,16 @@ async function initDelayService({ log = noop }) {
    * @return {Promise}
    * A promise resolved when cancellation is done.
    * @example
-   * const delayed = delay.create(1000)
-   * .then(() => console.log('1000 ms elapsed!'))
-   * .catch(() => console.log('Cancelled!'));
-   * clear(delayed)
+   * try {
+   *   const delayPromise = delay.create(1000);
+   *   await Promise.all(delayPromise, delay.clear(delayPromise));
+   *   console.log('1000 ms elapsed!');
+   * } catch (err) {
+   *   if(err.code != 'E_DELAY_CLEARED') {
+   *     trow err;
+   *   }
+   *   console.log('Cancelled!'));
+   * }
    * // Prints: Cancelled!
    */
   async function clear(promise) {

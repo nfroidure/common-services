@@ -15,7 +15,7 @@ export default reuseSpecialProps(initTimeService, initTimeMock);
  * @return {Promise<Function>}  A promise of the mocked
  *  time function
  * @example
- * import initTimeMock from 'common-services/src/time.mock';
+ * import initTimeMock from 'common-services/dist/time.mock';
  * import assert from 'assert';
  *
  * const time = await initTimeMock();

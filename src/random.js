@@ -22,10 +22,10 @@ export default initializer(
 /**
  * Instantiate the random service
  * @param  {Object}   services           The services to inject
- * @param  {Object}   [services.log]     A logging function
+ * @param  {Object}   [services.log = noop]     A logging function
  * @return {Promise<Function>}           A promise of the random function
  * @example
- * import initRandomService from 'common-services/src/random';
+ * import initRandomService from 'common-services/dist/random';
  *
  * const random = await initRandomService({
  *   log: console.log.bind(console),

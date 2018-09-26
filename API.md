@@ -14,6 +14,9 @@
 <dt><a href="#initDelayMock">initDelayMock()</a> ⇒ <code>Promise.&lt;Object&gt;</code></dt>
 <dd><p>Instantiate the delay service mock</p>
 </dd>
+<dt><a href="#initLockService">initLockService(services)</a> ⇒ <code>Promise.&lt;Object&gt;</code></dt>
+<dd><p>Instantiate the lock service</p>
+</dd>
 <dt><a href="#initLogService">initLogService(services)</a> ⇒ <code>Promise.&lt;function()&gt;</code></dt>
 <dd><p>Instantiate the logging service</p>
 </dd>
@@ -41,16 +44,16 @@ Instantiate the codeGenerator service
 
 **Kind**: global function  
 
-| Param | Type | Description |
-| --- | --- | --- |
-| services | <code>Object</code> | The services to inject |
-| [services.CHARS_SET] | <code>Object</code> | An optional char set to pick cars into |
-| [services.random] | <code>Object</code> | An optional random function to replace the `Math.random` one used by default |
-| [services.log] | <code>Object</code> | An optional logging function |
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| services | <code>Object</code> |  | The services to inject |
+| [services.CHARS_SET] | <code>Object</code> | <code>EXPLICIT_CHARS</code> | An optional char set to pick cars into |
+| [services.random] | <code>Object</code> | <code>Math.random</code> | An optional random function to replace the `Math.random` one used by default |
+| [services.log] | <code>Object</code> | <code>noop</code> | An optional logging function |
 
 **Example**  
 ```js
-import initCodeGeneratorService from 'common-services/src/codeGenerator';
+import initCodeGeneratorService from 'common-services/dist/codeGenerator';
 
 const codeGenerator = await initCodeGeneratorService({
   log: console.log.bind(console),
@@ -85,15 +88,15 @@ Instantiate the counter service
 **Kind**: global function  
 **Returns**: <code>Promise.&lt;function()&gt;</code> - A promise of the counter function  
 
-| Param | Type | Description |
-| --- | --- | --- |
-| services | <code>Object</code> | The services to inject |
-| [services.COUNTER] | <code>Object</code> | An optional configuration object |
-| [services.log] | <code>Object</code> | An optional logging function |
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| services | <code>Object</code> |  | The services to inject |
+| [services.COUNTER] | <code>Object</code> | <code>DEFAULT_COUNTER</code> | An optional configuration object |
+| [services.log] | <code>Object</code> | <code>noop</code> | An optional logging function |
 
 **Example**  
 ```js
-import initCounterService from 'common-services/src/counter';
+import initCounterService from 'common-services/dist/counter';
 
 const counter = await initCounterService({
   COUNTER: { firstCount: 1 },
@@ -124,14 +127,14 @@ Instantiate the delay service
 **Kind**: global function  
 **Returns**: <code>Promise.&lt;Object&gt;</code> - A promise of the delay service  
 
-| Param | Type | Description |
-| --- | --- | --- |
-| services | <code>Object</code> | The services to inject |
-| [services.log] | <code>function</code> | A logging function |
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| services | <code>Object</code> |  | The services to inject |
+| [services.log] | <code>function</code> | <code>noop</code> | A logging function |
 
 **Example**  
 ```js
-import initDelayService from 'common-services/src/delay';
+import initDelayService from 'common-services/dist/delay';
 
 const delay = await initDelayService({
   log: console.log.bind(console)
@@ -157,10 +160,8 @@ or rejected if it is cancelled.
 
 **Example**  
 ```js
-delay.create(1000)
-.then(() => console.log('1000 ms elapsed!'))
-.catch(() => console.log('Cancelled!'));
-// Prints: 1000 ms elapsed!
+await delay.create(1000);
+console.log('1000 ms elapsed!');
 ```
 <a name="initDelayService..clear"></a>
 
@@ -176,10 +177,16 @@ Cancel an earlier created delay
 
 **Example**  
 ```js
-const delayed = delay.create(1000)
-.then(() => console.log('1000 ms elapsed!'))
-.catch(() => console.log('Cancelled!'));
-clear(delayed)
+try {
+  const delayPromise = delay.create(1000);
+  await Promise.all(delayPromise, delay.clear(delayPromise));
+  console.log('1000 ms elapsed!');
+} catch (err) {
+  if(err.code != 'E_DELAY_CLEARED') {
+    trow err;
+  }
+  console.log('Cancelled!'));
+}
 // Prints: Cancelled!
 ```
 <a name="initDelayMock"></a>
@@ -191,7 +198,7 @@ Instantiate the delay service mock
 **Returns**: <code>Promise.&lt;Object&gt;</code> - A promise of the mocked delay service  
 **Example**  
 ```js
-import initDelayMock from 'common-services/src/delay.mock';
+import initDelayMock from 'common-services/dist/delay.mock';
 import assert from 'assert';
 
 const delay = await initDelayMock();
@@ -205,6 +212,83 @@ delayPromise.then(() => {
   // instead of after a 1000ms delay
 });
 ```
+<a name="initLockService"></a>
+
+## initLockService(services) ⇒ <code>Promise.&lt;Object&gt;</code>
+Instantiate the lock service
+
+**Kind**: global function  
+**Returns**: <code>Promise.&lt;Object&gt;</code> - A promise of the lock service  
+
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| services | <code>Object</code> |  | The services to inject |
+| [services.LOCKS_MAP] | <code>Map</code> |  | A map to store le current locks (optional) |
+| [services.LOCK_TIMEOUT] | <code>Number</code> | <code>Infitiny</code> | The timeout in milliseconds for the lock to  be released. |
+| [services.log] | <code>function</code> |  | A logging function |
+| [services.delay] | <code>Object</code> |  | A delay service like the `common-services` one |
+
+**Example**  
+```js
+import initLog from 'common-services/dist/log';
+import initDelayService from 'common-services/dist/delay';
+import initLock from 'common-services/dist/lock';
+import ms from 'ms';
+
+const log = await initLogService({
+  logger: require('winston'),
+  debug: require('debug')('myapp'),
+});
+const delay = await initDelayService({ log });
+const lock = await initLock({ LOCK_TIMEOUT: ms('5s'), delay, log });
+
+
+run();
+
+async function run() {
+  // The following async jobs are done sequentially
+  // if they have the same `resourceKey` value
+  await Promise.all(asynTasks.map(async (asyncTask) => {
+    await lock.take(asyncTask.resourceKey);
+
+    await myAsyncStuff1(asyncTask);
+    await myAsyncStuff2(asyncTask);
+    await myAsyncStuff3(asyncTask);
+
+   lock.release(asyncTask.resourceKey);
+  });
+}
+```
+
+* [initLockService(services)](#initLockService) ⇒ <code>Promise.&lt;Object&gt;</code>
+    * [~take(key)](#initLockService..take) ⇒ <code>Promise</code>
+    * [~release(key)](#initLockService..release) ⇒ <code>void</code>
+
+<a name="initLockService..take"></a>
+
+### initLockService~take(key) ⇒ <code>Promise</code>
+Take the lock on the given resource key
+
+**Kind**: inner method of [<code>initLockService</code>](#initLockService)  
+**Returns**: <code>Promise</code> - A promise to be resolved when the lock
+ is gained or rejected if the lock release
+ timeout is reached.  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| key | <code>String</code> | A unique key for the locked resource |
+
+<a name="initLockService..release"></a>
+
+### initLockService~release(key) ⇒ <code>void</code>
+Release the lock on the given resource key
+
+**Kind**: inner method of [<code>initLockService</code>](#initLockService)  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| key | <code>String</code> | A unique key for the resource to release |
+
 <a name="initLogService"></a>
 
 ## initLogService(services) ⇒ <code>Promise.&lt;function()&gt;</code>
@@ -216,12 +300,12 @@ Instantiate the logging service
 | Param | Type | Default | Description |
 | --- | --- | --- | --- |
 | services | <code>Object</code> |  | The services to inject |
-| [services.logger] | <code>Object</code> |  | The logger to use |
+| [services.logger] | <code>Object</code> | <code>DEFAULT_LOGGER</code> | The logger to use |
 | [services.debug] | <code>function</code> | <code>noop</code> | A debugging function |
 
 **Example**  
 ```js
-import initLogService from 'common-services/src/log';
+import initLogService from 'common-services/dist/log';
 
 const log = await initLogService({
   logger: require('winston'),
@@ -254,7 +338,7 @@ Instantiate the logging mock
  logging function  
 **Example**  
 ```js
-import initLogMock from 'common-services/src/log.mock';
+import initLogMock from 'common-services/dist/log.mock';
 import assert from 'assert';
 
 const log = await initLogMock();
@@ -280,14 +364,14 @@ Instantiate the random service
 **Kind**: global function  
 **Returns**: <code>Promise.&lt;function()&gt;</code> - A promise of the random function  
 
-| Param | Type | Description |
-| --- | --- | --- |
-| services | <code>Object</code> | The services to inject |
-| [services.log] | <code>Object</code> | A logging function |
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| services | <code>Object</code> |  | The services to inject |
+| [services.log] | <code>Object</code> | <code>noop</code> | A logging function |
 
 **Example**  
 ```js
-import initRandomService from 'common-services/src/random';
+import initRandomService from 'common-services/dist/random';
 
 const random = await initRandomService({
   log: console.log.bind(console),
@@ -315,7 +399,7 @@ Instantiate the random service mock
  random function  
 **Example**  
 ```js
-import initRandomMock from 'common-services/src/random.mock';
+import initRandomMock from 'common-services/dist/random.mock';
 import assert from 'assert';
 
 const random = await initRandomMock();
@@ -337,14 +421,14 @@ Instantiate the time service
 **Kind**: global function  
 **Returns**: <code>Promise.&lt;function()&gt;</code> - A promise of the time function  
 
-| Param | Type | Description |
-| --- | --- | --- |
-| services | <code>Object</code> | The services to inject |
-| [services.log] | <code>Object</code> | A logging function |
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| services | <code>Object</code> |  | The services to inject |
+| [services.log] | <code>Object</code> | <code>noop</code> | A logging function |
 
 **Example**  
 ```js
-import initTimeService from 'common-services/src/time';
+import initTimeService from 'common-services/dist/time';
 
 const time = await initTimeService({
   log: console.log.bind(console),
@@ -372,7 +456,7 @@ Instantiate the time service mock
  time function  
 **Example**  
 ```js
-import initTimeMock from 'common-services/src/time.mock';
+import initTimeMock from 'common-services/dist/time.mock';
 import assert from 'assert';
 
 const time = await initTimeMock();

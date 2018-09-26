@@ -20,10 +20,10 @@ export default initializer(
 /**
  * Instantiate the time service
  * @param  {Object}   services           The services to inject
- * @param  {Object}   [services.log]     A logging function
+ * @param  {Object}   [services.log = noop]     A logging function
  * @return {Promise<Function>}           A promise of the time function
  * @example
- * import initTimeService from 'common-services/src/time';
+ * import initTimeService from 'common-services/dist/time';
  *
  * const time = await initTimeService({
  *   log: console.log.bind(console),

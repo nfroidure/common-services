@@ -18,6 +18,7 @@ import initDelayService from './delay';
 import initProcessService from './process';
 import initCounterService from './counter';
 import initCodeGeneratorService from './codeGenerator';
+import initLockService from './lock';
 
 /**
  * All services of the `common-services` module as
@@ -41,4 +42,5 @@ export {
   initProcessService,
   initCounterService,
   initCodeGeneratorService,
+  initLockService,
 };

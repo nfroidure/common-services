@@ -11,7 +11,7 @@ The log mock uses the
 
 For example:
 ```js1
-import initLogMock from 'common-services/src/log.mock';
+import initLogMock from 'common-services/dist/log.mock';
 import myTestedFunction from 'mylib';
 
 describe('my test', () => {
@@ -61,7 +61,7 @@ export default reuseSpecialProps(initLogService, initLogMock);
  * @return {Promise<Function>}  A promise of the mocked
  *  logging function
  * @example
- * import initLogMock from 'common-services/src/log.mock';
+ * import initLogMock from 'common-services/dist/log.mock';
  * import assert from 'assert';
  *
  * const log = await initLogMock();

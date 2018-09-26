@@ -25,18 +25,18 @@ export default initializer(
  * Instantiate the codeGenerator service
  * @param  {Object}   services
  * The services to inject
- * @param  {Object}   [services.CHARS_SET]
+ * @param  {Object}   [services.CHARS_SET = EXPLICIT_CHARS]
  * An optional char set to pick cars into
- * @param  {Object}   [services.random]
+ * @param  {Object}   [services.random = Math.random]
  * An optional random function to replace the
  * `Math.random` one used by default
  * @return {Promise<Function>}
- * @param  {Object}   [services.log]
+ * @param  {Object}   [services.log = noop]
  * An optional logging function
  * @return {Promise<Function>}
  * A promise of the codeGenerator function
  * @example
- * import initCodeGeneratorService from 'common-services/src/codeGenerator';
+ * import initCodeGeneratorService from 'common-services/dist/codeGenerator';
  *
  * const codeGenerator = await initCodeGeneratorService({
  *   log: console.log.bind(console),

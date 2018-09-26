@@ -15,7 +15,7 @@ export default reuseSpecialProps(initRandomService, initRandomMock);
  * @return {Promise<Function>}  A promise of the mocked
  *  random function
  * @example
- * import initRandomMock from 'common-services/src/random.mock';
+ * import initRandomMock from 'common-services/dist/random.mock';
  * import assert from 'assert';
  *
  * const random = await initRandomMock();

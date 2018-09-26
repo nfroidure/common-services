@@ -19,7 +19,7 @@ export default reuseSpecialProps(initDelayService, initDelayMock);
  * @return {Promise<Object>}
  * A promise of the mocked delay service
  * @example
- * import initDelayMock from 'common-services/src/delay.mock';
+ * import initDelayMock from 'common-services/dist/delay.mock';
  * import assert from 'assert';
  *
  * const delay = await initDelayMock();

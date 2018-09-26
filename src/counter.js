@@ -30,14 +30,14 @@ export default initializer(
  * Instantiate the counter service
  * @param  {Object}   services
  * The services to inject
- * @param  {Object}   [services.COUNTER]
+ * @param  {Object}   [services.COUNTER=DEFAULT_COUNTER]
  * An optional configuration object
- * @param  {Object}   [services.log]
+ * @param  {Object}   [services.log=noop]
  * An optional logging function
  * @return {Promise<Function>}
  * A promise of the counter function
  * @example
- * import initCounterService from 'common-services/src/counter';
+ * import initCounterService from 'common-services/dist/counter';
  *
  * const counter = await initCounterService({
  *   COUNTER: { firstCount: 1 },

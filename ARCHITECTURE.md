@@ -46,7 +46,7 @@ The log mock uses the
 
 For example:
 ```js1
-import initLogMock from 'common-services/src/log.mock';
+import initLogMock from 'common-services/dist/log.mock';
 import myTestedFunction from 'mylib';
 
 describe('my test', () => {
@@ -226,4 +226,19 @@ The `codeGenerator` service provide a service
  mistake by humans.
 
 [See in context](./src/codeGenerator.js#L5-L11)
+
+
+
+### Lock
+
+This service allows to maintain a lock on a given resource in order
+ to ensure a sequential access to it in asynchronous code.
+
+The release is done by its key and the current lock is removed. There
+ is no check on the fact the lock is well released. By design, it is
+ your responsibility to ensure you release the locks properly. That
+ said, it should not be hard to handle since the actual behavior of
+ the library makes your code run sequentially.
+
+[See in context](./src/lock.js#L6-L16)
 
