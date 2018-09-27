@@ -1,3 +1,13 @@
+<a name="3.2.0"></a>
+# [3.2.0](https://github.com/nfroidure/common-services/compare/v3.1.1...v3.2.0) (2018-09-27)
+
+
+### Features
+
+* **Lock service:** Add a service to manage locks on resources ([34a2f00](https://github.com/nfroidure/common-services/commit/34a2f00))
+
+
+
 <a name="3.1.1"></a>
 ## [3.1.1](https://github.com/nfroidure/common-services/compare/v3.1.0...v3.1.1) (2018-09-16)
 
