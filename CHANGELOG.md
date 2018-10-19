@@ -1,3 +1,8 @@
+<a name="4.0.0"></a>
+# [4.0.0](https://github.com/nfroidure/common-services/compare/v3.2.0...v4.0.0) (2018-10-19)
+
+
+
 <a name="3.2.0"></a>
 # [3.2.0](https://github.com/nfroidure/common-services/compare/v3.1.1...v3.2.0) (2018-09-27)
 
