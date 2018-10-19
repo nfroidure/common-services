@@ -1,6 +1,6 @@
 import sinon from 'sinon';
 import initTimeService from './time';
-import { reuseSpecialProps } from 'knifecycle/dist/util';
+import { reuseSpecialProps } from 'knifecycle';
 
 /* Architecture Note #1.2.1: Mocking time
 

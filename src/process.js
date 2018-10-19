@@ -18,14 +18,14 @@ export default initializer(
     name: 'process',
     type: 'service',
     inject: [
-      '$destroy',
-      '$fatalError',
-      'ENV',
+      'NODE_ENV',
       '?PROCESS_NAME',
       '?SIGNALS',
       '?NODE_ENVS',
       '?log',
       'exit',
+      '$destroy',
+      '$fatalError',
     ],
     options: { singleton: true },
   },
@@ -33,7 +33,7 @@ export default initializer(
 );
 
 async function initProcessService({
-  ENV,
+  NODE_ENV,
   PROCESS_NAME,
   SIGNALS,
   NODE_ENVS,
@@ -51,14 +51,14 @@ async function initProcessService({
    your own list of valid environments by injecting the
    `SIGNALS` optional dependency.
   */
-  if (!(NODE_ENVS || DEFAULT_NODE_ENVS).includes(ENV.NODE_ENV)) {
-    throw new YError('E_NODE_ENV', ENV.NODE_ENV);
+  if (!(NODE_ENVS || DEFAULT_NODE_ENVS).includes(NODE_ENV)) {
+    throw new YError('E_NODE_ENV', NODE_ENV);
   }
 
-  log('debug', `Running in "${ENV.NODE_ENV}" environment.`);
+  log('debug', `Running in "${NODE_ENV}" environment.`);
 
   global.process.title =
-    (PROCESS_NAME || global.process.title) + ' - ' + ENV.NODE_ENV;
+    (PROCESS_NAME || global.process.title) + ' - ' + NODE_ENV;
 
   /* Architecture Note #1.5.2: Signals handling
 

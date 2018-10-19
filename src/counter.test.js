@@ -1,6 +1,6 @@
 import assert from 'assert';
 import sinon from 'sinon';
-import { Knifecycle } from 'knifecycle/dist';
+import Knifecycle, { constant } from 'knifecycle';
 import initCounterService from './counter';
 
 describe('initCounterService', () => {
@@ -36,7 +36,7 @@ describe('initCounterService', () => {
   test('should work with Knifecycle', async () => {
     const { counter } = await new Knifecycle()
       .register(initCounterService)
-      .constant('log', log)
+      .register(constant('log', log))
       .run(['counter']);
 
     assert(counter);

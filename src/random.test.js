@@ -2,7 +2,7 @@
 
 import assert from 'assert';
 import sinon from 'sinon';
-import { Knifecycle } from 'knifecycle/dist';
+import Knifecycle, { constant } from 'knifecycle';
 import initRandomService from './random';
 
 describe('initRandomService', () => {
@@ -45,7 +45,7 @@ describe('initRandomService', () => {
   test('should work with Knifecycle', done => {
     new Knifecycle()
       .register(initRandomService)
-      .constant('log', log)
+      .register(constant('log', log))
       .run(['random'])
       .then(({ random }) => {
         assert(random);

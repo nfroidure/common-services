@@ -1,7 +1,7 @@
 'use strict';
 
 import initProcessService from './delay';
-import { reuseSpecialProps } from 'knifecycle/dist/util';
+import { reuseSpecialProps } from 'knifecycle';
 
 export default reuseSpecialProps(initProcessService, initProcessMock);
 

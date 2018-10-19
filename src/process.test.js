@@ -1,7 +1,7 @@
 import assert from 'assert';
 import sinon from 'sinon';
 import YError from 'yerror';
-import { Knifecycle } from 'knifecycle/dist';
+import Knifecycle, { constant } from 'knifecycle';
 import initProcessService from './process';
 
 describe('Process service', () => {
@@ -27,7 +27,7 @@ describe('Process service', () => {
   describe('', () => {
     beforeEach(done => {
       initProcessService({
-        ENV: { NODE_ENV: 'development' },
+        NODE_ENV: 'development',
         PROCESS_NAME: 'Kikooolol',
         log,
         exit,
@@ -102,11 +102,9 @@ describe('Process service', () => {
   test('should work with Knifecycle', done => {
     new Knifecycle()
       .register(initProcessService)
-      .constant('log', log)
-      .constant('ENV', {
-        NODE_ENV: 'production',
-      })
-      .constant('exit', exit)
+      .register(constant('log', log))
+      .register(constant('NODE_ENV', 'production'))
+      .register(constant('exit', exit))
       .run(['process'])
       .then(() => {
         assert.deepEqual(log.args, [

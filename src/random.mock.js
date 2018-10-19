@@ -1,6 +1,6 @@
 import sinon from 'sinon';
 import initRandomService from './random';
-import { reuseSpecialProps } from 'knifecycle/dist/util';
+import { reuseSpecialProps } from 'knifecycle';
 
 /* Architecture Note #1.3.1: Mocking randomness
 

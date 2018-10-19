@@ -1,6 +1,6 @@
 import sinon from 'sinon';
 import initLogService from './log';
-import { reuseSpecialProps } from 'knifecycle/dist/util';
+import { reuseSpecialProps } from 'knifecycle';
 
 /* Architecture Note #1.1.1: Mocking logs
 

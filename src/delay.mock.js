@@ -1,6 +1,6 @@
 import YError from 'yerror';
 import initDelayService from './delay';
-import { reuseSpecialProps } from 'knifecycle/dist/util';
+import { reuseSpecialProps } from 'knifecycle';
 
 /* Architecture Note #1.4.1: Mocking delays
 

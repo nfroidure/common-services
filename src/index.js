@@ -27,12 +27,12 @@ import initLockService from './lock';
  * @type {Object}
  * @example
  * import * as COMMON_SERVICES from 'common-services';
- * import $ from 'knifecycle/instance';
+ * import Knifecycle from 'knifecycle';
  *
- * $.register(
+ * new Knifecycle().register(
  *   ...Object.keys(COMMON_SERVICES)
  *   .map(serviceName => COMMON_SERVICES[serviceName])
- *  );
+ * );
  */
 export {
   initLogService,

@@ -1,7 +1,7 @@
 /* eslint max-nested-callbacks:0 */
 import assert from 'assert';
 import sinon from 'sinon';
-import { Knifecycle } from 'knifecycle/dist';
+import Knifecycle, { constant } from 'knifecycle';
 import initDelayService from './delay';
 
 describe('initDelayService', () => {
@@ -104,7 +104,7 @@ describe('initDelayService', () => {
   test('should work with Knifecycle', async () => {
     const { delay } = await new Knifecycle()
       .register(initDelayService)
-      .constant('log', log)
+      .register(constant('log', log))
       .run(['delay']);
 
     assert(delay);

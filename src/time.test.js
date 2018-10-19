@@ -1,6 +1,6 @@
 import assert from 'assert';
 import sinon from 'sinon';
-import { Knifecycle } from 'knifecycle/dist';
+import Knifecycle, { constant } from 'knifecycle';
 import initTimeService from './time';
 
 describe('initTimeService', () => {
@@ -41,7 +41,7 @@ describe('initTimeService', () => {
   test('should work with Knifecycle', done => {
     new Knifecycle()
       .register(initTimeService)
-      .constant('log', log)
+      .register(constant('log', log))
       .run(['time'])
       .then(({ time }) => {
         assert(time);

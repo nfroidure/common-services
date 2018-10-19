@@ -1,6 +1,6 @@
 import assert from 'assert';
 import sinon from 'sinon';
-import { Knifecycle } from 'knifecycle/dist';
+import Knifecycle, { constant } from 'knifecycle';
 import initLockService from './lock';
 
 describe('initLockService', () => {
@@ -38,8 +38,8 @@ describe('initLockService', () => {
   test('should work with Knifecycle', done => {
     new Knifecycle()
       .register(initLockService)
-      .constant('log', log)
-      .constant('delay', delay)
+      .register(constant('log', log))
+      .register(constant('delay', delay))
       .run(['lock'])
       .then(({ lock }) => {
         assert(lock);

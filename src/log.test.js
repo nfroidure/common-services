@@ -2,7 +2,7 @@
 
 import assert from 'assert';
 import sinon from 'sinon';
-import { Knifecycle } from 'knifecycle/dist';
+import Knifecycle, { constant } from 'knifecycle';
 import initLogService from './log';
 
 describe('initLogService', () => {
@@ -57,8 +57,8 @@ describe('initLogService', () => {
   test('should work with Knifecycle', done => {
     new Knifecycle()
       .register(initLogService)
-      .constant('debug', debug)
-      .constant('logger', logger)
+      .register(constant('debug', debug))
+      .register(constant('logger', logger))
       .run(['log'])
       .then(({ log }) => {
         debug.reset();
