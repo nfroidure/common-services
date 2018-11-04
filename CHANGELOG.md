@@ -1,3 +1,17 @@
+# [5.0.0](https://github.com/nfroidure/common-services/compare/v4.0.0...v5.0.0) (2018-11-04)
+
+
+### chore
+
+* **Dependencies:** Update dependencies ([ee0bdbb](https://github.com/nfroidure/common-services/commit/ee0bdbb))
+
+
+### BREAKING CHANGES
+
+* **Dependencies:** Drops NodeJS < 8  support
+
+
+
 <a name="4.0.0"></a>
 # [4.0.0](https://github.com/nfroidure/common-services/compare/v3.2.0...v4.0.0) (2018-10-19)
 
