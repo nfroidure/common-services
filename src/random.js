@@ -1,4 +1,4 @@
-import { initializer } from 'knifecycle';
+import { autoService, options } from 'knifecycle';
 
 function noop() {}
 
@@ -9,15 +9,7 @@ The random service is just proxying [`Math.random`
  in a stubbable manner.
 */
 
-export default initializer(
-  {
-    name: 'random',
-    type: 'service',
-    inject: ['?log'],
-    options: { singleton: true },
-  },
-  initRandomService,
-);
+export default options({ singleton: true }, autoService(initRandom));
 
 /**
  * Instantiate the random service
@@ -25,13 +17,13 @@ export default initializer(
  * @param  {Object}   [services.log = noop]     A logging function
  * @return {Promise<Function>}           A promise of the random function
  * @example
- * import initRandomService from 'common-services/dist/random';
+ * import initRandom from 'common-services/dist/random';
  *
- * const random = await initRandomService({
+ * const random = await initRandom({
  *   log: console.log.bind(console),
  * });
  */
-async function initRandomService({ log = noop }) {
+async function initRandom({ log = noop }) {
   log('debug', 'Random service initialized.');
 
   return random;

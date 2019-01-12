@@ -1,5 +1,5 @@
 import YError from 'yerror';
-import { initializer } from 'knifecycle';
+import { autoService, options } from 'knifecycle';
 
 function noop() {}
 
@@ -9,15 +9,7 @@ The delay service is `setTimeout` like I would like it
  to be.
 */
 
-export default initializer(
-  {
-    name: 'delay',
-    type: 'provider',
-    inject: ['?log'],
-    options: { singleton: true },
-  },
-  initDelayService,
-);
+export default options({ singleton: true }, autoService(initDelay));
 
 /**
  * Instantiate the delay service
@@ -28,13 +20,13 @@ export default initializer(
  * @return {Promise<Object>}
  * A promise of the delay service
  * @example
- * import initDelayService from 'common-services/dist/delay';
+ * import initDelay from 'common-services/dist/delay';
  *
- * const delay = await initDelayService({
+ * const delay = await initDelay({
  *   log: console.log.bind(console)
  * });
  */
-async function initDelayService({ log = noop }) {
+async function initDelay({ log = noop }) {
   const pendingPromises = new Map();
 
   log('debug', 'Delay service initialized.');

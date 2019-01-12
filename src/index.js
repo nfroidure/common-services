@@ -11,14 +11,14 @@ Their goal is to encapsulate unpredictible states and
  but should be usable with any DI system or even rawly.
 */
 
-import initLogService from './log';
-import initTimeService from './time';
-import initRandomService from './random';
-import initDelayService from './delay';
-import initProcessService from './process';
-import initCounterService from './counter';
-import initCodeGeneratorService from './codeGenerator';
-import initLockService from './lock';
+import initLog from './log';
+import initTime from './time';
+import initRandom from './random';
+import initDelay from './delay';
+import initProcess from './process';
+import initCounter from './counter';
+import initCodeGenerator from './codeGenerator';
+import initLock from './lock';
 
 /**
  * All services of the `common-services` module as
@@ -35,12 +35,12 @@ import initLockService from './lock';
  * );
  */
 export {
-  initLogService,
-  initTimeService,
-  initRandomService,
-  initDelayService,
-  initProcessService,
-  initCounterService,
-  initCodeGeneratorService,
-  initLockService,
+  initLog as initLogService,
+  initTime as initTimeService,
+  initRandom as initRandomService,
+  initDelay as initDelayService,
+  initProcess as initProcessService,
+  initCounter as initCounterService,
+  initCodeGenerator as initCodeGeneratorService,
+  initLock as initLockService,
 };

@@ -1,13 +1,12 @@
-import { initializer } from 'knifecycle';
+import { autoService, options } from 'knifecycle';
 
 const DEFAULT_COUNTER = {
-  log: false,
   firstCount: 1,
 };
 
 /* Architecture Note #1.6: Counter
 
-The `counter` service provide a simple local and
+The `counter` service provide a simple, local and
  stubbable counter.
 
 The count are returned asynchronously in order
@@ -16,15 +15,7 @@ The count are returned asynchronously in order
  surface API.
 */
 
-export default initializer(
-  {
-    name: 'counter',
-    type: 'service',
-    inject: ['?log'],
-    options: { singleton: true },
-  },
-  initCounterService,
-);
+export default options({ singleton: true }, autoService(initCounter));
 
 /**
  * Instantiate the counter service
@@ -37,15 +28,15 @@ export default initializer(
  * @return {Promise<Function>}
  * A promise of the counter function
  * @example
- * import initCounterService from 'common-services/dist/counter';
+ * import initCounter from 'common-services/dist/counter';
  *
- * const counter = await initCounterService({
+ * const counter = await initCounter({
  *   COUNTER: { firstCount: 1 },
  *   log: console.log.bind(console),
  * });
  */
-async function initCounterService({ COUNTER = DEFAULT_COUNTER, log }) {
-  let currentCount = COUNTER.firstCount || DEFAULT_COUNTER.firstCount;
+async function initCounter({ COUNTER = DEFAULT_COUNTER, log }) {
+  let currentCount = COUNTER.firstCount;
 
   log('debug', 'Counter service initialized.');
 

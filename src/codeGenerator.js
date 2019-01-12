@@ -1,4 +1,4 @@
-import { initializer } from 'knifecycle';
+import { autoService } from 'knifecycle';
 
 function noop() {}
 
@@ -12,14 +12,7 @@ The `codeGenerator` service provide a service
 
 const EXPLICIT_CHARS = 'ABCDEFGHJKMNPRSTUVWXYZ23456789';
 
-export default initializer(
-  {
-    name: 'codeGenerator',
-    type: 'service',
-    inject: ['?CHARS_SET', '?random', '?log'],
-  },
-  initCodeGeneratorService,
-);
+export default autoService(initCodeGenerator);
 
 /**
  * Instantiate the codeGenerator service
@@ -36,13 +29,13 @@ export default initializer(
  * @return {Promise<Function>}
  * A promise of the codeGenerator function
  * @example
- * import initCodeGeneratorService from 'common-services/dist/codeGenerator';
+ * import initCodeGenerator from 'common-services/dist/codeGenerator';
  *
- * const codeGenerator = await initCodeGeneratorService({
+ * const codeGenerator = await initCodeGenerator({
  *   log: console.log.bind(console),
  * });
  */
-async function initCodeGeneratorService({
+async function initCodeGenerator({
   CHARS_SET = EXPLICIT_CHARS,
   random = Math.random.bind(Math),
   log = noop,

@@ -170,7 +170,7 @@ It also forces NODE_ENV to be set to avoid unintentionnal
  your own list of valid environments by injecting the
  `SIGNALS` optional dependency.
 
-[See in context](./src/process.js#L47-L53)
+[See in context](./src/process.js#L30-L36)
 
 
 
@@ -181,7 +181,7 @@ It also handle SIGINT and SIGTERM signals to allow to
  to handle can be customized by injecting the `SIGNALS`
  optional dependencies.
 
-[See in context](./src/process.js#L63-L69)
+[See in context](./src/process.js#L46-L52)
 
 
 
@@ -190,7 +190,7 @@ It also handle SIGINT and SIGTERM signals to allow to
 If an error occurs it attempts to gracefully exit
 to give it a chance to finish properly.
 
-[See in context](./src/process.js#L74-L78)
+[See in context](./src/process.js#L57-L61)
 
 
 
@@ -200,13 +200,13 @@ If an uncaught exeption occurs it also attempts to
  gracefully exit since a process should never be kept
  alive when an uncaught exception is raised.
 
-[See in context](./src/process.js#L84-L89)
+[See in context](./src/process.js#L67-L72)
 
 
 
 ### Counter
 
-The `counter` service provide a simple local and
+The `counter` service provide a simple, local and
  stubbable counter.
 
 The count are returned asynchronously in order
@@ -214,7 +214,7 @@ The count are returned asynchronously in order
  if needed later via another service with the same
  surface API.
 
-[See in context](./src/counter.js#L8-L17)
+[See in context](./src/counter.js#L7-L16)
 
 
 

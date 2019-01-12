@@ -29,7 +29,7 @@ describe('index.mock', () => {
           Object.keys(services).sort(),
           modules
             .map(module => module.name)
-            .map(name => name.replace('bound ', ''))
+            .map(name => name.replace(/(bound )*/, ''))
             .sort(),
         );
       })

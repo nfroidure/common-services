@@ -27,10 +27,12 @@ describe('index', () => {
     )
       .then(modules => {
         assert.deepEqual(
-          Object.keys(services).sort(),
+          Object.keys(services)
+            .sort()
+            .map(name => name.replace(/Service$/, '')),
           modules
             .map(module => module.name)
-            .map(name => name.replace('bound ', ''))
+            .map(name => name.replace(/(bound )*/, ''))
             .sort(),
         );
       })

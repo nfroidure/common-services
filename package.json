@@ -41,6 +41,7 @@
     "@babel/register": "^7.0.0",
     "babel-core": "^7.0.0-0",
     "babel-eslint": "^10.0.1",
+    "babel-plugin-knifecycle": "^1.0.1",
     "commitizen": "^3.0.5",
     "conventional-changelog-cli": "^2.0.11",
     "coveralls": "^3.0.2",
@@ -133,7 +134,8 @@
       ]
     ],
     "plugins": [
-      "@babel/plugin-proposal-object-rest-spread"
+      "@babel/plugin-proposal-object-rest-spread",
+      "babel-plugin-knifecycle"
     ]
   },
   "contributors": [],

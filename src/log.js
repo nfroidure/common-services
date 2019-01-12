@@ -1,4 +1,4 @@
-import { initializer } from 'knifecycle';
+import { autoService, options } from 'knifecycle';
 
 function noop() {}
 
@@ -25,15 +25,7 @@ If provided, I route debug messages to the `debug`
 
 */
 
-export default initializer(
-  {
-    name: 'log',
-    type: 'service',
-    inject: ['?logger', '?debug'],
-    options: { singleton: true },
-  },
-  initLogService,
-);
+export default options({ singleton: true }, autoService(initLog));
 
 /**
  * Instantiate the logging service
@@ -46,14 +38,14 @@ export default initializer(
  * @return {Promise<Function>}
  * A promise of the logging function
  * @example
- * import initLogService from 'common-services/dist/log';
+ * import initLog from 'common-services/dist/log';
  *
- * const log = await initLogService({
+ * const log = await initLog({
  *   logger: require('winston'),
  *   debug: require('debug')('myapp'),
  *  });
  */
-async function initLogService({ logger = DEFAULT_LOGGER, debug = noop }) {
+async function initLog({ logger = DEFAULT_LOGGER, debug = noop }) {
   log('debug', 'Logging service initialized.');
 
   return log;

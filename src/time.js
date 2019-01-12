@@ -1,4 +1,4 @@
-import { initializer } from 'knifecycle';
+import { autoService, options } from 'knifecycle';
 
 /* Architecture Note #1.2: Time
 
@@ -7,15 +7,7 @@ The time service is just proxying [`Date.now`
  in a stubbable manner.
 */
 
-export default initializer(
-  {
-    name: 'time',
-    type: 'service',
-    inject: ['?log'],
-    options: { singleton: true },
-  },
-  initTimeService,
-);
+export default options({ singleton: true }, autoService(initTime));
 
 /**
  * Instantiate the time service
@@ -23,13 +15,13 @@ export default initializer(
  * @param  {Object}   [services.log = noop]     A logging function
  * @return {Promise<Function>}           A promise of the time function
  * @example
- * import initTimeService from 'common-services/dist/time';
+ * import initTime from 'common-services/dist/time';
  *
- * const time = await initTimeService({
+ * const time = await initTime({
  *   log: console.log.bind(console),
  * });
  */
-async function initTimeService({ log }) {
+async function initTime({ log }) {
   log('debug', 'Time service initialized.');
 
   return time;

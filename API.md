@@ -2,34 +2,34 @@
 ## Functions
 
 <dl>
-<dt><a href="#initCodeGeneratorService">initCodeGeneratorService(services)</a> ⇒ <code>Promise.&lt;function()&gt;</code> | <code>Promise.&lt;function()&gt;</code></dt>
+<dt><a href="#initCodeGenerator">initCodeGenerator(services)</a> ⇒ <code>Promise.&lt;function()&gt;</code> | <code>Promise.&lt;function()&gt;</code></dt>
 <dd><p>Instantiate the codeGenerator service</p>
 </dd>
-<dt><a href="#initCounterService">initCounterService(services)</a> ⇒ <code>Promise.&lt;function()&gt;</code></dt>
+<dt><a href="#initCounter">initCounter(services)</a> ⇒ <code>Promise.&lt;function()&gt;</code></dt>
 <dd><p>Instantiate the counter service</p>
 </dd>
-<dt><a href="#initDelayService">initDelayService(services)</a> ⇒ <code>Promise.&lt;Object&gt;</code></dt>
+<dt><a href="#initDelay">initDelay(services)</a> ⇒ <code>Promise.&lt;Object&gt;</code></dt>
 <dd><p>Instantiate the delay service</p>
 </dd>
 <dt><a href="#initDelayMock">initDelayMock()</a> ⇒ <code>Promise.&lt;Object&gt;</code></dt>
 <dd><p>Instantiate the delay service mock</p>
 </dd>
-<dt><a href="#initLockService">initLockService(services)</a> ⇒ <code>Promise.&lt;Object&gt;</code></dt>
+<dt><a href="#initLock">initLock(services)</a> ⇒ <code>Promise.&lt;Object&gt;</code></dt>
 <dd><p>Instantiate the lock service</p>
 </dd>
-<dt><a href="#initLogService">initLogService(services)</a> ⇒ <code>Promise.&lt;function()&gt;</code></dt>
+<dt><a href="#initLog">initLog(services)</a> ⇒ <code>Promise.&lt;function()&gt;</code></dt>
 <dd><p>Instantiate the logging service</p>
 </dd>
 <dt><a href="#initLogMock">initLogMock()</a> ⇒ <code>Promise.&lt;function()&gt;</code></dt>
 <dd><p>Instantiate the logging mock</p>
 </dd>
-<dt><a href="#initRandomService">initRandomService(services)</a> ⇒ <code>Promise.&lt;function()&gt;</code></dt>
+<dt><a href="#initRandom">initRandom(services)</a> ⇒ <code>Promise.&lt;function()&gt;</code></dt>
 <dd><p>Instantiate the random service</p>
 </dd>
 <dt><a href="#initRandomMock">initRandomMock()</a> ⇒ <code>Promise.&lt;function()&gt;</code></dt>
 <dd><p>Instantiate the random service mock</p>
 </dd>
-<dt><a href="#initTimeService">initTimeService(services)</a> ⇒ <code>Promise.&lt;function()&gt;</code></dt>
+<dt><a href="#initTime">initTime(services)</a> ⇒ <code>Promise.&lt;function()&gt;</code></dt>
 <dd><p>Instantiate the time service</p>
 </dd>
 <dt><a href="#initTimeMock">initTimeMock()</a> ⇒ <code>Promise.&lt;function()&gt;</code></dt>
@@ -37,9 +37,9 @@
 </dd>
 </dl>
 
-<a name="initCodeGeneratorService"></a>
+<a name="initCodeGenerator"></a>
 
-## initCodeGeneratorService(services) ⇒ <code>Promise.&lt;function()&gt;</code> \| <code>Promise.&lt;function()&gt;</code>
+## initCodeGenerator(services) ⇒ <code>Promise.&lt;function()&gt;</code> \| <code>Promise.&lt;function()&gt;</code>
 Instantiate the codeGenerator service
 
 **Kind**: global function  
@@ -53,18 +53,18 @@ Instantiate the codeGenerator service
 
 **Example**  
 ```js
-import initCodeGeneratorService from 'common-services/dist/codeGenerator';
+import initCodeGenerator from 'common-services/dist/codeGenerator';
 
-const codeGenerator = await initCodeGeneratorService({
+const codeGenerator = await initCodeGenerator({
   log: console.log.bind(console),
 });
 ```
-<a name="initCodeGeneratorService..codeGenerator"></a>
+<a name="initCodeGenerator..codeGenerator"></a>
 
-### initCodeGeneratorService~codeGenerator([length]) ⇒ <code>Promise.&lt;String&gt;</code>
+### initCodeGenerator~codeGenerator([length]) ⇒ <code>Promise.&lt;String&gt;</code>
 Returns a random code
 
-**Kind**: inner method of [<code>initCodeGeneratorService</code>](#initCodeGeneratorService)  
+**Kind**: inner method of [<code>initCodeGenerator</code>](#initCodeGenerator)  
 **Returns**: <code>Promise.&lt;String&gt;</code> - A promise of the generated code  
 
 | Param | Type | Default | Description |
@@ -80,9 +80,9 @@ console.log([
 ]);
 // Prints: ABCDEF,GHJKMN,PRSTUV
 ```
-<a name="initCounterService"></a>
+<a name="initCounter"></a>
 
-## initCounterService(services) ⇒ <code>Promise.&lt;function()&gt;</code>
+## initCounter(services) ⇒ <code>Promise.&lt;function()&gt;</code>
 Instantiate the counter service
 
 **Kind**: global function  
@@ -96,19 +96,19 @@ Instantiate the counter service
 
 **Example**  
 ```js
-import initCounterService from 'common-services/dist/counter';
+import initCounter from 'common-services/dist/counter';
 
-const counter = await initCounterService({
+const counter = await initCounter({
   COUNTER: { firstCount: 1 },
   log: console.log.bind(console),
 });
 ```
-<a name="initCounterService..counter"></a>
+<a name="initCounter..counter"></a>
 
-### initCounterService~counter() ⇒ <code>Promise.&lt;number&gt;</code>
+### initCounter~counter() ⇒ <code>Promise.&lt;number&gt;</code>
 Returns the current count and increment the counter
 
-**Kind**: inner method of [<code>initCounterService</code>](#initCounterService)  
+**Kind**: inner method of [<code>initCounter</code>](#initCounter)  
 **Returns**: <code>Promise.&lt;number&gt;</code> - A promise of the current count  
 **Example**  
 ```js
@@ -119,9 +119,9 @@ console.log([
 ]);
 // Prints: 1,2,3
 ```
-<a name="initDelayService"></a>
+<a name="initDelay"></a>
 
-## initDelayService(services) ⇒ <code>Promise.&lt;Object&gt;</code>
+## initDelay(services) ⇒ <code>Promise.&lt;Object&gt;</code>
 Instantiate the delay service
 
 **Kind**: global function  
@@ -134,23 +134,23 @@ Instantiate the delay service
 
 **Example**  
 ```js
-import initDelayService from 'common-services/dist/delay';
+import initDelay from 'common-services/dist/delay';
 
-const delay = await initDelayService({
+const delay = await initDelay({
   log: console.log.bind(console)
 });
 ```
 
-* [initDelayService(services)](#initDelayService) ⇒ <code>Promise.&lt;Object&gt;</code>
-    * [~create(delay)](#initDelayService..create) ⇒ <code>Promise</code>
-    * [~clear(promise)](#initDelayService..clear) ⇒ <code>Promise</code>
+* [initDelay(services)](#initDelay) ⇒ <code>Promise.&lt;Object&gt;</code>
+    * [~create(delay)](#initDelay..create) ⇒ <code>Promise</code>
+    * [~clear(promise)](#initDelay..clear) ⇒ <code>Promise</code>
 
-<a name="initDelayService..create"></a>
+<a name="initDelay..create"></a>
 
-### initDelayService~create(delay) ⇒ <code>Promise</code>
+### initDelay~create(delay) ⇒ <code>Promise</code>
 Create a new delay
 
-**Kind**: inner method of [<code>initDelayService</code>](#initDelayService)  
+**Kind**: inner method of [<code>initDelay</code>](#initDelay)  
 **Returns**: <code>Promise</code> - A promise to be resolved after that delay
 or rejected if it is cancelled.  
 
@@ -163,12 +163,12 @@ or rejected if it is cancelled.
 await delay.create(1000);
 console.log('1000 ms elapsed!');
 ```
-<a name="initDelayService..clear"></a>
+<a name="initDelay..clear"></a>
 
-### initDelayService~clear(promise) ⇒ <code>Promise</code>
+### initDelay~clear(promise) ⇒ <code>Promise</code>
 Cancel an earlier created delay
 
-**Kind**: inner method of [<code>initDelayService</code>](#initDelayService)  
+**Kind**: inner method of [<code>initDelay</code>](#initDelay)  
 **Returns**: <code>Promise</code> - A promise resolved when cancellation is done.  
 
 | Param | Type | Description |
@@ -212,9 +212,9 @@ delayPromise.then(() => {
   // instead of after a 1000ms delay
 });
 ```
-<a name="initLockService"></a>
+<a name="initLock"></a>
 
-## initLockService(services) ⇒ <code>Promise.&lt;Object&gt;</code>
+## initLock(services) ⇒ <code>Promise.&lt;Object&gt;</code>
 Instantiate the lock service
 
 **Kind**: global function  
@@ -260,16 +260,16 @@ async function run() {
 }
 ```
 
-* [initLockService(services)](#initLockService) ⇒ <code>Promise.&lt;Object&gt;</code>
-    * [~take(key)](#initLockService..take) ⇒ <code>Promise</code>
-    * [~release(key)](#initLockService..release) ⇒ <code>void</code>
+* [initLock(services)](#initLock) ⇒ <code>Promise.&lt;Object&gt;</code>
+    * [~take(key)](#initLock..take) ⇒ <code>Promise</code>
+    * [~release(key)](#initLock..release) ⇒ <code>void</code>
 
-<a name="initLockService..take"></a>
+<a name="initLock..take"></a>
 
-### initLockService~take(key) ⇒ <code>Promise</code>
+### initLock~take(key) ⇒ <code>Promise</code>
 Take the lock on the given resource key
 
-**Kind**: inner method of [<code>initLockService</code>](#initLockService)  
+**Kind**: inner method of [<code>initLock</code>](#initLock)  
 **Returns**: <code>Promise</code> - A promise to be resolved when the lock
  is gained or rejected if the lock release
  timeout is reached.  
@@ -278,20 +278,20 @@ Take the lock on the given resource key
 | --- | --- | --- |
 | key | <code>String</code> | A unique key for the locked resource |
 
-<a name="initLockService..release"></a>
+<a name="initLock..release"></a>
 
-### initLockService~release(key) ⇒ <code>void</code>
+### initLock~release(key) ⇒ <code>void</code>
 Release the lock on the given resource key
 
-**Kind**: inner method of [<code>initLockService</code>](#initLockService)  
+**Kind**: inner method of [<code>initLock</code>](#initLock)  
 
 | Param | Type | Description |
 | --- | --- | --- |
 | key | <code>String</code> | A unique key for the resource to release |
 
-<a name="initLogService"></a>
+<a name="initLog"></a>
 
-## initLogService(services) ⇒ <code>Promise.&lt;function()&gt;</code>
+## initLog(services) ⇒ <code>Promise.&lt;function()&gt;</code>
 Instantiate the logging service
 
 **Kind**: global function  
@@ -305,19 +305,19 @@ Instantiate the logging service
 
 **Example**  
 ```js
-import initLogService from 'common-services/dist/log';
+import initLog from 'common-services/dist/log';
 
-const log = await initLogService({
+const log = await initLog({
   logger: require('winston'),
   debug: require('debug')('myapp'),
  });
 ```
-<a name="initLogService..log"></a>
+<a name="initLog..log"></a>
 
-### initLogService~log(type, ...args) ⇒ <code>void</code>
+### initLog~log(type, ...args) ⇒ <code>void</code>
 Logging function
 
-**Kind**: inner method of [<code>initLogService</code>](#initLogService)  
+**Kind**: inner method of [<code>initLog</code>](#initLog)  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -356,9 +356,9 @@ log.reset();
 
 assert.deepEqual(log.args, []);
 ```
-<a name="initRandomService"></a>
+<a name="initRandom"></a>
 
-## initRandomService(services) ⇒ <code>Promise.&lt;function()&gt;</code>
+## initRandom(services) ⇒ <code>Promise.&lt;function()&gt;</code>
 Instantiate the random service
 
 **Kind**: global function  
@@ -371,18 +371,18 @@ Instantiate the random service
 
 **Example**  
 ```js
-import initRandomService from 'common-services/dist/random';
+import initRandom from 'common-services/dist/random';
 
-const random = await initRandomService({
+const random = await initRandom({
   log: console.log.bind(console),
 });
 ```
-<a name="initRandomService..random"></a>
+<a name="initRandom..random"></a>
 
-### initRandomService~random() ⇒ <code>number</code>
+### initRandom~random() ⇒ <code>number</code>
 Returns a new random number
 
-**Kind**: inner method of [<code>initRandomService</code>](#initRandomService)  
+**Kind**: inner method of [<code>initRandom</code>](#initRandom)  
 **Returns**: <code>number</code> - The random number  
 **Example**  
 ```js
@@ -413,9 +413,9 @@ random.reset();
 
 assert.deepEqual(random.args, []);
 ```
-<a name="initTimeService"></a>
+<a name="initTime"></a>
 
-## initTimeService(services) ⇒ <code>Promise.&lt;function()&gt;</code>
+## initTime(services) ⇒ <code>Promise.&lt;function()&gt;</code>
 Instantiate the time service
 
 **Kind**: global function  
@@ -428,18 +428,18 @@ Instantiate the time service
 
 **Example**  
 ```js
-import initTimeService from 'common-services/dist/time';
+import initTime from 'common-services/dist/time';
 
-const time = await initTimeService({
+const time = await initTime({
   log: console.log.bind(console),
 });
 ```
-<a name="initTimeService..time"></a>
+<a name="initTime..time"></a>
 
-### initTimeService~time() ⇒ <code>number</code>
+### initTime~time() ⇒ <code>number</code>
 Returns the current timestamp
 
-**Kind**: inner method of [<code>initTimeService</code>](#initTimeService)  
+**Kind**: inner method of [<code>initTime</code>](#initTime)  
 **Returns**: <code>number</code> - The current timestamp  
 **Example**  
 ```js

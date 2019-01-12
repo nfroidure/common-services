@@ -1,5 +1,5 @@
 import YError from 'yerror';
-import { initializer } from 'knifecycle';
+import { autoService, options } from 'knifecycle';
 
 const noop = () => {};
 
@@ -14,15 +14,7 @@ The release is done by its key and the current lock is removed. There
  said, it should not be hard to handle since the actual behavior of
  the library makes your code run sequentially.
 */
-export default initializer(
-  {
-    name: 'lock',
-    type: 'service',
-    inject: ['?LOCKS_MAP', '?LOCK_TIMEOUT', 'delay', '?log'],
-    options: { singleton: true },
-  },
-  initLockService,
-);
+export default options({ singleton: true }, autoService(initLock));
 
 /**
  * Instantiate the lock service
@@ -69,7 +61,7 @@ export default initializer(
  *   });
  * }
  */
-async function initLockService({
+async function initLock({
   LOCKS_MAP = new Map(),
   LOCK_TIMEOUT = Infinity,
   delay,

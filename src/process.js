@@ -1,5 +1,5 @@
 import YError from 'yerror';
-import { initializer } from 'knifecycle';
+import { autoService, options } from 'knifecycle';
 
 const DEFAULT_NODE_ENVS = ['development', 'test', 'production'];
 const DEFAULT_SIGNALS = ['SIGTERM', 'SIGINT'];
@@ -13,30 +13,13 @@ It returns nothing and should be injected only for its
  side effects.
 */
 
-export default initializer(
-  {
-    name: 'process',
-    type: 'service',
-    inject: [
-      'NODE_ENV',
-      '?PROCESS_NAME',
-      '?SIGNALS',
-      '?NODE_ENVS',
-      '?log',
-      'exit',
-      '$destroy',
-      '$fatalError',
-    ],
-    options: { singleton: true },
-  },
-  initProcessService,
-);
+export default options({ singleton: true }, autoService(initProcess));
 
-async function initProcessService({
+async function initProcess({
   NODE_ENV,
-  PROCESS_NAME,
-  SIGNALS,
-  NODE_ENVS,
+  PROCESS_NAME = '',
+  SIGNALS = DEFAULT_SIGNALS,
+  NODE_ENVS = DEFAULT_NODE_ENVS,
   log = noop,
   exit,
   $destroy,
@@ -51,7 +34,7 @@ async function initProcessService({
    your own list of valid environments by injecting the
    `SIGNALS` optional dependency.
   */
-  if (!(NODE_ENVS || DEFAULT_NODE_ENVS).includes(NODE_ENV)) {
+  if (!NODE_ENVS.includes(NODE_ENV)) {
     throw new YError('E_NODE_ENV', NODE_ENV);
   }
 
@@ -67,7 +50,7 @@ async function initProcessService({
    to handle can be customized by injecting the `SIGNALS`
    optional dependencies.
   */
-  (SIGNALS || DEFAULT_SIGNALS).forEach(signal => {
+  SIGNALS.forEach(signal => {
     global.process.on(signal, terminate.bind(null, signal));
   });
 
