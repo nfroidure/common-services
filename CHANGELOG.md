@@ -1,3 +1,12 @@
+## [5.0.3](https://github.com/nfroidure/common-services/compare/v5.0.2...v5.0.3) (2019-02-02)
+
+
+### Bug Fixes
+
+* **Delay service:** Fix provider declaration ([0527c14](https://github.com/nfroidure/common-services/commit/0527c14))
+
+
+
 ## [5.0.2](https://github.com/nfroidure/common-services/compare/v5.0.1...v5.0.2) (2019-02-02)
 
 
