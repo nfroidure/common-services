@@ -1,5 +1,5 @@
 import YError from 'yerror';
-import { autoService, options } from 'knifecycle';
+import { autoProvider, options } from 'knifecycle';
 
 function noop() {}
 
@@ -9,7 +9,7 @@ The delay service is `setTimeout` like I would like it
  to be.
 */
 
-export default options({ singleton: true }, autoService(initDelay));
+export default options({ singleton: true }, autoProvider(initDelay));
 
 /**
  * Instantiate the delay service
