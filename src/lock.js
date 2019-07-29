@@ -89,19 +89,20 @@ async function initLock({
 
     log('debug', `Taking the lock on ${key} (queue length was ${locksLength})`);
 
-    let release;
+    let _resolve;
+    const releasePromise = new Promise((resolve, reject) => {
+      _resolve = resolve;
+
+      if (LOCK_TIMEOUT !== Infinity) {
+        delay
+          .create(LOCK_TIMEOUT)
+          .then(() => reject(new YError('E_LOCK_TIMEOUT')));
+      }
+    });
 
     const newLock = {
-      releasePromise: new Promise(async (resolve, reject) => {
-        release = resolve;
-
-        if (LOCK_TIMEOUT !== Infinity) {
-          await delay.create(LOCK_TIMEOUT);
-
-          reject(new YError('E_LOCK_TIMEOUT'));
-        }
-      }),
-      release,
+      releasePromise,
+      release: _resolve,
     };
 
     previousLocks.push(newLock);
