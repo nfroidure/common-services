@@ -1,3 +1,12 @@
+# [6.0.0-beta.0](https://github.com/nfroidure/common-services/compare/v5.0.3...v6.0.0-beta.0) (2019-12-01)
+
+
+### Features
+
+* **core:** convert to TypeScript ([23016c0](https://github.com/nfroidure/common-services/commit/23016c0b70573db4c97e3e923a49ed9a2ad4be0f)), closes [#1](https://github.com/nfroidure/common-services/issues/1)
+
+
+
 ## [5.0.3](https://github.com/nfroidure/common-services/compare/v5.0.2...v5.0.3) (2019-02-02)
 
 
