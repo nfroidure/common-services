@@ -19,7 +19,7 @@ Their goal is to encapsulate unpredictible states and
  [`knifecycle`](https://github.com/nfroidure/knifecycle)
  but should be usable with any DI system or even rawly.
 
-[See in context](./src/index.js#L1-L12)
+[See in context](./src/index.ts#L1-L12)
 
 
 
@@ -33,7 +33,7 @@ I prefer using a unique function with the log type
 If provided, I route debug messages to the `debug`
  node module.
 
-[See in context](./src/log.js#L16-L26)
+[See in context](./src/log.ts#L39-L49)
 
 
 
@@ -88,7 +88,7 @@ describe('my test', () => {
 });
 ```
 
-[See in context](./src/log.mock.js#L5-L55)
+[See in context](./src/log.mock.ts#L5-L55)
 
 
 
@@ -98,7 +98,7 @@ The time service is just proxying [`Date.now`
 ](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Date/now)
  in a stubbable manner.
 
-[See in context](./src/time.js#L3-L8)
+[See in context](./src/time.ts#L10-L15)
 
 
 
@@ -107,7 +107,7 @@ The time service is just proxying [`Date.now`
 The time mock uses the [`sinon`](https://github.com/sinonjs/sinon/)
  module under the hood like for the logging mock.
 
-[See in context](./src/time.mock.js#L5-L9)
+[See in context](./src/time.mock.ts#L5-L9)
 
 
 
@@ -117,7 +117,7 @@ The random service is just proxying [`Math.random`
 ](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Math/random)
  in a stubbable manner.
 
-[See in context](./src/random.js#L5-L10)
+[See in context](./src/random.ts#L10-L15)
 
 
 
@@ -126,7 +126,7 @@ The random service is just proxying [`Math.random`
 The random mock uses the [`sinon`](https://github.com/sinonjs/sinon/)
  module under the hood like for the logging mock.
 
-[See in context](./src/random.mock.js#L5-L9)
+[See in context](./src/random.mock.ts#L5-L9)
 
 
 
@@ -135,7 +135,7 @@ The random mock uses the [`sinon`](https://github.com/sinonjs/sinon/)
 The delay service is `setTimeout` like I would like it
  to be.
 
-[See in context](./src/delay.js#L6-L10)
+[See in context](./src/delay.ts#L16-L20)
 
 
 
@@ -148,7 +148,7 @@ This mock is largely inspired by the `$timeout` one of
  bug but a design choice to keep the closest possible
  to what would happen in actual code.
 
-[See in context](./src/delay.mock.js#L5-L13)
+[See in context](./src/delay.mock.ts#L5-L13)
 
 
 
@@ -159,7 +159,7 @@ The `process` service takes care of the process status.
 It returns nothing and should be injected only for its
  side effects.
 
-[See in context](./src/process.js#L9-L14)
+[See in context](./src/process.ts#L14-L19)
 
 
 
@@ -170,7 +170,7 @@ It also forces NODE_ENV to be set to avoid unintentionnal
  your own list of valid environments by injecting the
  `SIGNALS` optional dependency.
 
-[See in context](./src/process.js#L30-L36)
+[See in context](./src/process.ts#L53-L59)
 
 
 
@@ -181,7 +181,7 @@ It also handle SIGINT and SIGTERM signals to allow to
  to handle can be customized by injecting the `SIGNALS`
  optional dependencies.
 
-[See in context](./src/process.js#L46-L52)
+[See in context](./src/process.ts#L69-L75)
 
 
 
@@ -190,7 +190,7 @@ It also handle SIGINT and SIGTERM signals to allow to
 If an error occurs it attempts to gracefully exit
 to give it a chance to finish properly.
 
-[See in context](./src/process.js#L57-L61)
+[See in context](./src/process.ts#L80-L84)
 
 
 
@@ -200,7 +200,7 @@ If an uncaught exeption occurs it also attempts to
  gracefully exit since a process should never be kept
  alive when an uncaught exception is raised.
 
-[See in context](./src/process.js#L67-L72)
+[See in context](./src/process.ts#L91-L96)
 
 
 
@@ -214,7 +214,7 @@ The count are returned asynchronously in order
  if needed later via another service with the same
  surface API.
 
-[See in context](./src/counter.js#L7-L16)
+[See in context](./src/counter.ts#L14-L23)
 
 
 
@@ -225,7 +225,7 @@ The `codeGenerator` service provide a service
  a character set that avoid recognition
  mistake by humans.
 
-[See in context](./src/codeGenerator.js#L5-L11)
+[See in context](./src/codeGenerator.ts#L11-L17)
 
 
 
@@ -240,5 +240,5 @@ The release is done by its key and the current lock is removed. There
  said, it should not be hard to handle since the actual behavior of
  the library makes your code run sequentially.
 
-[See in context](./src/lock.js#L6-L16)
+[See in context](./src/lock.ts#L23-L33)
 

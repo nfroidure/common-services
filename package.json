@@ -3,6 +3,7 @@
   "version": "5.0.3",
   "description": "A module to gather very common services and their mocks.",
   "main": "dist/index.js",
+  "types": "src/index.d.ts",
   "author": {
     "name": "Nicolas Froidure",
     "email": "nicolas.froidure@insertafter.com",
@@ -11,66 +12,78 @@
   "license": "MIT",
   "metapak": {
     "data": {
-      "files": "'src/**/*.js'",
-      "testsFiles": "'src/**/*.test.js'",
+      "files": "'src/**/*.ts'",
+      "testsFiles": "'src/**/*.test.ts'",
+      "distFiles": "'dist/**/*.js'",
+      "typesFiles": "src/*.ts",
+      "typesDefs": "src/*.d.ts",
       "ignore": [
         "dist"
       ],
       "bundleFiles": [
-        "dist/**/*.js"
+        "dist/**/*.js",
+        "src/index.d.ts",
+        "src/*.d.ts"
       ]
     },
     "configs": [
       "main",
-      "jsarch",
       "readme",
       "eslint",
-      "codeclimate",
-      "jest",
       "babel",
-      "travis",
+      "typescript",
+      "jest",
       "jsdocs",
-      "codeclimate"
+      "jsarch",
+      "codeclimate",
+      "travis"
     ]
   },
   "devDependencies": {
-    "@babel/cli": "^7.2.3",
-    "@babel/core": "^7.2.2",
-    "@babel/plugin-proposal-object-rest-spread": "^7.3.1",
-    "@babel/preset-env": "^7.3.1",
-    "@babel/register": "^7.0.0",
-    "babel-eslint": "^10.0.1",
+    "@babel/cli": "^7.7.4",
+    "@babel/core": "^7.7.4",
+    "@babel/plugin-proposal-class-properties": "^7.7.4",
+    "@babel/plugin-proposal-object-rest-spread": "^7.7.4",
+    "@babel/preset-env": "^7.7.4",
+    "@babel/preset-typescript": "^7.7.4",
+    "@babel/register": "^7.7.4",
+    "@types/jest": "^24.0.23",
+    "@typescript-eslint/eslint-plugin": "^2.9.0",
+    "@typescript-eslint/parser": "^2.9.0",
+    "babel-eslint": "^10.0.3",
     "babel-plugin-knifecycle": "^1.0.3",
-    "commitizen": "^3.0.5",
-    "conventional-changelog-cli": "^2.0.11",
-    "coveralls": "^3.0.2",
-    "cz-conventional-changelog": "^2.1.0",
-    "eslint": "^5.13.0",
-    "eslint-plugin-prettier": "^3.0.1",
-    "jest": "^24.0.0",
-    "jsarch": "^2.0.1",
-    "jsdoc-to-markdown": "^4.0.1",
-    "metapak": "^3.1.2",
-    "metapak-nfroidure": "9.5.0",
-    "prettier": "^1.16.3"
+    "commitizen": "^4.0.3",
+    "conventional-changelog-cli": "^2.0.28",
+    "coveralls": "^3.0.9",
+    "cz-conventional-changelog": "^3.0.2",
+    "eslint": "^6.7.1",
+    "eslint-config-typescript": "^3.0.0",
+    "eslint-plugin-prettier": "^3.1.1",
+    "jest": "^24.9.0",
+    "jsarch": "^2.0.3",
+    "jsdoc-to-markdown": "^5.0.3",
+    "metapak": "^3.1.6",
+    "metapak-nfroidure": "9.7.4",
+    "prettier": "^1.19.1",
+    "typescript": "^3.7.2"
   },
   "scripts": {
-    "architecture": "jsarch 'src/**/*.js' > ARCHITECTURE.md && git add ARCHITECTURE.md",
+    "architecture": "jsarch 'src/**/*.ts' > ARCHITECTURE.md && git add ARCHITECTURE.md",
     "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s && git add CHANGELOG.md",
     "cli": "env NODE_ENV=${NODE_ENV:-cli}",
-    "compile": "babel src --out-dir=dist",
+    "compile": "babel --extensions '.ts,.js' src --out-dir=dist",
     "cover": "npm run jest -- --coverage",
     "coveralls": "npm run cover && cat ./coverage/lcov.info | coveralls && rm -rf ./coverage",
     "cz": "env NODE_ENV=${NODE_ENV:-cli} git cz",
-    "doc": "echo \"# API\" > API.md; jsdoc2md 'src/**/*.js' >> API.md && git add API.md",
+    "doc": "echo \"# API\" > API.md; jsdoc2md 'dist/**/*.js' >> API.md && git add API.md",
     "jest": "NODE_ENV=test jest",
-    "lint": "eslint 'src/**/*.js'",
+    "lint": "eslint 'src/**/*.ts'",
     "metapak": "metapak",
-    "mocha": "mocha --compilers js:babel-register src/*.mocha.js",
-    "precz": "npm t && npm run lint && npm run architecture && npm run doc && npm run metapak -- -s",
-    "prettier": "prettier --write 'src/**/*.js'",
-    "preversion": "npm run compile && npm t && npm run lint && npm run architecture && npm run doc && npm run metapak -- -s",
+    "precz": "npm t && npm run lint && npm run architecture && npm run doc && npm run metapak -- -s && npm run types",
+    "prettier": "prettier --write 'src/**/*.ts'",
+    "preversion": "npm run compile && npm t && npm run lint && npm run architecture && npm run doc && npm run metapak -- -s && npm run types",
     "test": "npm run jest",
+    "types": "rm src/*.d.ts; tsc --project . --declaration --emitDeclarationOnly; npm run prettier -- src/*.d.ts",
     "version": "npm run changelog"
   },
   "repository": {
@@ -95,8 +108,8 @@
     }
   },
   "dependencies": {
-    "knifecycle": "^5.1.6",
-    "sinon": "^7.2.3",
+    "knifecycle": "^7.0.2",
+    "sinon": "^7.5.0",
     "yerror": "^4.0.1"
   },
   "greenkeeper": {
@@ -104,20 +117,24 @@
       "commitizen",
       "cz-conventional-changelog",
       "conventional-changelog-cli",
-      "jsarch",
       "eslint",
       "eslint-config-prettier",
       "prettier",
-      "jest",
-      "coveralls",
+      "@typescript-eslint/parser",
       "@babel/cli",
       "@babel/core",
       "@babel/register",
       "@babel/preset-env",
       "@babel/plugin-proposal-object-rest-spread",
+      "@babel/preset-typescript",
+      "@babel/plugin-proposal-class-properties",
       "babel-eslint",
       "babel-core",
-      "jsdoc-to-markdown"
+      "typescript",
+      "jest",
+      "coveralls",
+      "jsdoc-to-markdown",
+      "jsarch"
     ]
   },
   "jest": {
@@ -133,6 +150,7 @@
   },
   "babel": {
     "presets": [
+      "@babel/typescript",
       [
         "@babel/env",
         {
@@ -143,6 +161,7 @@
       ]
     ],
     "plugins": [
+      "@babel/proposal-class-properties",
       "@babel/plugin-proposal-object-rest-spread",
       "babel-plugin-knifecycle"
     ]
@@ -166,7 +185,26 @@
     ],
     "rules": {
       "prettier/prettier": "error"
-    }
+    },
+    "parser": "@typescript-eslint/parser",
+    "ignorePatterns": [
+      "*.d.ts"
+    ],
+    "overrides": [
+      {
+        "files": [
+          "*.ts"
+        ],
+        "rules": {
+          "no-unused-vars": [
+            1,
+            {
+              "args": "none"
+            }
+          ]
+        }
+      }
+    ]
   },
   "prettier": {
     "semi": true,
@@ -177,8 +215,17 @@
   },
   "files": [
     "dist/**/*.js",
+    "src/index.d.ts",
+    "src/*.d.ts",
     "LICENSE",
     "README.md",
     "CHANGELOG.md"
-  ]
+  ],
+  "jsarch": {
+    "parserOptions": {
+      "plugins": [
+        "typescript"
+      ]
+    }
+  }
 }
