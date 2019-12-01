@@ -1,0 +1,62 @@
+/* Architecture Note #1: Services
+
+Since the services in this module are very common, we
+ provide a helper to require them all with a single
+ line of code.
+
+Their goal is to encapsulate unpredictible states and
+ inputs/outputs of the software they are part of. They
+ are primarily meant to be used with
+ [`knifecycle`](https://github.com/nfroidure/knifecycle)
+ but should be usable with any DI system or even rawly.
+*/
+
+import initCodeGenerator, { CodeGeneratorService } from './codeGenerator';
+import initCounter, { CounterService } from './counter';
+import initDelay, { DelayProvider, DelayService } from './delay';
+import initLock, { LockService } from './lock';
+import initLog, {
+  LogService,
+  StdStream,
+  DEFAULT_LOGGER,
+  DEFAULT_LOG_ROUTING,
+} from './log';
+import initTime, { TimeService } from './time';
+import initRandom, { RandomService } from './random';
+import initProcess from './process';
+
+/**
+ * All services of the `common-services` module as
+ *  properties.
+ * @constant
+ * @type {Object}
+ * @example
+ * import * as COMMON_SERVICES from 'common-services';
+ * import Knifecycle from 'knifecycle';
+ *
+ * new Knifecycle().register(
+ *   ...Object.keys(COMMON_SERVICES)
+ *   .map(serviceName => COMMON_SERVICES[serviceName])
+ * );
+ */
+export {
+  initCodeGenerator as initCodeGeneratorService,
+  CodeGeneratorService,
+  initCounter as initCounterService,
+  CounterService,
+  initDelay as initDelayService,
+  DelayProvider,
+  DelayService,
+  initLock as initLockService,
+  LockService,
+  initLog as initLogService,
+  LogService,
+  StdStream,
+  DEFAULT_LOGGER,
+  DEFAULT_LOG_ROUTING,
+  initTime as initTimeService,
+  TimeService,
+  initRandom as initRandomService,
+  RandomService,
+  initProcess as initProcessService,
+};
