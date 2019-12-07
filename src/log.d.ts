@@ -1,3 +1,4 @@
+declare function noop(): void;
 export interface LogService {
   (...args: any[]): void;
 }
@@ -8,6 +9,18 @@ export declare enum StdStream {
 export interface Logger {
   [name: string]: LogService;
 }
+export declare const DEFAULT_LOGGER: {
+  debug: typeof noop;
+  error: typeof noop;
+  info: typeof noop;
+  warning: typeof noop;
+};
+export declare const DEFAULT_LOG_ROUTING: {
+  error: StdStream;
+  stack: StdStream;
+  warning: StdStream;
+  info: StdStream;
+};
 declare const _default: typeof initLog;
 export default _default;
 /**

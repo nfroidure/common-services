@@ -2,7 +2,12 @@ import initCodeGenerator, { CodeGeneratorService } from './codeGenerator';
 import initCounter, { CounterService } from './counter';
 import initDelay, { DelayProvider, DelayService } from './delay';
 import initLock, { LockService } from './lock';
-import initLog, { LogService } from './log';
+import initLog, {
+  LogService,
+  StdStream,
+  DEFAULT_LOGGER,
+  DEFAULT_LOG_ROUTING,
+} from './log';
 import initTime, { TimeService } from './time';
 import initRandom, { RandomService } from './random';
 import initProcess from './process';
@@ -32,6 +37,9 @@ export {
   LockService,
   initLog as initLogService,
   LogService,
+  StdStream,
+  DEFAULT_LOGGER,
+  DEFAULT_LOG_ROUTING,
   initTime as initTimeService,
   TimeService,
   initRandom as initRandomService,

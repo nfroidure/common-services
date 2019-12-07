@@ -108,7 +108,7 @@
     }
   },
   "dependencies": {
-    "knifecycle": "^7.0.2",
+    "knifecycle": "^8.0.0",
     "sinon": "^7.5.0",
     "yerror": "^4.0.1"
   },
