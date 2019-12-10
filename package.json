@@ -108,9 +108,9 @@
     }
   },
   "dependencies": {
-    "knifecycle": "^8.0.0",
+    "knifecycle": "^8.0.1",
     "sinon": "^7.5.0",
-    "yerror": "^4.0.1"
+    "yerror": "^5.0.0"
   },
   "greenkeeper": {
     "ignore": [
