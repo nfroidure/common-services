@@ -1,7 +1,10 @@
-import initCodeGenerator, { CodeGeneratorService } from './codeGenerator';
-import initCounter, { CounterService } from './counter';
+import initCodeGenerator, {
+  CodeGeneratorService,
+  CodeGeneratorServiceConfig,
+} from './codeGenerator';
+import initCounter, { CounterService, CounterServiceConfig } from './counter';
 import initDelay, { DelayProvider, DelayService } from './delay';
-import initLock, { LockService } from './lock';
+import initLock, { LockService, LockServiceConfig } from './lock';
 import initLog, {
   LogService,
   StdStream,
@@ -10,7 +13,7 @@ import initLog, {
 } from './log';
 import initTime, { TimeService } from './time';
 import initRandom, { RandomService } from './random';
-import initProcess from './process';
+import initProcess, { ProcessServiceConfig } from './process';
 /**
  * All services of the `common-services` module as
  *  properties.
@@ -27,13 +30,16 @@ import initProcess from './process';
  */
 export {
   initCodeGenerator as initCodeGeneratorService,
+  CodeGeneratorServiceConfig,
   CodeGeneratorService,
   initCounter as initCounterService,
+  CounterServiceConfig,
   CounterService,
   initDelay as initDelayService,
   DelayProvider,
   DelayService,
   initLock as initLockService,
+  LockServiceConfig,
   LockService,
   initLog as initLogService,
   LogService,
@@ -44,5 +50,6 @@ export {
   TimeService,
   initRandom as initRandomService,
   RandomService,
+  ProcessServiceConfig,
   initProcess as initProcessService,
 };

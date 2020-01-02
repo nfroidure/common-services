@@ -50,6 +50,13 @@ describe('index', () => {
             .concat(['StdStream', 'DEFAULT_LOGGER', 'DEFAULT_LOG_ROUTING'])
             // process does nos export an interface
             .filter(name => name !== 'ProcessService')
+            // Also exports service config
+            .concat([
+              'CodeGeneratorServiceConfig',
+              'ProcessServiceConfig',
+              'CounterServiceConfig',
+              'LockServiceConfig',
+            ])
             .sort(),
         );
       })

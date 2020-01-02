@@ -159,7 +159,7 @@ The `process` service takes care of the process status.
 It returns nothing and should be injected only for its
  side effects.
 
-[See in context](./src/process.ts#L14-L19)
+[See in context](./src/process.ts#L28-L33)
 
 
 
@@ -170,7 +170,7 @@ It also forces NODE_ENV to be set to avoid unintentionnal
  your own list of valid environments by injecting the
  `SIGNALS` optional dependency.
 
-[See in context](./src/process.ts#L53-L59)
+[See in context](./src/process.ts#L58-L64)
 
 
 
@@ -181,7 +181,7 @@ It also handle SIGINT and SIGTERM signals to allow to
  to handle can be customized by injecting the `SIGNALS`
  optional dependencies.
 
-[See in context](./src/process.ts#L69-L75)
+[See in context](./src/process.ts#L74-L80)
 
 
 
@@ -190,7 +190,7 @@ It also handle SIGINT and SIGTERM signals to allow to
 If an error occurs it attempts to gracefully exit
 to give it a chance to finish properly.
 
-[See in context](./src/process.ts#L80-L84)
+[See in context](./src/process.ts#L85-L89)
 
 
 
@@ -200,7 +200,7 @@ If an uncaught exeption occurs it also attempts to
  gracefully exit since a process should never be kept
  alive when an uncaught exception is raised.
 
-[See in context](./src/process.ts#L91-L96)
+[See in context](./src/process.ts#L96-L101)
 
 
 
@@ -214,7 +214,7 @@ The count are returned asynchronously in order
  if needed later via another service with the same
  surface API.
 
-[See in context](./src/counter.ts#L14-L23)
+[See in context](./src/counter.ts#L21-L30)
 
 
 
@@ -225,7 +225,7 @@ The `codeGenerator` service provide a service
  a character set that avoid recognition
  mistake by humans.
 
-[See in context](./src/codeGenerator.ts#L11-L17)
+[See in context](./src/codeGenerator.ts#L18-L24)
 
 
 
@@ -240,5 +240,5 @@ The release is done by its key and the current lock is removed. There
  said, it should not be hard to handle since the actual behavior of
  the library makes your code run sequentially.
 
-[See in context](./src/lock.ts#L23-L33)
+[See in context](./src/lock.ts#L28-L38)
 

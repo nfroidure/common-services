@@ -1,5 +1,18 @@
 import Knifecycle, { FatalErrorProvider } from 'knifecycle';
 import { LogService } from './log';
+export declare type ProcessServiceConfig = {
+  NODE_ENV?: string;
+  PROCESS_NAME?: string;
+  SIGNALS?: string[];
+  NODE_ENVS?: string[];
+};
+export declare type ProcessServiceDependencies = ProcessServiceConfig & {
+  NODE_ENV: string;
+  exit: Function;
+  $instance: Knifecycle;
+  $fatalError: FatalErrorProvider;
+  log?: LogService;
+};
 declare const _default: typeof initProcess;
 export default _default;
 /**
@@ -20,13 +33,4 @@ declare function initProcess({
   exit,
   $instance,
   $fatalError,
-}: {
-  NODE_ENV: string;
-  PROCESS_NAME?: string;
-  SIGNALS?: string[];
-  NODE_ENVS?: string[];
-  exit: Function;
-  $instance: Knifecycle;
-  $fatalError: FatalErrorProvider;
-  log?: LogService;
-}): Promise<typeof global.process>;
+}: ProcessServiceDependencies): Promise<typeof global.process>;

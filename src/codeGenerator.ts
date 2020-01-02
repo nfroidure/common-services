@@ -4,6 +4,13 @@ import { RandomService } from './random';
 
 function noop() {}
 
+export type CodeGeneratorServiceConfig = {
+  CHARS_SET?: string;
+};
+export type CodeGeneratorServiceDependencies = CodeGeneratorServiceConfig & {
+  random: RandomService;
+  log?: LogService;
+};
 export interface CodeGeneratorService {
   (length?: number): Promise<string>;
 }
@@ -47,11 +54,7 @@ async function initCodeGenerator({
   CHARS_SET = EXPLICIT_CHARS,
   random = Math.random.bind(Math),
   log = noop,
-}: {
-  CHARS_SET?: string;
-  random: RandomService;
-  log?: LogService;
-}): Promise<CodeGeneratorService> {
+}: CodeGeneratorServiceDependencies): Promise<CodeGeneratorService> {
   log('debug', `↪️ - Code generation service Initialized!`);
   const charsSetLength = CHARS_SET.length;
 

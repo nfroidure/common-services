@@ -11,6 +11,20 @@ const DEFAULT_SIGNALS = ['SIGTERM', 'SIGINT'];
 
 function noop() {}
 
+export type ProcessServiceConfig = {
+  NODE_ENV?: string;
+  PROCESS_NAME?: string;
+  SIGNALS?: string[];
+  NODE_ENVS?: string[];
+};
+export type ProcessServiceDependencies = ProcessServiceConfig & {
+  NODE_ENV: string;
+  exit: Function;
+  $instance: Knifecycle;
+  $fatalError: FatalErrorProvider;
+  log?: LogService;
+};
+
 /* Architecture Note #1.5: Process
 The `process` service takes care of the process status.
 
@@ -38,16 +52,7 @@ async function initProcess({
   exit,
   $instance,
   $fatalError,
-}: {
-  NODE_ENV: string;
-  PROCESS_NAME?: string;
-  SIGNALS?: string[];
-  NODE_ENVS?: string[];
-  exit: Function;
-  $instance: Knifecycle;
-  $fatalError: FatalErrorProvider;
-  log?: LogService;
-}): Promise<typeof global.process> {
+}: ProcessServiceDependencies): Promise<typeof global.process> {
   let shuttingDown = null;
 
   /* Architecture Note #1.5.1: Node environment filtering

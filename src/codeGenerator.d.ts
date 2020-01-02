@@ -1,5 +1,12 @@
 import { LogService } from './log';
 import { RandomService } from './random';
+export declare type CodeGeneratorServiceConfig = {
+  CHARS_SET?: string;
+};
+export declare type CodeGeneratorServiceDependencies = CodeGeneratorServiceConfig & {
+  random: RandomService;
+  log?: LogService;
+};
 export interface CodeGeneratorService {
   (length?: number): Promise<string>;
 }
@@ -32,8 +39,4 @@ declare function initCodeGenerator({
   CHARS_SET,
   random,
   log,
-}: {
-  CHARS_SET?: string;
-  random: RandomService;
-  log?: LogService;
-}): Promise<CodeGeneratorService>;
+}: CodeGeneratorServiceDependencies): Promise<CodeGeneratorService>;

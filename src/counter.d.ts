@@ -2,6 +2,14 @@ import { LogService } from './log';
 export interface CounterService {
   (): Promise<number>;
 }
+export declare type CounterServiceConfig = {
+  COUNTER?: {
+    firstCount: number;
+  };
+};
+export declare type CounterServiceDependencies = CounterServiceConfig & {
+  log?: LogService;
+};
 declare const _default: typeof initCounter;
 export default _default;
 /**
@@ -27,9 +35,4 @@ export default _default;
 declare function initCounter({
   COUNTER,
   log,
-}: {
-  COUNTER?: {
-    firstCount: number;
-  };
-  log?: LogService;
-}): Promise<CounterService>;
+}: CounterServiceDependencies): Promise<CounterService>;

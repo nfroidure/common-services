@@ -7,6 +7,13 @@ export interface CounterService {
   (): Promise<number>;
 }
 
+export type CounterServiceConfig = {
+  COUNTER?: { firstCount: number };
+};
+export type CounterServiceDependencies = CounterServiceConfig & {
+  log?: LogService;
+};
+
 const DEFAULT_COUNTER = {
   firstCount: 1,
 };
@@ -47,10 +54,7 @@ export default options({ singleton: true }, autoService(initCounter), true);
 async function initCounter({
   COUNTER = DEFAULT_COUNTER,
   log = noop,
-}: {
-  COUNTER?: { firstCount: number };
-  log?: LogService;
-}): Promise<CounterService> {
+}: CounterServiceDependencies): Promise<CounterService> {
   let currentCount = COUNTER.firstCount;
 
   log('debug', '📇 - Counter service initialized.');

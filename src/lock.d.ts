@@ -4,12 +4,14 @@ interface Lock {
   releasePromise: Promise<void>;
   release: Function;
 }
-interface LockServiceDependencies<K> {
+export declare type LockServiceConfig<K> = {
   LOCKS_MAP?: Map<K, Lock[]>;
-  log?: LogService;
   LOCK_TIMEOUT?: number;
+};
+declare type LockServiceDependencies<K> = LockServiceConfig<K> & {
+  log?: LogService;
   delay: DelayService;
-}
+};
 export interface LockService<K> {
   take: (key: K) => Promise<void>;
   release: (key: K) => Promise<void>;
