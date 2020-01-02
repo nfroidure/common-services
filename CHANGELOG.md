@@ -1,3 +1,12 @@
+# [6.1.0](https://github.com/nfroidure/common-services/compare/v6.0.2...v6.1.0) (2020-01-02)
+
+
+### Features
+
+* **types:** add configuration types ([00a9948](https://github.com/nfroidure/common-services/commit/00a99487901d42e7ada518bad8873a573fad75d6))
+
+
+
 ## [6.0.2](https://github.com/nfroidure/common-services/compare/v6.0.1...v6.0.2) (2019-12-10)
 
 
