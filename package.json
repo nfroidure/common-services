@@ -3,7 +3,7 @@
   "version": "6.1.0",
   "description": "A module to gather very common services and their mocks.",
   "main": "dist/index.js",
-  "types": "src/index.d.ts",
+  "types": "dist/index.d.ts",
   "author": {
     "name": "Nicolas Froidure",
     "email": "nicolas.froidure@insertafter.com",
@@ -15,15 +15,12 @@
       "files": "'src/**/*.ts'",
       "testsFiles": "'src/**/*.test.ts'",
       "distFiles": "'dist/**/*.js'",
-      "typesFiles": "src/*.ts",
-      "typesDefs": "src/*.d.ts",
       "ignore": [
         "dist"
       ],
       "bundleFiles": [
-        "dist/**/*.js",
-        "src/index.d.ts",
-        "src/*.d.ts"
+        "dist",
+        "src"
       ]
     },
     "configs": [
@@ -40,38 +37,38 @@
     ]
   },
   "devDependencies": {
-    "@babel/cli": "^7.7.4",
-    "@babel/core": "^7.7.4",
-    "@babel/plugin-proposal-class-properties": "^7.7.4",
-    "@babel/plugin-proposal-object-rest-spread": "^7.7.4",
-    "@babel/preset-env": "^7.7.4",
-    "@babel/preset-typescript": "^7.7.4",
-    "@babel/register": "^7.7.4",
-    "@types/jest": "^24.0.23",
-    "@typescript-eslint/eslint-plugin": "^2.9.0",
-    "@typescript-eslint/parser": "^2.9.0",
+    "@babel/cli": "^7.8.3",
+    "@babel/core": "^7.8.3",
+    "@babel/plugin-proposal-class-properties": "^7.8.3",
+    "@babel/plugin-proposal-object-rest-spread": "^7.8.3",
+    "@babel/preset-env": "^7.8.3",
+    "@babel/preset-typescript": "^7.8.3",
+    "@babel/register": "^7.8.3",
+    "@types/jest": "^24.9.0",
+    "@typescript-eslint/eslint-plugin": "^2.16.0",
+    "@typescript-eslint/parser": "^2.16.0",
     "babel-eslint": "^10.0.3",
-    "babel-plugin-knifecycle": "^1.0.3",
+    "babel-plugin-knifecycle": "^1.1.1",
     "commitizen": "^4.0.3",
-    "conventional-changelog-cli": "^2.0.28",
+    "conventional-changelog-cli": "^2.0.31",
     "coveralls": "^3.0.9",
     "cz-conventional-changelog": "^3.0.2",
-    "eslint": "^6.7.1",
+    "eslint": "^6.8.0",
     "eslint-config-typescript": "^3.0.0",
-    "eslint-plugin-prettier": "^3.1.1",
+    "eslint-plugin-prettier": "^3.1.2",
     "jest": "^24.9.0",
     "jsarch": "^2.0.3",
     "jsdoc-to-markdown": "^5.0.3",
     "metapak": "^3.1.6",
-    "metapak-nfroidure": "9.7.4",
+    "metapak-nfroidure": "9.8.1",
     "prettier": "^1.19.1",
-    "typescript": "^3.7.2"
+    "typescript": "^3.7.5"
   },
   "scripts": {
     "architecture": "jsarch 'src/**/*.ts' > ARCHITECTURE.md && git add ARCHITECTURE.md",
     "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s && git add CHANGELOG.md",
     "cli": "env NODE_ENV=${NODE_ENV:-cli}",
-    "compile": "babel --extensions '.ts,.js' src --out-dir=dist",
+    "compile": "babel --extensions '.ts,.js' src --out-dir=dist --source-maps=true",
     "cover": "npm run jest -- --coverage",
     "coveralls": "npm run cover && cat ./coverage/lcov.info | coveralls && rm -rf ./coverage",
     "cz": "env NODE_ENV=${NODE_ENV:-cli} git cz",
@@ -79,11 +76,11 @@
     "jest": "NODE_ENV=test jest",
     "lint": "eslint 'src/**/*.ts'",
     "metapak": "metapak",
-    "precz": "npm t && npm run lint && npm run architecture && npm run doc && npm run metapak -- -s && npm run types",
+    "precz": "npm t && npm run lint && npm run types && npm run compile && npm run architecture && npm run doc && npm run metapak -- -s",
     "prettier": "prettier --write 'src/**/*.ts'",
-    "preversion": "npm run compile && npm t && npm run lint && npm run architecture && npm run doc && npm run metapak -- -s && npm run types",
+    "preversion": "npm t && npm run lint && npm run types && npm run compile && npm run architecture && npm run doc && npm run metapak -- -s",
     "test": "npm run jest",
-    "types": "rm src/*.d.ts; tsc --project . --declaration --emitDeclarationOnly; npm run prettier -- src/*.d.ts",
+    "types": "rimraf -f 'dist/**/*.d.ts' && tsc --project . --declaration --emitDeclarationOnly --outDir dist",
     "version": "npm run changelog"
   },
   "repository": {
@@ -108,8 +105,9 @@
     }
   },
   "dependencies": {
-    "knifecycle": "^8.0.1",
-    "sinon": "^8.0.2",
+    "@types/node": "^13.1.8",
+    "knifecycle": "^8.1.0",
+    "sinon": "^8.1.0",
     "yerror": "^5.0.0"
   },
   "greenkeeper": {
@@ -214,9 +212,8 @@
     "proseWrap": "always"
   },
   "files": [
-    "dist/**/*.js",
-    "src/index.d.ts",
-    "src/*.d.ts",
+    "dist",
+    "src",
     "LICENSE",
     "README.md",
     "CHANGELOG.md"
