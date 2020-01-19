@@ -1,6 +1,6 @@
 {
   "name": "common-services",
-  "version": "6.1.0",
+  "version": "6.2.0",
   "description": "A module to gather very common services and their mocks.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
