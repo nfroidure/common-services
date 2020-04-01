@@ -1,3 +1,12 @@
+# [7.1.0](https://github.com/nfroidure/common-services/compare/v7.0.0...v7.1.0) (2020-04-01)
+
+
+### Features
+
+* **core:** add support for esm ([b1b17e3](https://github.com/nfroidure/common-services/commit/b1b17e33fca2a718b660650ac17bf8dbfc7c0e31))
+
+
+
 # [7.0.0](https://github.com/nfroidure/common-services/compare/v6.2.0...v7.0.0) (2020-03-20)
 
 
