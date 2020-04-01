@@ -76,7 +76,7 @@ describe('initDelayService', () => {
 
       log.reset();
 
-      await delay.clear(Promise.resolve()).catch(err => {
+      await delay.clear(Promise.resolve()).catch((err) => {
         assert.equal(err.code, 'E_BAD_DELAY');
       });
     });
@@ -93,7 +93,7 @@ describe('initDelayService', () => {
 
       await Promise.all([
         delay.clear(delayPromise),
-        delayPromise.catch(err => {
+        delayPromise.catch((err) => {
           assert.equal(err.code, 'E_DELAY_CLEARED');
         }),
       ]);

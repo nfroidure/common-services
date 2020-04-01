@@ -4,7 +4,7 @@ import YError from 'yerror';
 import initDelayMock from './delay.mock';
 
 describe('initDelayMock', () => {
-  test('should work', done => {
+  test('should work', (done) => {
     initDelayMock({})
       .then(
         ({
@@ -30,7 +30,7 @@ describe('initDelayMock', () => {
   });
 
   describe('_resolve', () => {
-    test('should work', done => {
+    test('should work', (done) => {
       initDelayMock({})
         .then(({ service: { create, __resolve } }) => {
           const delayPromise = create(1000);
@@ -43,14 +43,14 @@ describe('initDelayMock', () => {
   });
 
   describe('_resolveAll', () => {
-    test('should work with no pending delays', done => {
+    test('should work with no pending delays', (done) => {
       initDelayMock({})
         .then(({ service: { __resolveAll } }) => __resolveAll())
         .then(() => done())
         .catch(done);
     });
 
-    test('should work with one pending delay', done => {
+    test('should work with one pending delay', (done) => {
       initDelayMock({})
         .then(({ service: { create, __resolveAll } }) => {
           const delayPromise = create(1000);
@@ -61,7 +61,7 @@ describe('initDelayMock', () => {
         .catch(done);
     });
 
-    test('should work with 10 pending delays', done => {
+    test('should work with 10 pending delays', (done) => {
       initDelayMock({})
         .then(({ service: { create, __resolveAll } }) => {
           const delayPromises = new Array(10).fill(1).map(() => create(1000));
@@ -74,7 +74,7 @@ describe('initDelayMock', () => {
   });
 
   describe('_reject', () => {
-    test('should work', done => {
+    test('should work', (done) => {
       initDelayMock({})
         .then(({ service: { create, __reject } }) => {
           const delayPromise = create(1000);
@@ -85,7 +85,7 @@ describe('initDelayMock', () => {
               .then(() => {
                 throw new YError('E_UNEXPECTED_SUCCESS');
               })
-              .catch(err => {
+              .catch((err) => {
                 assert.equal(err.code, 'E_DELAY_CLEARED');
               }),
           ]);
@@ -96,14 +96,14 @@ describe('initDelayMock', () => {
   });
 
   describe('_rejectAll', () => {
-    test('should work with no pending delays', done => {
+    test('should work with no pending delays', (done) => {
       initDelayMock({})
         .then(({ service: { __rejectAll } }) => __rejectAll())
         .then(() => done())
         .catch(done);
     });
 
-    test('should work with one pending delay', done => {
+    test('should work with one pending delay', (done) => {
       initDelayMock({})
         .then(({ service: { create, __rejectAll } }) => {
           const delayPromise = create(1000);
@@ -113,7 +113,7 @@ describe('initDelayMock', () => {
               .then(() => {
                 throw new YError('E_UNEXPECTED_SUCCESS');
               })
-              .catch(err => {
+              .catch((err) => {
                 assert.equal(err.code, 'E_DELAY_CLEARED');
               }),
             __rejectAll(),
@@ -123,18 +123,18 @@ describe('initDelayMock', () => {
         .catch(done);
     });
 
-    test('should work with 10 pending delays', done => {
+    test('should work with 10 pending delays', (done) => {
       initDelayMock({})
         .then(({ service: { create, __rejectAll } }) => {
           const delayPromises = new Array(10)
             .fill(1)
             .map(() => create(1000))
-            .map(delayPromise =>
+            .map((delayPromise) =>
               delayPromise
                 .then(() => {
                   throw new YError('E_UNEXPECTED_SUCCESS');
                 })
-                .catch(err => {
+                .catch((err) => {
                   assert.equal(err.code, 'E_DELAY_CLEARED');
                 }),
             );

@@ -10,11 +10,11 @@ describe('initTimeService', () => {
     log.reset();
   });
 
-  test('should work', done => {
+  test('should work', (done) => {
     initTimeService({
       log,
     })
-      .then(time => {
+      .then((time) => {
         assert('function' === typeof time);
         assert.deepEqual(log.args, [
           ['debug', '⏰ - Time service initialized.'],
@@ -25,11 +25,11 @@ describe('initTimeService', () => {
   });
 
   describe('time', () => {
-    test('should work', done => {
+    test('should work', (done) => {
       initTimeService({
         log,
       })
-        .then(time => {
+        .then((time) => {
           log.reset();
           const now = time();
 
@@ -42,7 +42,7 @@ describe('initTimeService', () => {
     });
   });
 
-  test('should work with Knifecycle', done => {
+  test('should work with Knifecycle', (done) => {
     new Knifecycle()
       .register(initTimeService)
       .register(constant('log', log))

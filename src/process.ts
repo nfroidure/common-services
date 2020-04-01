@@ -78,7 +78,7 @@ async function initProcess({
    to handle can be customized by injecting the `SIGNALS`
    optional dependencies.
   */
-  SIGNALS.forEach(signal => {
+  SIGNALS.forEach((signal) => {
     global.process.on(signal as NodeJS.Signals, terminate.bind(null, signal));
   });
 
@@ -87,7 +87,7 @@ async function initProcess({
   If an error occurs it attempts to gracefully exit
   to give it a chance to finish properly.
   */
-  $fatalError.promise.catch(err => {
+  $fatalError.promise.catch((err) => {
     log('error', '💀 - Fatal error');
     log('stack', err.stack || err);
     terminate('FATAL');
@@ -99,7 +99,7 @@ async function initProcess({
    gracefully exit since a process should never be kept
    alive when an uncaught exception is raised.
   */
-  global.process.on('uncaughtException', err => {
+  global.process.on('uncaughtException', (err) => {
     log('error', '💀 - Uncaught Exception');
     log('stack', err.stack || err);
     terminate('ERR');

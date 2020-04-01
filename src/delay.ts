@@ -116,7 +116,7 @@ async function initDelay({
   }
 
   async function dispose(): Promise<void> {
-    await new Promise(resolve => {
+    await new Promise((resolve) => {
       log('debug', '⏳ - Cancelling pending timeouts:', pendingPromises.size);
       resolve(Promise.all([...pendingPromises.keys()].map(clear)));
     });

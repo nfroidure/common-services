@@ -41,7 +41,7 @@ describe('initLockService', () => {
     }).toMatchSnapshot();
   });
 
-  test('should work with Knifecycle', done => {
+  test('should work with Knifecycle', (done) => {
     new Knifecycle()
       .register(initLockService)
       .register(constant('log', log))

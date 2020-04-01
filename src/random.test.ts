@@ -12,11 +12,11 @@ describe('initRandomService', () => {
     log.reset();
   });
 
-  test('should work', done => {
+  test('should work', (done) => {
     initRandomService({
       log,
     })
-      .then(random => {
+      .then((random) => {
         assert('function' === typeof random);
         assert.deepEqual(log.args, [
           ['debug', '🎲 - Random service initialized.'],
@@ -27,11 +27,11 @@ describe('initRandomService', () => {
   });
 
   describe('random', () => {
-    test('should work', done => {
+    test('should work', (done) => {
       initRandomService({
         log,
       })
-        .then(random => {
+        .then((random) => {
           log.reset();
           const num = random();
 
@@ -44,7 +44,7 @@ describe('initRandomService', () => {
     });
   });
 
-  test('should work with Knifecycle', done => {
+  test('should work with Knifecycle', (done) => {
     new Knifecycle()
       .register(initRandomService)
       .register(constant('log', log))

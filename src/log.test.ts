@@ -18,12 +18,12 @@ describe('initLogService', () => {
     logger.error.reset();
   });
 
-  test('should work', done => {
+  test('should work', (done) => {
     initLogService({
       debug,
       logger,
     })
-      .then(fn => {
+      .then((fn) => {
         assert('function' === typeof fn);
         assert.deepEqual(debug.args, [['👣 - Logging service initialized.']]);
         assert.deepEqual(logger.info.args, []);
@@ -34,12 +34,12 @@ describe('initLogService', () => {
   });
 
   describe('log', () => {
-    test('should work', done => {
+    test('should work', (done) => {
       initLogService({
         debug,
         logger,
       })
-        .then(log => {
+        .then((log) => {
           debug.reset();
           log('debug', 'debug test');
           log('stack', 'stack test');
@@ -54,7 +54,7 @@ describe('initLogService', () => {
     });
   });
 
-  test('should work with Knifecycle', done => {
+  test('should work with Knifecycle', (done) => {
     new Knifecycle()
       .register(initLogService)
       .register(constant('debug', debug))

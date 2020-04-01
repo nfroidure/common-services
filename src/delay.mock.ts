@@ -81,7 +81,7 @@ function initDelayMock(
 
   async function clear(promise: Promise<any>) {
     const pendingPromiseIndex = pendingPromises.findIndex(
-      pendingPromise => pendingPromise.promise === promise,
+      (pendingPromise) => pendingPromise.promise === promise,
     );
 
     if (-1 === pendingPromiseIndex) {
@@ -94,7 +94,7 @@ function initDelayMock(
 
   function __resolve(promise: Promise<any>) {
     const pendingPromise = pendingPromises.find(
-      pendingPromise => pendingPromise.promise === promise,
+      (pendingPromise) => pendingPromise.promise === promise,
     );
 
     if (!pendingPromise) {
@@ -110,7 +110,7 @@ function initDelayMock(
 
   function __reject(promise) {
     const pendingPromise = pendingPromises.find(
-      pendingPromise => pendingPromise.promise === promise,
+      (pendingPromise) => pendingPromise.promise === promise,
     );
 
     if (!pendingPromise) {
@@ -126,7 +126,7 @@ function initDelayMock(
 
   function __delete(promise: Promise<any>) {
     const pendingPromiseIndex = pendingPromises.findIndex(
-      pendingPromise => pendingPromise.promise === promise,
+      (pendingPromise) => pendingPromise.promise === promise,
     );
     pendingPromises.splice(pendingPromiseIndex, 1);
   }

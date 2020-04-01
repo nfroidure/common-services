@@ -13,7 +13,7 @@ describe('Process service', () => {
   let fatalErrorDeferred;
 
   beforeEach(() => {
-    exitPromise = new Promise(resolve => {
+    exitPromise = new Promise((resolve) => {
       exit = sinon.spy(resolve);
     });
     processListenerStub.reset();
@@ -25,7 +25,7 @@ describe('Process service', () => {
   });
 
   describe('', () => {
-    beforeEach(done => {
+    beforeEach((done) => {
       initProcessService({
         NODE_ENV: 'development',
         PROCESS_NAME: 'Kikooolol',
@@ -59,7 +59,7 @@ describe('Process service', () => {
       );
     });
 
-    test('should handle fatal errors', done => {
+    test('should handle fatal errors', (done) => {
       fatalErrorDeferred.reject(new YError('E_AOUCH'));
 
       exitPromise
@@ -70,10 +70,10 @@ describe('Process service', () => {
         .catch(done);
     });
 
-    test('should handle uncaught exceptions', done => {
-      processListenerStub.args.find(call => 'uncaughtException' === call[0])[1](
-        new YError('E_AOUCH'),
-      );
+    test('should handle uncaught exceptions', (done) => {
+      processListenerStub.args.find(
+        (call) => 'uncaughtException' === call[0],
+      )[1](new YError('E_AOUCH'));
 
       exitPromise
         .then(() => {
@@ -83,9 +83,9 @@ describe('Process service', () => {
         .catch(done);
     });
 
-    ['SIGINT', 'SIGTERM'].forEach(signal =>
-      test('should handle `signal`', done => {
-        processListenerStub.args.find(call => signal === call[0])[1](
+    ['SIGINT', 'SIGTERM'].forEach((signal) =>
+      test('should handle `signal`', (done) => {
+        processListenerStub.args.find((call) => signal === call[0])[1](
           new YError('E_AOUCH'),
         );
 
@@ -99,7 +99,7 @@ describe('Process service', () => {
     );
   });
 
-  test('should work with Knifecycle', done => {
+  test('should work with Knifecycle', (done) => {
     new Knifecycle()
       .register(initProcessService)
       .register(constant('log', log))
