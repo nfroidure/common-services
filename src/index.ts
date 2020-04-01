@@ -11,22 +11,25 @@ Their goal is to encapsulate unpredictible states and
  but should be usable with any DI system or even rawly.
 */
 
-import initCodeGenerator, {
+import initCodeGenerator from './codeGenerator';
+import initCounter from './counter';
+import initDelay from './delay';
+import initLock from './lock';
+import initLog, { DEFAULT_LOGGER, DEFAULT_LOG_ROUTING } from './log';
+import initTime from './time';
+import initRandom from './random';
+import initProcess from './process';
+import type {
   CodeGeneratorService,
   CodeGeneratorServiceConfig,
 } from './codeGenerator';
-import initCounter, { CounterService, CounterServiceConfig } from './counter';
-import initDelay, { DelayProvider, DelayService } from './delay';
-import initLock, { LockService, LockServiceConfig } from './lock';
-import initLog, {
-  LogService,
-  StdStream,
-  DEFAULT_LOGGER,
-  DEFAULT_LOG_ROUTING,
-} from './log';
-import initTime, { TimeService } from './time';
-import initRandom, { RandomService } from './random';
-import initProcess, { ProcessServiceConfig } from './process';
+import type { CounterService, CounterServiceConfig } from './counter';
+import type { DelayProvider, DelayService } from './delay';
+import type { LockService, LockServiceConfig } from './lock';
+import type { LogService, StdStream } from './log';
+import type { TimeService } from './time';
+import type { RandomService } from './random';
+import type { ProcessServiceConfig } from './process';
 
 /**
  * All services of the `common-services` module as
@@ -42,28 +45,30 @@ import initProcess, { ProcessServiceConfig } from './process';
  *   .map(serviceName => COMMON_SERVICES[serviceName])
  * );
  */
-export {
-  initCodeGenerator as initCodeGeneratorService,
+export type {
   CodeGeneratorServiceConfig,
   CodeGeneratorService,
-  initCounter as initCounterService,
   CounterServiceConfig,
   CounterService,
-  initDelay as initDelayService,
   DelayProvider,
   DelayService,
-  initLock as initLockService,
   LockServiceConfig,
   LockService,
-  initLog as initLogService,
   LogService,
   StdStream,
+  TimeService,
+  RandomService,
+  ProcessServiceConfig,
+};
+export {
+  initCodeGenerator as initCodeGeneratorService,
+  initCounter as initCounterService,
+  initDelay as initDelayService,
+  initLock as initLockService,
+  initLog as initLogService,
   DEFAULT_LOGGER,
   DEFAULT_LOG_ROUTING,
   initTime as initTimeService,
-  TimeService,
   initRandom as initRandomService,
-  RandomService,
-  ProcessServiceConfig,
   initProcess as initProcessService,
 };

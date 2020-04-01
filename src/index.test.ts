@@ -35,28 +35,8 @@ describe('index', () => {
           modules
             .map((module) => (module as any).name as string)
             .map((name) => name.replace(/(bound )*/, ''))
-            .reduce(
-              (allNames, name) => [
-                ...allNames,
-                name,
-                name.replace(/^init*/, '') + 'Service',
-              ],
-              [],
-            )
-            // delay also exports its provider, may be automated once
-            // resolved https://github.com/nfroidure/knifecycle/issues/106
-            .concat(['DelayProvider'])
             // Also exports LogService defaults/interfaces
-            .concat(['StdStream', 'DEFAULT_LOGGER', 'DEFAULT_LOG_ROUTING'])
-            // process does nos export an interface
-            .filter((name) => name !== 'ProcessService')
-            // Also exports service config
-            .concat([
-              'CodeGeneratorServiceConfig',
-              'ProcessServiceConfig',
-              'CounterServiceConfig',
-              'LockServiceConfig',
-            ])
+            .concat(['DEFAULT_LOGGER', 'DEFAULT_LOG_ROUTING'])
             .sort(),
         );
       })
