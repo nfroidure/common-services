@@ -1,3 +1,12 @@
+## [7.1.1](https://github.com/nfroidure/common-services/compare/v7.1.0...v7.1.1) (2020-04-01)
+
+
+### Bug Fixes
+
+* **core:** fix types for webpack esm builds ([067cfed](https://github.com/nfroidure/common-services/commit/067cfed0747ffefdb2f4dd44a29c70d7f7db1c3c))
+
+
+
 # [7.1.0](https://github.com/nfroidure/common-services/compare/v7.0.0...v7.1.0) (2020-04-01)
 
 

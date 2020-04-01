@@ -1,6 +1,6 @@
 {
   "name": "common-services",
-  "version": "7.1.0",
+  "version": "7.1.1",
   "description": "A module to gather very common services and their mocks.",
   "main": "dist/index",
   "module": "dist/index.mjs",
