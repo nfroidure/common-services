@@ -109,8 +109,8 @@
     }
   },
   "dependencies": {
-    "@types/node": "^13.9.2",
-    "knifecycle": "^9.1.0",
+    "@types/node": "^13.9.8",
+    "knifecycle": "^9.1.1",
     "sinon": "^9.0.1",
     "yerror": "^5.0.0"
   },
