@@ -1,3 +1,7 @@
+## [7.1.3](https://github.com/nfroidure/common-services/compare/v7.1.2...v7.1.3) (2020-04-03)
+
+
+
 ## [7.1.2](https://github.com/nfroidure/common-services/compare/v7.1.1...v7.1.2) (2020-04-02)
 
 
