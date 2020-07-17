@@ -107,7 +107,7 @@ The time service is just proxying [`Date.now`
 The time mock uses the [`sinon`](https://github.com/sinonjs/sinon/)
  module under the hood like for the logging mock.
 
-[See in context](./src/time.mock.ts#L5-L9)
+[See in context](./src/time.mock.ts#L6-L10)
 
 
 
@@ -148,7 +148,7 @@ This mock is largely inspired by the `$timeout` one of
  bug but a design choice to keep the closest possible
  to what would happen in actual code.
 
-[See in context](./src/delay.mock.ts#L5-L13)
+[See in context](./src/delay.mock.ts#L6-L14)
 
 
 

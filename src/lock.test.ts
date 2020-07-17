@@ -2,7 +2,7 @@ import assert from 'assert';
 import sinon from 'sinon';
 import Knifecycle, { constant } from 'knifecycle';
 import initLockService from './lock';
-import { DelayService } from './delay';
+import type { DelayService } from './delay';
 
 describe('initLockService', () => {
   const log = sinon.stub();

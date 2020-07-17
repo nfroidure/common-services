@@ -1,7 +1,7 @@
 import YError from 'yerror';
 import { autoService, options } from 'knifecycle';
-import { LogService } from './log';
-import { DelayService } from './delay';
+import type { LogService } from './log';
+import type { DelayService } from './delay';
 
 const noop = () => {};
 

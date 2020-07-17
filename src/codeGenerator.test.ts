@@ -1,5 +1,5 @@
 import initCodeGenerator from './codeGenerator';
-import { RandomService } from './random';
+import type { RandomService } from './random';
 
 describe('codeGenerator', () => {
   const log = jest.fn();

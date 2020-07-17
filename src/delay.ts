@@ -1,6 +1,6 @@
 import YError from 'yerror';
 import { autoProvider, options } from 'knifecycle';
-import { LogService } from './log';
+import type { LogService } from './log';
 
 function noop() {}
 

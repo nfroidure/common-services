@@ -1,6 +1,6 @@
 import { autoService } from 'knifecycle';
-import { LogService } from './log';
-import { RandomService } from './random';
+import type { LogService } from './log';
+import type { RandomService } from './random';
 
 function noop() {}
 

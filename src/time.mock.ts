@@ -1,6 +1,7 @@
 import sinon from 'sinon';
-import initTimeService, { TimeService } from './time';
+import initTimeService from './time';
 import { reuseSpecialProps } from 'knifecycle';
+import type { TimeService } from './time';
 
 /* Architecture Note #1.2.1: Mocking time
 
