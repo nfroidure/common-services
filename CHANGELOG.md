@@ -1,3 +1,12 @@
+## [7.1.5](https://github.com/nfroidure/common-services/compare/v7.1.4...v7.1.5) (2020-07-17)
+
+
+### Bug Fixes
+
+* **process:** cleanup the process service listeners ([8b91cac](https://github.com/nfroidure/common-services/commit/8b91cac54c00d9a44c6c121466c0ae41b59a2c36))
+
+
+
 ## [7.1.4](https://github.com/nfroidure/common-services/compare/v7.1.3...v7.1.4) (2020-04-03)
 
 
