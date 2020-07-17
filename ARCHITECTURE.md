@@ -159,7 +159,7 @@ The `process` service takes care of the process status.
 It returns nothing and should be injected only for its
  side effects.
 
-[See in context](./src/process.ts#L28-L33)
+[See in context](./src/process.ts#L25-L30)
 
 
 
@@ -170,7 +170,7 @@ It also forces NODE_ENV to be set to avoid unintentionnal
  your own list of valid environments by injecting the
  `SIGNALS` optional dependency.
 
-[See in context](./src/process.ts#L58-L64)
+[See in context](./src/process.ts#L61-L67)
 
 
 
@@ -181,7 +181,7 @@ It also handle SIGINT and SIGTERM signals to allow to
  to handle can be customized by injecting the `SIGNALS`
  optional dependencies.
 
-[See in context](./src/process.ts#L74-L80)
+[See in context](./src/process.ts#L77-L83)
 
 
 
@@ -190,7 +190,7 @@ It also handle SIGINT and SIGTERM signals to allow to
 If an error occurs it attempts to gracefully exit
 to give it a chance to finish properly.
 
-[See in context](./src/process.ts#L85-L89)
+[See in context](./src/process.ts#L88-L92)
 
 
 
@@ -200,7 +200,7 @@ If an uncaught exeption occurs it also attempts to
  gracefully exit since a process should never be kept
  alive when an uncaught exception is raised.
 
-[See in context](./src/process.ts#L96-L101)
+[See in context](./src/process.ts#L99-L104)
 
 
 

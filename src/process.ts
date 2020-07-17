@@ -1,20 +1,17 @@
 import YError from 'yerror';
-import Knifecycle, {
-  autoService,
-  options,
-  FatalErrorProvider,
-} from 'knifecycle';
-import { LogService } from './log';
+import { autoProvider, options } from 'knifecycle';
+import type { Knifecycle, FatalErrorProvider } from 'knifecycle';
+import type { LogService } from './log';
 
 const DEFAULT_NODE_ENVS = ['development', 'test', 'production'];
-const DEFAULT_SIGNALS = ['SIGTERM', 'SIGINT'];
+const DEFAULT_SIGNALS: NodeJS.Signals[] = ['SIGTERM', 'SIGINT'];
 
 function noop() {}
 
 export type ProcessServiceConfig = {
   NODE_ENV?: string;
   PROCESS_NAME?: string;
-  SIGNALS?: string[];
+  SIGNALS?: NodeJS.Signals[];
   NODE_ENVS?: string[];
 };
 export type ProcessServiceDependencies = ProcessServiceConfig & {
@@ -32,7 +29,7 @@ It returns nothing and should be injected only for its
  side effects.
 */
 
-export default options({ singleton: true }, autoService(initProcess), true);
+export default options({ singleton: true }, autoProvider(initProcess), true);
 
 /**
  * Instantiate the process service
@@ -52,8 +49,14 @@ async function initProcess({
   exit,
   $instance,
   $fatalError,
-}: ProcessServiceDependencies): Promise<typeof global.process> {
+}: ProcessServiceDependencies): Promise<{
+  service: NodeJS.Process;
+  dispose: () => Promise<void>;
+}> {
   let shuttingDown = null;
+  let signalsListeners = SIGNALS.map<[NodeJS.Signals, NodeJS.SignalsListener]>(
+    (signal) => [signal, terminate.bind(null, signal)],
+  );
 
   /* Architecture Note #1.5.1: Node environment filtering
 
@@ -78,8 +81,8 @@ async function initProcess({
    to handle can be customized by injecting the `SIGNALS`
    optional dependencies.
   */
-  SIGNALS.forEach((signal) => {
-    global.process.on(signal as NodeJS.Signals, terminate.bind(null, signal));
+  signalsListeners.forEach(([signal, signalListener]) => {
+    global.process.on(signal, signalListener);
   });
 
   /* Architecture Note #1.5.3: Handling services fatal errors
@@ -99,11 +102,13 @@ async function initProcess({
    gracefully exit since a process should never be kept
    alive when an uncaught exception is raised.
   */
-  global.process.on('uncaughtException', (err) => {
+  global.process.on('uncaughtException', catchUncaughtException);
+
+  function catchUncaughtException(err) {
     log('error', '💀 - Uncaught Exception');
     log('stack', err.stack || err);
     terminate('ERR');
-  });
+  }
 
   function terminate(signal) {
     if (shuttingDown) {
@@ -133,6 +138,16 @@ async function initProcess({
     }
   }
 
+  async function dispose() {
+    global.process.removeListener('uncaughtException', catchUncaughtException);
+    signalsListeners.forEach(([signal, signalListener]) => {
+      global.process.removeListener(signal, signalListener);
+    });
+  }
+
   log('debug', '📇 - Process service initialized.');
-  return global.process;
+  return {
+    service: global.process,
+    dispose,
+  };
 }
