@@ -1,3 +1,7 @@
+# [8.0.0](https://github.com/nfroidure/common-services/compare/v7.1.5...v8.0.0) (2020-09-14)
+
+
+
 ## [7.1.5](https://github.com/nfroidure/common-services/compare/v7.1.4...v7.1.5) (2020-07-17)
 
 
