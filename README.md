@@ -8,12 +8,12 @@
 > A module to gather very common services and their mocks.
 
 [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/nfroidure/common-services/blob/master/LICENSE)
-[![Build status](https://secure.travis-ci.org/nfroidure/common-services.svg)](https://travis-ci.org/nfroidure/common-services)
-[![Coverage Status](https://coveralls.io/repos/nfroidure/common-services/badge.svg?branch=master)](https://coveralls.io/r/nfroidure/common-services?branch=master)
+[![Build status](https://travis-ci.com/nfroidure/common-services.svg?branch=master)](https://travis-ci.com/github/nfroidure/common-services)
+[![Coverage Status](https://coveralls.io/repos/github/nfroidure/common-services/badge.svg?branch=master)](https://coveralls.io/github/nfroidure/common-services?branch=master)
 [![NPM version](https://badge.fury.io/js/common-services.svg)](https://npmjs.org/package/common-services)
 [![Dependency Status](https://david-dm.org/nfroidure/common-services.svg)](https://david-dm.org/nfroidure/common-services)
 [![devDependency Status](https://david-dm.org/nfroidure/common-services/dev-status.svg)](https://david-dm.org/nfroidure/common-services#info=devDependencies)
-[![Package Quality](http://npm.packagequality.com/shield/common-services.svg)](http://packagequality.com/#?package=common-services)
+[![Package Quality](https://npm.packagequality.com/shield/common-services.svg)](https://packagequality.com/#?package=common-services)
 [![Code Climate](https://codeclimate.com/github/nfroidure/common-services.svg)](https://codeclimate.com/github/nfroidure/common-services)
 
 
