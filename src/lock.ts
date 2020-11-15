@@ -111,9 +111,13 @@ async function initLock<K>({
     const previousLocks = LOCKS_MAP.get(key) || [];
     let locksLength = previousLocks.length;
 
+    if (locksLength === 0) {
+      LOCKS_MAP.set(key, previousLocks);
+    }
+
     log(
       'debug',
-      `🔐 - Taking the lock on ${key} (queue length was ${locksLength})`,
+      `🔐 - Taking the lock on "${key}" (queue length was ${locksLength})`,
     );
 
     let _resolve: Function;
@@ -133,12 +137,9 @@ async function initLock<K>({
     };
 
     previousLocks.push(newLock);
-    locksLength++;
 
     if (locksLength > 1) {
-      await previousLocks[locksLength - 1].releasePromise;
-    } else {
-      LOCKS_MAP.set(key, previousLocks);
+      await previousLocks[locksLength - 2].releasePromise;
     }
   }
 
@@ -148,13 +149,21 @@ async function initLock<K>({
    * @return {void}
    */
   async function release(key) {
-    const previousLocks = LOCKS_MAP.get(key) || [];
-    const locksLength = previousLocks.length;
+    const actualLocks = LOCKS_MAP.get(key) || [];
+    const locksLength = actualLocks.length;
+
+    if (!locksLength) {
+      throw new YError('E_NO_LOCK', key);
+    }
 
     log(
       'debug',
-      `🔓 - Releasing the lock on ${key} (queue length was ${locksLength})`,
+      `🔓 - Releasing the lock on "${key}" (queue length was ${locksLength})`,
     );
-    previousLocks.pop().release();
+    actualLocks.shift().release();
+
+    if (locksLength === 0) {
+      LOCKS_MAP.delete(key);
+    }
   }
 }
