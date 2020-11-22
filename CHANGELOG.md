@@ -1,3 +1,12 @@
+# [9.0.0](https://github.com/nfroidure/common-services/compare/v8.0.2...v9.0.0) (2020-11-22)
+
+
+### Bug Fixes
+
+* **lock:** fix memory leaks and release order ([ebba7f7](https://github.com/nfroidure/common-services/commit/ebba7f7483f6c739c404a62d75fba093816f0fff))
+
+
+
 ## [8.0.2](https://github.com/nfroidure/common-services/compare/v8.0.1...v8.0.2) (2020-10-18)
 
 
