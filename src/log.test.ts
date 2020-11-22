@@ -1,21 +1,17 @@
-'use strict';
-
-import assert from 'assert';
-import sinon from 'sinon';
 import Knifecycle, { constant } from 'knifecycle';
 import initLogService from './log';
 
 describe('initLogService', () => {
-  const debug = sinon.stub();
+  const debug = jest.fn();
   const logger = {
-    error: sinon.stub(),
-    info: sinon.stub(),
+    error: jest.fn(),
+    info: jest.fn(),
   };
 
   beforeEach(() => {
-    debug.reset();
-    logger.info.reset();
-    logger.error.reset();
+    debug.mockReset();
+    logger.info.mockReset();
+    logger.error.mockReset();
   });
 
   test('should work', (done) => {
@@ -24,10 +20,16 @@ describe('initLogService', () => {
       logger,
     })
       .then((fn) => {
-        assert('function' === typeof fn);
-        assert.deepEqual(debug.args, [['👣 - Logging service initialized.']]);
-        assert.deepEqual(logger.info.args, []);
-        assert.deepEqual(logger.error.args, []);
+        expect('function' === typeof fn);
+        expect(debug.mock.calls).toMatchInlineSnapshot(`
+          Array [
+            Array [
+              "👣 - Logging service initialized.",
+            ],
+          ]
+        `);
+        expect(logger.info.mock.calls).toMatchInlineSnapshot(`Array []`);
+        expect(logger.error.mock.calls).toMatchInlineSnapshot(`Array []`);
       })
       .then(() => done())
       .catch(done);
@@ -40,14 +42,35 @@ describe('initLogService', () => {
         logger,
       })
         .then((log) => {
-          debug.reset();
+          debug.mockClear();
           log('debug', 'debug test');
           log('stack', 'stack test');
           log('info', 'info test');
           log('error', 'error test');
-          assert.deepEqual(debug.args, [['debug test']]);
-          assert.deepEqual(logger.info.args, [['info test']]);
-          assert.deepEqual(logger.error.args, [['stack test'], ['error test']]);
+          expect(debug.mock.calls).toMatchInlineSnapshot(`
+            Array [
+              Array [
+                "debug test",
+              ],
+            ]
+          `);
+          expect(logger.info.mock.calls).toMatchInlineSnapshot(`
+            Array [
+              Array [
+                "info test",
+              ],
+            ]
+          `);
+          expect(logger.error.mock.calls).toMatchInlineSnapshot(`
+            Array [
+              Array [
+                "stack test",
+              ],
+              Array [
+                "error test",
+              ],
+            ]
+          `);
         })
         .then(() => done())
         .catch(done);
@@ -61,11 +84,24 @@ describe('initLogService', () => {
       .register(constant('logger', logger))
       .run(['log'])
       .then(({ log }) => {
-        debug.reset();
+        debug.mockClear();
         log('debug', 'debug test');
         log('info', 'info test');
-        assert.deepEqual(debug.args, [['debug test']]);
-        assert.deepEqual(logger.info.args, [['info test']]);
+        expect(debug.mock.calls).toMatchInlineSnapshot(`
+          Array [
+            Array [
+              "debug test",
+            ],
+          ]
+        `);
+        expect(logger.info.mock.calls).toMatchInlineSnapshot(`
+          Array [
+            Array [
+              "info test",
+            ],
+          ]
+        `);
+        expect(logger.error.mock.calls).toMatchInlineSnapshot(`Array []`);
       })
       .then(() => done())
       .catch(done);

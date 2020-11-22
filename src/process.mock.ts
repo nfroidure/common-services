@@ -1,5 +1,3 @@
-'use strict';
-
 import initProcessService from './delay';
 import { reuseSpecialProps } from 'knifecycle';
 
@@ -15,4 +13,6 @@ export default reuseSpecialProps(
  * @return {Promise<Object>}
  * A promise of the process object
  */
-async function initProcessMock() {}
+async function initProcessMock(): Promise<void> {
+  return undefined;
+}

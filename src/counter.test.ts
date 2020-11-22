@@ -1,13 +1,11 @@
-import assert from 'assert';
-import sinon from 'sinon';
 import Knifecycle, { constant } from 'knifecycle';
 import initCounterService from './counter';
 
 describe('initCounterService', () => {
-  const log = sinon.stub();
+  const log = jest.fn();
 
   beforeEach(() => {
-    log.reset();
+    log.mockReset();
   });
 
   test('should work', async () => {
@@ -15,10 +13,15 @@ describe('initCounterService', () => {
       log,
     });
 
-    assert('function' === typeof counter);
-    assert.deepEqual(log.args, [
-      ['debug', '📇 - Counter service initialized.'],
-    ]);
+    expect('function' === typeof counter);
+    expect(log.mock.calls).toMatchInlineSnapshot(`
+      Array [
+        Array [
+          "debug",
+          "📇 - Counter service initialized.",
+        ],
+      ]
+    `);
   });
 
   describe('counter', () => {
@@ -27,11 +30,11 @@ describe('initCounterService', () => {
         log,
       });
 
-      log.reset();
+      log.mockReset();
 
       const num = await counter();
 
-      assert.deepEqual(log.args, [['debug', '📇 - Picked a count:', num]]);
+      expect(log.mock.calls).toEqual([['debug', '📇 - Picked a count:', num]]);
     });
   });
 
@@ -41,9 +44,14 @@ describe('initCounterService', () => {
       .register(constant('log', log))
       .run(['counter']);
 
-    assert(counter);
-    assert.deepEqual(log.args, [
-      ['debug', '📇 - Counter service initialized.'],
-    ]);
+    expect(counter).toBeDefined();
+    expect(log.mock.calls).toMatchInlineSnapshot(`
+      Array [
+        Array [
+          "debug",
+          "📇 - Counter service initialized.",
+        ],
+      ]
+    `);
   });
 });

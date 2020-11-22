@@ -2,7 +2,6 @@ import Knifecycle, { constant } from 'knifecycle';
 import initLockService from './lock';
 import initDelayService from './delay';
 import YError from 'yerror';
-import type { DelayService } from './delay';
 
 describe('initLockService', () => {
   const log = jest.fn();

@@ -1,12 +1,14 @@
 import YError from 'yerror';
-import { autoProvider, options } from 'knifecycle';
-import type { Knifecycle, FatalErrorProvider } from 'knifecycle';
+import { autoProvider, singleton } from 'knifecycle';
+import type { Knifecycle, FatalErrorService } from 'knifecycle';
 import type { LogService } from './log';
 
 const DEFAULT_NODE_ENVS = ['development', 'test', 'production'];
 const DEFAULT_SIGNALS: NodeJS.Signals[] = ['SIGTERM', 'SIGINT'];
 
-function noop() {}
+function noop(): void {
+  return undefined;
+}
 
 export type ProcessServiceConfig = {
   NODE_ENV?: string;
@@ -16,9 +18,9 @@ export type ProcessServiceConfig = {
 };
 export type ProcessServiceDependencies = ProcessServiceConfig & {
   NODE_ENV: string;
-  exit: Function;
-  $instance: Knifecycle;
-  $fatalError: FatalErrorProvider;
+  exit: typeof process.exit;
+  $instance: Knifecycle<unknown>;
+  $fatalError: FatalErrorService;
   log?: LogService;
 };
 
@@ -29,7 +31,7 @@ It returns nothing and should be injected only for its
  side effects.
 */
 
-export default options({ singleton: true }, autoProvider(initProcess), true);
+export default singleton(autoProvider(initProcess));
 
 /**
  * Instantiate the process service
@@ -53,10 +55,10 @@ async function initProcess({
   service: NodeJS.Process;
   dispose: () => Promise<void>;
 }> {
+  const signalsListeners = SIGNALS.map<
+    [NodeJS.Signals, NodeJS.SignalsListener]
+  >((signal) => [signal, terminate.bind(null, signal)]);
   let shuttingDown = null;
-  let signalsListeners = SIGNALS.map<[NodeJS.Signals, NodeJS.SignalsListener]>(
-    (signal) => [signal, terminate.bind(null, signal)],
-  );
 
   /* Architecture Note #1.5.1: Node environment filtering
 
@@ -104,13 +106,13 @@ async function initProcess({
   */
   global.process.on('uncaughtException', catchUncaughtException);
 
-  function catchUncaughtException(err) {
+  function catchUncaughtException(err: Error) {
     log('error', '💀 - Uncaught Exception');
     log('stack', err.stack || err);
     terminate('ERR');
   }
 
-  function terminate(signal) {
+  function terminate(signal: NodeJS.Signals | 'ERR' | 'FATAL') {
     if (shuttingDown) {
       log('warning', `🚦 - ${signal} received again, shutdown now.`);
       exit(1);
@@ -123,7 +125,7 @@ async function initProcess({
     }
   }
 
-  async function shutdown(code) {
+  async function shutdown(code: number) {
     shuttingDown = true;
     log('warning', 'Shutting down now 🙏...');
     await $instance.destroy();

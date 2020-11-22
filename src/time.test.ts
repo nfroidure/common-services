@@ -1,13 +1,11 @@
-import assert from 'assert';
-import sinon from 'sinon';
 import Knifecycle, { constant } from 'knifecycle';
 import initTimeService from './time';
 
 describe('initTimeService', () => {
-  const log = sinon.stub();
+  const log = jest.fn();
 
   beforeEach(() => {
-    log.reset();
+    log.mockReset();
   });
 
   test('should work', (done) => {
@@ -15,10 +13,15 @@ describe('initTimeService', () => {
       log,
     })
       .then((time) => {
-        assert('function' === typeof time);
-        assert.deepEqual(log.args, [
-          ['debug', '⏰ - Time service initialized.'],
-        ]);
+        expect('function' === typeof time);
+        expect(log.mock.calls).toMatchInlineSnapshot(`
+          Array [
+            Array [
+              "debug",
+              "⏰ - Time service initialized.",
+            ],
+          ]
+        `);
       })
       .then(() => done())
       .catch(done);
@@ -30,10 +33,11 @@ describe('initTimeService', () => {
         log,
       })
         .then((time) => {
-          log.reset();
+          log.mockClear();
+
           const now = time();
 
-          assert.deepEqual(log.args, [
+          expect(log.mock.calls).toEqual([
             ['debug', '⏰ - Picked a timestamp:', now],
           ]);
         })
@@ -48,10 +52,15 @@ describe('initTimeService', () => {
       .register(constant('log', log))
       .run(['time'])
       .then(({ time }) => {
-        assert(time);
-        assert.deepEqual(log.args, [
-          ['debug', '⏰ - Time service initialized.'],
-        ]);
+        expect(time).toBeDefined();
+        expect(log.mock.calls).toMatchInlineSnapshot(`
+          Array [
+            Array [
+              "debug",
+              "⏰ - Time service initialized.",
+            ],
+          ]
+        `);
       })
       .then(() => done())
       .catch(done);

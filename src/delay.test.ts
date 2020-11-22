@@ -1,14 +1,12 @@
 /* eslint max-nested-callbacks:0 */
-import assert from 'assert';
-import sinon from 'sinon';
 import Knifecycle, { constant } from 'knifecycle';
 import initDelayService from './delay';
 
 describe('initDelayService', () => {
-  const log = sinon.stub();
+  const log = jest.fn();
 
   beforeEach(() => {
-    log.reset();
+    log.mockReset();
   });
 
   test('should work', async () => {
@@ -16,21 +14,28 @@ describe('initDelayService', () => {
       log,
     });
 
-    assert('function' === typeof delay.service.create);
-    assert('function' === typeof delay.service.clear);
-    assert('function' === typeof delay.dispose);
-    assert.deepEqual(log.args, [['debug', '⌛ - Delay service initialized.']]);
+    expect('function' === typeof delay.service.create);
+    expect('function' === typeof delay.service.clear);
+    expect('function' === typeof delay.dispose);
+    expect(log.mock.calls).toMatchInlineSnapshot(`
+      Array [
+        Array [
+          "debug",
+          "⌛ - Delay service initialized.",
+        ],
+      ]
+    `);
   });
 
   describe('delay.create', () => {
     let setTimeoutStub;
 
     beforeEach(() => {
-      setTimeoutStub = sinon.stub(global, 'setTimeout');
+      setTimeoutStub = jest.spyOn(global, 'setTimeout');
     });
 
     afterEach(() => {
-      setTimeoutStub.restore();
+      setTimeoutStub.mockClear();
     });
 
     test('should work', async () => {
@@ -38,17 +43,23 @@ describe('initDelayService', () => {
         log,
       });
 
-      let delayPromise;
+      log.mockReset();
 
-      log.reset();
-      setTimeoutStub.returns({});
+      const delayPromise = delay.create(1000);
 
-      delayPromise = delay.create(1000);
-      assert.equal(setTimeoutStub.args.length, 1);
-      assert.equal(setTimeoutStub.args[0][1], 1000);
-      assert.deepEqual(log.args, [['debug', '⏳ - Created a delay:', 1000]]);
+      expect(setTimeoutStub.mock.calls.length).toEqual(1);
+      expect(setTimeoutStub.mock.calls[0][1]).toEqual(1000);
+      expect(log.mock.calls).toMatchInlineSnapshot(`
+        Array [
+          Array [
+            "debug",
+            "⏳ - Created a delay:",
+            1000,
+          ],
+        ]
+      `);
       // Run set callback
-      setTimeoutStub.args[0][0]();
+      setTimeoutStub.mock.calls[0][0]();
 
       await delayPromise;
     });
@@ -59,14 +70,13 @@ describe('initDelayService', () => {
     let clearTimeoutStub;
 
     beforeEach(() => {
-      setTimeoutStub = sinon.stub(global, 'setTimeout');
-      clearTimeoutStub = sinon.stub(global, 'clearTimeout');
-      setTimeoutStub.returns({});
+      setTimeoutStub = jest.spyOn(global, 'setTimeout');
+      clearTimeoutStub = jest.spyOn(global, 'clearTimeout');
     });
 
     afterEach(() => {
-      setTimeoutStub.restore();
-      clearTimeoutStub.restore();
+      setTimeoutStub.mockClear();
+      clearTimeoutStub.mockClear();
     });
 
     test('should fail with bad promise', async () => {
@@ -74,10 +84,10 @@ describe('initDelayService', () => {
         log,
       });
 
-      log.reset();
+      log.mockReset();
 
       await delay.clear(Promise.resolve()).catch((err) => {
-        assert.equal(err.code, 'E_BAD_DELAY');
+        expect(err.code).toEqual('E_BAD_DELAY');
       });
     });
 
@@ -89,15 +99,22 @@ describe('initDelayService', () => {
 
       await Promise.resolve();
 
-      log.reset();
+      log.mockReset();
 
       await Promise.all([
         delay.clear(delayPromise),
         delayPromise.catch((err) => {
-          assert.equal(err.code, 'E_DELAY_CLEARED');
+          expect(err.code).toEqual('E_DELAY_CLEARED');
         }),
       ]);
-      assert.deepEqual(log.args, [['debug', '⏳ - Cleared a delay']]);
+      expect(log.mock.calls).toMatchInlineSnapshot(`
+        Array [
+          Array [
+            "debug",
+            "⏳ - Cleared a delay",
+          ],
+        ]
+      `);
     });
   });
 
@@ -107,7 +124,14 @@ describe('initDelayService', () => {
       .register(constant('log', log))
       .run(['delay']);
 
-    assert(delay);
-    assert.deepEqual(log.args, [['debug', '⌛ - Delay service initialized.']]);
+    expect(delay);
+    expect(log.mock.calls).toMatchInlineSnapshot(`
+      Array [
+        Array [
+          "debug",
+          "⌛ - Delay service initialized.",
+        ],
+      ]
+    `);
   });
 });

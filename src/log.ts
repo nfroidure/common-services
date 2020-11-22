@@ -1,6 +1,8 @@
-import { autoService, options } from 'knifecycle';
+import { autoService, singleton } from 'knifecycle';
 
-function noop() {}
+function noop(): void {
+  return undefined;
+}
 
 export interface LogService {
   (...args: any[]): void;
@@ -48,7 +50,7 @@ If provided, I route debug messages to the `debug`
 
 */
 
-export default options({ singleton: true }, autoService(initLog), true);
+export default singleton(autoService(initLog));
 
 /**
  * Instantiate the logging service

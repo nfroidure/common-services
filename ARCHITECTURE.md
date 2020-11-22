@@ -33,7 +33,7 @@ I prefer using a unique function with the log type
 If provided, I route debug messages to the `debug`
  node module.
 
-[See in context](./src/log.ts#L39-L49)
+[See in context](./src/log.ts#L41-L51)
 
 
 
@@ -98,7 +98,7 @@ The time service is just proxying [`Date.now`
 ](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Date/now)
  in a stubbable manner.
 
-[See in context](./src/time.ts#L10-L15)
+[See in context](./src/time.ts#L12-L17)
 
 
 
@@ -117,7 +117,7 @@ The random service is just proxying [`Math.random`
 ](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Math/random)
  in a stubbable manner.
 
-[See in context](./src/random.ts#L10-L15)
+[See in context](./src/random.ts#L12-L17)
 
 
 
@@ -135,7 +135,7 @@ The random mock uses the [`sinon`](https://github.com/sinonjs/sinon/)
 The delay service is `setTimeout` like I would like it
  to be.
 
-[See in context](./src/delay.ts#L16-L20)
+[See in context](./src/delay.ts#L18-L22)
 
 
 
@@ -159,7 +159,7 @@ The `process` service takes care of the process status.
 It returns nothing and should be injected only for its
  side effects.
 
-[See in context](./src/process.ts#L25-L30)
+[See in context](./src/process.ts#L27-L32)
 
 
 
@@ -170,7 +170,7 @@ It also forces NODE_ENV to be set to avoid unintentionnal
  your own list of valid environments by injecting the
  `SIGNALS` optional dependency.
 
-[See in context](./src/process.ts#L61-L67)
+[See in context](./src/process.ts#L63-L69)
 
 
 
@@ -181,7 +181,7 @@ It also handle SIGINT and SIGTERM signals to allow to
  to handle can be customized by injecting the `SIGNALS`
  optional dependencies.
 
-[See in context](./src/process.ts#L77-L83)
+[See in context](./src/process.ts#L79-L85)
 
 
 
@@ -190,7 +190,7 @@ It also handle SIGINT and SIGTERM signals to allow to
 If an error occurs it attempts to gracefully exit
 to give it a chance to finish properly.
 
-[See in context](./src/process.ts#L88-L92)
+[See in context](./src/process.ts#L90-L94)
 
 
 
@@ -200,7 +200,7 @@ If an uncaught exeption occurs it also attempts to
  gracefully exit since a process should never be kept
  alive when an uncaught exception is raised.
 
-[See in context](./src/process.ts#L99-L104)
+[See in context](./src/process.ts#L101-L106)
 
 
 
@@ -214,7 +214,7 @@ The count are returned asynchronously in order
  if needed later via another service with the same
  surface API.
 
-[See in context](./src/counter.ts#L21-L30)
+[See in context](./src/counter.ts#L23-L32)
 
 
 
@@ -225,7 +225,7 @@ The `codeGenerator` service provide a service
  a character set that avoid recognition
  mistake by humans.
 
-[See in context](./src/codeGenerator.ts#L18-L24)
+[See in context](./src/codeGenerator.ts#L20-L26)
 
 
 

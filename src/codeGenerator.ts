@@ -2,7 +2,9 @@ import { autoService } from 'knifecycle';
 import type { LogService } from './log';
 import type { RandomService } from './random';
 
-function noop() {}
+function noop(): void {
+  return undefined;
+}
 
 export type CodeGeneratorServiceConfig = {
   CHARS_SET?: string;
@@ -74,7 +76,7 @@ async function initCodeGenerator({
    * ]);
    * // Prints: ABCDEF,GHJKMN,PRSTUV
    */
-  async function codeGenerator(length = 6) {
+  async function codeGenerator(length = 6): Promise<string> {
     const code = new Array(length)
       .fill('0')
       .map(() => CHARS_SET[Math.floor(random() * (charsSetLength - 1))])

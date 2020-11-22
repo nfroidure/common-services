@@ -1,7 +1,9 @@
-import { autoService, options } from 'knifecycle';
+import { autoService, singleton } from 'knifecycle';
 import type { LogService } from './log';
 
-function noop() {}
+function noop(): void {
+  return undefined;
+}
 
 export interface RandomService {
   (): number;
@@ -14,7 +16,7 @@ The random service is just proxying [`Math.random`
  in a stubbable manner.
 */
 
-export default options({ singleton: true }, autoService(initRandom), true);
+export default singleton(autoService(initRandom));
 
 /**
  * Instantiate the random service
@@ -46,7 +48,7 @@ async function initRandom({
    * random()
    * // Prints: 0.3141592653589793
    */
-  function random() {
+  function random(): number {
     const num = Math.random();
 
     log('debug', '🎲 - Created a random number:', num);

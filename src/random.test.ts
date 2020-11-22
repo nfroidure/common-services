@@ -1,15 +1,11 @@
-'use strict';
-
-import assert from 'assert';
-import sinon from 'sinon';
 import Knifecycle, { constant } from 'knifecycle';
 import initRandomService from './random';
 
 describe('initRandomService', () => {
-  const log = sinon.stub();
+  const log = jest.fn();
 
   beforeEach(() => {
-    log.reset();
+    log.mockReset();
   });
 
   test('should work', (done) => {
@@ -17,10 +13,15 @@ describe('initRandomService', () => {
       log,
     })
       .then((random) => {
-        assert('function' === typeof random);
-        assert.deepEqual(log.args, [
-          ['debug', '🎲 - Random service initialized.'],
-        ]);
+        expect('function' === typeof random);
+        expect(log.mock.calls).toMatchInlineSnapshot(`
+          Array [
+            Array [
+              "debug",
+              "🎲 - Random service initialized.",
+            ],
+          ]
+        `);
       })
       .then(() => done())
       .catch(done);
@@ -32,10 +33,10 @@ describe('initRandomService', () => {
         log,
       })
         .then((random) => {
-          log.reset();
+          log.mockClear();
           const num = random();
 
-          assert.deepEqual(log.args, [
+          expect(log.mock.calls).toEqual([
             ['debug', '🎲 - Created a random number:', num],
           ]);
         })
@@ -50,10 +51,15 @@ describe('initRandomService', () => {
       .register(constant('log', log))
       .run(['random'])
       .then(({ random }) => {
-        assert(random);
-        assert.deepEqual(log.args, [
-          ['debug', '🎲 - Random service initialized.'],
-        ]);
+        expect(random).toBeDefined();
+        expect(log.mock.calls).toMatchInlineSnapshot(`
+          Array [
+            Array [
+              "debug",
+              "🎲 - Random service initialized.",
+            ],
+          ]
+        `);
       })
       .then(() => done())
       .catch(done);

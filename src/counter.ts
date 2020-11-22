@@ -1,7 +1,9 @@
-import { autoService, options } from 'knifecycle';
+import { autoService, singleton } from 'knifecycle';
 import type { LogService } from './log';
 
-function noop() {}
+function noop(): void {
+  return undefined;
+}
 
 export interface CounterService {
   (): Promise<number>;
@@ -29,7 +31,7 @@ The count are returned asynchronously in order
  surface API.
 */
 
-export default options({ singleton: true }, autoService(initCounter), true);
+export default singleton(autoService(initCounter), true);
 
 /**
  * Instantiate the counter service

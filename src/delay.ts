@@ -1,8 +1,10 @@
 import YError from 'yerror';
-import { autoProvider, options } from 'knifecycle';
+import { autoProvider, singleton } from 'knifecycle';
 import type { LogService } from './log';
 
-function noop() {}
+function noop(): void {
+  return undefined;
+}
 
 export interface DelayProvider {
   service: DelayService;
@@ -19,7 +21,7 @@ The delay service is `setTimeout` like I would like it
  to be.
 */
 
-export default options({ singleton: true }, autoProvider(initDelay), true);
+export default singleton(autoProvider(initDelay));
 
 /**
  * Instantiate the delay service

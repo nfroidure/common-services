@@ -1,7 +1,9 @@
-import { autoService, options } from 'knifecycle';
+import { autoService, singleton } from 'knifecycle';
 import type { LogService } from './log';
 
-function noop() {}
+function noop(): void {
+  return undefined;
+}
 
 export interface TimeService {
   (): number;
@@ -14,7 +16,7 @@ The time service is just proxying [`Date.now`
  in a stubbable manner.
 */
 
-export default options({ singleton: true }, autoService(initTime), true);
+export default singleton(autoService(initTime));
 
 /**
  * Instantiate the time service

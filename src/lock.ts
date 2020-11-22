@@ -1,13 +1,13 @@
 import YError from 'yerror';
-import { autoService, options } from 'knifecycle';
+import { autoService, singleton } from 'knifecycle';
 import type { LogService } from './log';
 import type { DelayService } from './delay';
 
-const noop = () => {};
+const noop = () => undefined;
 
 interface Lock {
   releasePromise: Promise<void>;
-  release: Function;
+  release: () => void;
 }
 
 export type LockServiceConfig<K> = {
@@ -36,7 +36,7 @@ The release is done by its key and the current lock is removed. There
  said, it should not be hard to handle since the actual behavior of
  the library makes your code run sequentially.
 */
-export default options({ singleton: true }, autoService(initLock), true);
+export default singleton(autoService(initLock), true);
 
 /**
  * Instantiate the lock service
@@ -109,7 +109,7 @@ async function initLock<K>({
    */
   async function take(key) {
     const previousLocks = LOCKS_MAP.get(key) || [];
-    let locksLength = previousLocks.length;
+    const locksLength = previousLocks.length;
 
     if (locksLength === 0) {
       LOCKS_MAP.set(key, previousLocks);
@@ -120,7 +120,7 @@ async function initLock<K>({
       `🔐 - Taking the lock on "${key}" (queue length was ${locksLength})`,
     );
 
-    let _resolve: Function;
+    let _resolve: () => void;
     const releasePromise: Promise<void> = new Promise((resolve, reject) => {
       _resolve = resolve;
 
