@@ -132,11 +132,11 @@ async function initProcess({
 
     try {
       log('warning', '😎 - Gracefull shutdown sucessfully done !');
-      exit(code || 0);
+      exit(code);
     } catch (err) {
       log('error', '🤔 - Could not gracefully shutdown.');
       log('stack', err.stack || err);
-      exit(1);
+      exit(code);
     }
   }
 
