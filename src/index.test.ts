@@ -33,10 +33,10 @@ describe('index', () => {
             .sort()
             .map((name) => name.replace(/^init(.*)Service$/, 'init$1')),
           modules
-            .map((module) => (module as any).name as string)
+            .map((module) => (module as { name: string }).name as string)
             .map((name) => name.replace(/(bound )*/, ''))
             // Also exports LogService defaults/interfaces
-            .concat(['DEFAULT_LOGGER', 'DEFAULT_LOG_ROUTING'])
+            .concat(['DEFAULT_LOG_CONFIG', 'DEFAULT_LOG_ROUTING'])
             .sort(),
         );
       })

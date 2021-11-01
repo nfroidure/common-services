@@ -10,11 +10,6 @@
 [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/nfroidure/common-services/blob/master/LICENSE)
 [![Build status](https://travis-ci.com/nfroidure/common-services.svg?branch=master)](https://travis-ci.com/github/nfroidure/common-services)
 [![Coverage Status](https://coveralls.io/repos/github/nfroidure/common-services/badge.svg?branch=master)](https://coveralls.io/github/nfroidure/common-services?branch=master)
-[![NPM version](https://badge.fury.io/js/common-services.svg)](https://npmjs.org/package/common-services)
-[![Dependency Status](https://david-dm.org/nfroidure/common-services.svg)](https://david-dm.org/nfroidure/common-services)
-[![devDependency Status](https://david-dm.org/nfroidure/common-services/dev-status.svg)](https://david-dm.org/nfroidure/common-services#info=devDependencies)
-[![Package Quality](https://npm.packagequality.com/shield/common-services.svg)](https://packagequality.com/#?package=common-services)
-[![Code Climate](https://codeclimate.com/github/nfroidure/common-services.svg)](https://codeclimate.com/github/nfroidure/common-services)
 
 
 [//]: # (::contents:start)
@@ -332,7 +327,7 @@ Instantiate the logging service
 | Param | Type | Default | Description |
 | --- | --- | --- | --- |
 | services | <code>Object</code> |  | The services to inject |
-| [services.logger] | <code>Object</code> | <code>DEFAULT_LOGGER</code> | The logger to use |
+| services.logger | <code>Object</code> |  | The logger object that output the logs |
 | [services.debug] | <code>function</code> | <code>noop</code> | A debugging function |
 
 **Example**  

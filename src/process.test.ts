@@ -29,7 +29,7 @@ describe('Process service', () => {
         PROCESS_NAME: 'Kikooolol',
         log,
         exit,
-        $instance: { destroy: () => Promise.resolve() } as Knifecycle<unknown>,
+        $instance: { destroy: () => Promise.resolve() } as Knifecycle,
         $fatalError: {
           promise: new Promise((resolve, reject) => {
             fatalErrorDeferred = { resolve, reject };
@@ -61,8 +61,10 @@ describe('Process service', () => {
     });
 
     test('should handle uncaught exceptions', (done) => {
-      processListenerStub.mock.calls.find(
-        (call) => 'uncaughtException' === call[0],
+      (
+        processListenerStub.mock.calls.find(
+          (call) => 'uncaughtException' === call[0],
+        ) as [unknown, (err: Error) => void]
       )[1](new YError('E_AOUCH'));
 
       exitPromise
@@ -75,9 +77,12 @@ describe('Process service', () => {
 
     ['SIGINT', 'SIGTERM'].forEach((signal) =>
       test('should handle `signal`', (done) => {
-        processListenerStub.mock.calls.find((call) => signal === call[0])[1](
-          new YError('E_AOUCH'),
-        );
+        (
+          processListenerStub.mock.calls.find((call) => signal === call[0]) as [
+            unknown,
+            (err: Error) => void,
+          ]
+        )[1](new YError('E_AOUCH'));
 
         exitPromise
           .then(() => {

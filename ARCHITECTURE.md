@@ -5,9 +5,28 @@
 [//]: # ( )
 # Architecture Notes
 
+## Summary
+
+1. [Services](#1-services)
+   1. [Logging](#11-logging)
+      1. [Mocking logs](#11.1-mocking-logs)
+   2. [Time](#12-time)
+      1. [Mocking time](#12.1-mocking-time)
+   3. [Randomness](#13-randomness)
+      1. [Mocking randomness](#13.1-mocking-randomness)
+   4. [Delaying](#14-delaying)
+      1. [Mocking delays](#14.1-mocking-delays)
+   5. [Process](#15-process)
+      1. [Node environment filtering](#15.1-node-environment-filtering)
+      2. [Signals handling](#15.2-signals-handling)
+      3. [Handling services fatal errors](#15.3-handling-services-fatal-errors)
+      4. [Uncaught exceptions](#15.4-uncaught-exceptions)
+   6. [Counter](#16-counter)
+   7. [Code generator](#17-code-generator)
+   8. [Lock](#18-lock)
 
 
-## Services
+## 1. Services
 
 Since the services in this module are very common, we
  provide a helper to require them all with a single
@@ -23,7 +42,7 @@ Their goal is to encapsulate unpredictible states and
 
 
 
-### Logging
+### 1.1. Logging
 
 I prefer using a unique function with the log type
  in parameter instead of several methods for each
@@ -33,11 +52,11 @@ I prefer using a unique function with the log type
 If provided, I route debug messages to the `debug`
  node module.
 
-[See in context](./src/log.ts#L41-L51)
+[See in context](./src/log.ts#L53-L63)
 
 
 
-#### Mocking logs
+#### 1.1.1. Mocking logs
 
 The log mock uses the
  [`sinon`](https://github.com/sinonjs/sinon/)
@@ -92,7 +111,7 @@ describe('my test', () => {
 
 
 
-### Time
+### 1.2. Time
 
 The time service is just proxying [`Date.now`
 ](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Date/now)
@@ -102,7 +121,7 @@ The time service is just proxying [`Date.now`
 
 
 
-#### Mocking time
+#### 1.2.1. Mocking time
 
 The time mock uses the [`sinon`](https://github.com/sinonjs/sinon/)
  module under the hood like for the logging mock.
@@ -111,7 +130,7 @@ The time mock uses the [`sinon`](https://github.com/sinonjs/sinon/)
 
 
 
-### Randomness
+### 1.3. Randomness
 
 The random service is just proxying [`Math.random`
 ](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Math/random)
@@ -121,7 +140,7 @@ The random service is just proxying [`Math.random`
 
 
 
-#### Mocking randomness
+#### 1.3.1. Mocking randomness
 
 The random mock uses the [`sinon`](https://github.com/sinonjs/sinon/)
  module under the hood like for the logging mock.
@@ -130,7 +149,7 @@ The random mock uses the [`sinon`](https://github.com/sinonjs/sinon/)
 
 
 
-### Delaying
+### 1.4. Delaying
 
 The delay service is `setTimeout` like I would like it
  to be.
@@ -139,7 +158,7 @@ The delay service is `setTimeout` like I would like it
 
 
 
-#### Mocking delays
+#### 1.4.1. Mocking delays
 
 This mock is largely inspired by the `$timeout` one of
  AngularJS. It allows to resolve/reject pending delays
@@ -148,11 +167,11 @@ This mock is largely inspired by the `$timeout` one of
  bug but a design choice to keep the closest possible
  to what would happen in actual code.
 
-[See in context](./src/delay.mock.ts#L6-L14)
+[See in context](./src/delay.mock.ts#L5-L13)
 
 
 
-### Process
+### 1.5. Process
 
 The `process` service takes care of the process status.
 
@@ -163,7 +182,7 @@ It returns nothing and should be injected only for its
 
 
 
-#### Node environment filtering
+#### 1.5.1. Node environment filtering
 
 It also forces NODE_ENV to be set to avoid unintentionnal
  development version shipping to production. You can specify
@@ -174,7 +193,7 @@ It also forces NODE_ENV to be set to avoid unintentionnal
 
 
 
-#### Signals handling
+#### 1.5.2. Signals handling
 
 It also handle SIGINT and SIGTERM signals to allow to
  gracefully shutdown the running process. The signals
@@ -185,7 +204,7 @@ It also handle SIGINT and SIGTERM signals to allow to
 
 
 
-#### Handling services fatal errors
+#### 1.5.3. Handling services fatal errors
 
 If an error occurs it attempts to gracefully exit
 to give it a chance to finish properly.
@@ -194,7 +213,7 @@ to give it a chance to finish properly.
 
 
 
-#### Uncaught exceptions
+#### 1.5.4. Uncaught exceptions
 
 If an uncaught exeption occurs it also attempts to
  gracefully exit since a process should never be kept
@@ -204,7 +223,7 @@ If an uncaught exeption occurs it also attempts to
 
 
 
-### Counter
+### 1.6. Counter
 
 The `counter` service provide a simple, local and
  stubbable counter.
@@ -218,7 +237,7 @@ The count are returned asynchronously in order
 
 
 
-### Code generator
+### 1.7. Code generator
 
 The `codeGenerator` service provide a service
  that generate random strings composed of
@@ -229,7 +248,7 @@ The `codeGenerator` service provide a service
 
 
 
-### Lock
+### 1.8. Lock
 
 This service allows to maintain a lock on a given resource in order
  to ensure a sequential access to it in asynchronous code.

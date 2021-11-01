@@ -3,7 +3,7 @@ import { reuseSpecialProps } from 'knifecycle';
 
 export default reuseSpecialProps(
   initProcessService,
-  (initProcessMock as unknown) as typeof initProcessService,
+  initProcessMock as unknown as typeof initProcessService,
 );
 
 /**

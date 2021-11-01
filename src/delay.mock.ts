@@ -1,7 +1,6 @@
 import YError from 'yerror';
 import initDelayService from './delay';
 import { reuseSpecialProps } from 'knifecycle';
-import type { DelayService } from './delay';
 
 /* Architecture Note #1.4.1: Mocking delays
 
@@ -14,7 +13,7 @@ This mock is largely inspired by the `$timeout` one of
 */
 
 export default reuseSpecialProps(
-  (initDelayService as unknown) as typeof initDelayMock,
+  initDelayService as unknown as typeof initDelayMock,
   initDelayMock,
 );
 
@@ -39,19 +38,21 @@ export default reuseSpecialProps(
  *   // instead of after a 1000ms delay
  * });
  */
-function initDelayMock(
-  _: any,
-): Promise<{
+function initDelayMock(_: unknown): Promise<{
   service: {
     create: (delay: number) => Promise<void>;
-    clear: (promise: Promise<any>) => Promise<void>;
-    __resolve: (promise: Promise<any>) => Promise<void>;
+    clear: (promise: Promise<void>) => Promise<void>;
+    __resolve: (promise: Promise<void>) => Promise<void>;
     __resolveAll: () => Promise<void>;
-    __reject: (promise: Promise<any>) => Promise<void>;
+    __reject: (promise: Promise<void>) => Promise<void>;
     __rejectAll: () => Promise<void>;
   };
 }> {
-  const pendingPromises = [];
+  const pendingPromises: {
+    promise: Promise<void>;
+    resolve: Parameters<ConstructorParameters<typeof Promise>[0]>[0];
+    reject: Parameters<ConstructorParameters<typeof Promise>[0]>[1];
+  }[] = [];
 
   return Promise.resolve({
     service: {
@@ -67,7 +68,7 @@ function initDelayMock(
   function create(_: number): Promise<void> {
     let _resolve;
     let _reject;
-    const promise = new Promise((resolve, reject) => {
+    const promise = new Promise<void>((resolve, reject) => {
       _reject = reject;
       _resolve = resolve;
     });
@@ -80,7 +81,7 @@ function initDelayMock(
     return promise as Promise<void>;
   }
 
-  async function clear(promise: Promise<any>) {
+  async function clear(promise: Promise<void>) {
     const pendingPromiseIndex = pendingPromises.findIndex(
       (pendingPromise) => pendingPromise.promise === promise,
     );
@@ -93,7 +94,7 @@ function initDelayMock(
     return Promise.resolve() as Promise<void>;
   }
 
-  function __resolve(promise: Promise<any>) {
+  function __resolve(promise: Promise<void>) {
     const pendingPromise = pendingPromises.find(
       (pendingPromise) => pendingPromise.promise === promise,
     );
@@ -101,7 +102,7 @@ function initDelayMock(
     if (!pendingPromise) {
       return Promise.reject(new YError('E_BAD_DELAY'));
     }
-    pendingPromise.resolve();
+    pendingPromise.resolve(undefined);
     return Promise.resolve().then(__delete.bind(null, promise));
   }
 
@@ -125,7 +126,7 @@ function initDelayMock(
     await Promise.all(pendingPromises.map(({ promise }) => __reject(promise)));
   }
 
-  function __delete(promise: Promise<any>) {
+  function __delete(promise: Promise<void>) {
     const pendingPromiseIndex = pendingPromises.findIndex(
       (pendingPromise) => pendingPromise.promise === promise,
     );

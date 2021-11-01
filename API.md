@@ -306,7 +306,7 @@ Instantiate the logging service
 | Param | Type | Default | Description |
 | --- | --- | --- | --- |
 | services | <code>Object</code> |  | The services to inject |
-| [services.logger] | <code>Object</code> | <code>DEFAULT_LOGGER</code> | The logger to use |
+| services.logger | <code>Object</code> |  | The logger object that output the logs |
 | [services.debug] | <code>function</code> | <code>noop</code> | A debugging function |
 
 **Example**  

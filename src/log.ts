@@ -1,41 +1,53 @@
 import { autoService, singleton } from 'knifecycle';
+import type { JsonValue } from 'type-fest';
 
-function noop(): void {
-  return undefined;
-}
-
-export interface LogService {
-  (...args: any[]): void;
-}
-
-export enum StdStream {
-  STD_OUT = 'STD_OUT',
-  STD_ERR = 'STD_ERR',
-}
-
-export interface Logger {
-  [name: string]: LogService;
-}
-
-// Fallbacking to silent logs making logging
-// opt-in. It appears to be the best default
-// since logs are easy to get but won't disturb
-// tests.
-export const DEFAULT_LOGGER = {
-  debug: noop, // eslint-disable-line
-  error: noop, // eslint-disable-line
-  info: noop, // eslint-disable-line
-  warning: noop, // eslint-disable-line
+export type LogConfig = {
+  stringify: boolean;
 };
+export interface LogFunction {
+  (...args: JsonValue[]): void;
+}
+export interface Logger {
+  error: (message: string) => void;
+  output: (message: string) => void;
+  debug: (...args: JsonValue[]) => void;
+}
+export enum LogOutputTypes {
+  OUTPUT = 'output',
+  ERROR = 'error',
+  DEBUG = 'debug',
+}
+export type LogTypes =
+  | 'debug'
+  | 'error'
+  | 'info'
+  | 'warning'
+  | 'error-stack'
+  | 'debug-stack';
+export interface LogService {
+  (type: LogTypes, ...args: JsonValue[]): void;
+}
 
-export const DEFAULT_LOG_ROUTING = {
-  error: StdStream.STD_ERR,
+export const DEFAULT_LOG_CONFIG: LogConfig = {
+  stringify: false,
+};
+export const DEFAULT_LOG_ROUTING: Record<LogTypes, LogOutputTypes> = {
+  error: LogOutputTypes.ERROR,
+  debug: LogOutputTypes.DEBUG,
+  warning: LogOutputTypes.ERROR,
+  info: LogOutputTypes.OUTPUT,
   // The stack type allows to filter logs in testing
   // since the stack files paths vary between systems
   // and it is annoying to filter them
-  stack: StdStream.STD_ERR,
-  warning: StdStream.STD_ERR,
-  info: StdStream.STD_OUT,
+  'error-stack': LogOutputTypes.ERROR,
+  'debug-stack': LogOutputTypes.DEBUG,
+};
+export type LogServiceConfig = {
+  LOG_CONFIG?: LogConfig;
+  LOG_ROUTING?: { [type: string]: LogOutputTypes };
+};
+export type LogServiceDependencies = LogServiceConfig & {
+  logger: Logger;
 };
 
 /* Architecture Note #1.1: Logging
@@ -58,8 +70,8 @@ export default singleton(autoService(initLog));
  * @function
  * @param  {Object}   services
  * The services to inject
- * @param  {Object}   [services.logger = DEFAULT_LOGGER]
- * The logger to use
+ * @param  {Object}   services.logger
+ * The logger object that output the logs
  * @param  {Function} [services.debug = noop]
  * A debugging function
  * @return {Promise<Function>}
@@ -73,14 +85,10 @@ export default singleton(autoService(initLog));
  *  });
  */
 async function initLog({
+  LOG_CONFIG = DEFAULT_LOG_CONFIG,
   LOG_ROUTING = DEFAULT_LOG_ROUTING,
-  logger = DEFAULT_LOGGER,
-  debug = noop,
-}: {
-  LOG_ROUTING?: { [type: string]: StdStream };
-  logger?: Logger;
-  debug?: LogService;
-}) {
+  logger,
+}: LogServiceDependencies) {
   log('debug', '👣 - Logging service initialized.');
 
   return log;
@@ -95,15 +103,25 @@ async function initLog({
    * @example
    * log('debug', 'Luke, I am your father!')
    */
-  function log(type: string, ...args: any[]): void {
-    if (LOG_ROUTING[type] === StdStream.STD_ERR) {
-      logger.error(...args);
+  function log(type: LogTypes, ...args: JsonValue[]): void {
+    const output = args
+      .map((arg) =>
+        LOG_CONFIG.stringify && typeof arg === 'object'
+          ? JSON.stringify(arg)
+          : arg !== null
+          ? arg.toString()
+          : '',
+      )
+      .join(' ');
+
+    if (LOG_ROUTING[type] === LogOutputTypes.ERROR) {
+      logger.error(output);
       return;
     }
-    if (LOG_ROUTING[type] === StdStream.STD_OUT) {
-      logger.info(...args);
+    if (LOG_ROUTING[type] === LogOutputTypes.OUTPUT) {
+      logger.output(output);
       return;
     }
-    debug(...args);
+    logger.debug(...args);
   }
 }

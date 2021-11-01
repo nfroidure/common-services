@@ -18,7 +18,7 @@ describe('initLockService', () => {
 
   test('should work', async () => {
     const testDelay = await initDelayService({});
-    const lock = await initLockService({
+    const lock = await initLockService<string>({
       log,
       delay,
     });
@@ -61,8 +61,8 @@ describe('initLockService', () => {
     `);
     log.mockClear();
 
-    const lockOrder = [];
-    const releaseOrder = [];
+    const lockOrder: number[] = [];
+    const releaseOrder: number[] = [];
 
     await Promise.all([
       lock
@@ -154,8 +154,8 @@ describe('initLockService', () => {
       throw new YError('E_UNEXPECTED_SUCCESS');
     } catch (err) {
       expect({
-        code: err.code,
-        params: err.params,
+        code: (err as YError).code,
+        params: (err as YError).params,
       }).toMatchInlineSnapshot(`
         Object {
           "code": "E_NO_LOCK",

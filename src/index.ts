@@ -15,7 +15,7 @@ import initCodeGenerator from './codeGenerator';
 import initCounter from './counter';
 import initDelay from './delay';
 import initLock from './lock';
-import initLog, { DEFAULT_LOGGER, DEFAULT_LOG_ROUTING } from './log';
+import initLog, { DEFAULT_LOG_ROUTING, DEFAULT_LOG_CONFIG } from './log';
 import initTime from './time';
 import initRandom from './random';
 import initProcess from './process';
@@ -26,7 +26,13 @@ import type {
 import type { CounterService, CounterServiceConfig } from './counter';
 import type { DelayProvider, DelayService } from './delay';
 import type { LockService, LockServiceConfig } from './lock';
-import type { LogService, StdStream } from './log';
+import type {
+  LogService,
+  LogServiceConfig,
+  LogTypes,
+  LogFunction,
+  Logger,
+} from './log';
 import type { TimeService } from './time';
 import type { RandomService } from './random';
 import type { ProcessServiceConfig } from './process';
@@ -55,7 +61,10 @@ export type {
   LockServiceConfig,
   LockService,
   LogService,
-  StdStream,
+  LogServiceConfig,
+  LogTypes,
+  LogFunction,
+  Logger,
   TimeService,
   RandomService,
   ProcessServiceConfig,
@@ -66,7 +75,7 @@ export {
   initDelay as initDelayService,
   initLock as initLockService,
   initLog as initLogService,
-  DEFAULT_LOGGER,
+  DEFAULT_LOG_CONFIG,
   DEFAULT_LOG_ROUTING,
   initTime as initTimeService,
   initRandom as initRandomService,

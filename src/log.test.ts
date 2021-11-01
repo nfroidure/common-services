@@ -1,34 +1,30 @@
 import Knifecycle, { constant } from 'knifecycle';
 import initLogService from './log';
+import type { LogService } from '.';
 
 describe('initLogService', () => {
-  const debug = jest.fn();
-  const logger = {
-    error: jest.fn(),
-    info: jest.fn(),
-  };
+  const logger = { output: jest.fn(), error: jest.fn(), debug: jest.fn() };
 
   beforeEach(() => {
-    debug.mockReset();
-    logger.info.mockReset();
+    logger.output.mockReset();
     logger.error.mockReset();
+    logger.debug.mockReset();
   });
 
   test('should work', (done) => {
     initLogService({
-      debug,
       logger,
     })
       .then((fn) => {
         expect('function' === typeof fn);
-        expect(debug.mock.calls).toMatchInlineSnapshot(`
+        expect(logger.debug.mock.calls).toMatchInlineSnapshot(`
           Array [
             Array [
               "👣 - Logging service initialized.",
             ],
           ]
         `);
-        expect(logger.info.mock.calls).toMatchInlineSnapshot(`Array []`);
+        expect(logger.output.mock.calls).toMatchInlineSnapshot(`Array []`);
         expect(logger.error.mock.calls).toMatchInlineSnapshot(`Array []`);
       })
       .then(() => done())
@@ -38,23 +34,27 @@ describe('initLogService', () => {
   describe('log', () => {
     test('should work', (done) => {
       initLogService({
-        debug,
         logger,
       })
         .then((log) => {
-          debug.mockClear();
+          logger.debug.mockClear();
           log('debug', 'debug test');
-          log('stack', 'stack test');
+          log('debug-stack', 'debug stack test');
           log('info', 'info test');
           log('error', 'error test');
-          expect(debug.mock.calls).toMatchInlineSnapshot(`
+          log('error-stack', 'error stack test');
+          log('warning', 'warning test');
+          expect(logger.debug.mock.calls).toMatchInlineSnapshot(`
             Array [
               Array [
                 "debug test",
               ],
+              Array [
+                "debug stack test",
+              ],
             ]
           `);
-          expect(logger.info.mock.calls).toMatchInlineSnapshot(`
+          expect(logger.output.mock.calls).toMatchInlineSnapshot(`
             Array [
               Array [
                 "info test",
@@ -64,10 +64,13 @@ describe('initLogService', () => {
           expect(logger.error.mock.calls).toMatchInlineSnapshot(`
             Array [
               Array [
-                "stack test",
+                "error test",
               ],
               Array [
-                "error test",
+                "error stack test",
+              ],
+              Array [
+                "warning test",
               ],
             ]
           `);
@@ -80,21 +83,20 @@ describe('initLogService', () => {
   test('should work with Knifecycle', (done) => {
     new Knifecycle()
       .register(initLogService)
-      .register(constant('debug', debug))
       .register(constant('logger', logger))
-      .run(['log'])
+      .run<{ log: LogService }>(['log'])
       .then(({ log }) => {
-        debug.mockClear();
+        logger.debug.mockClear();
         log('debug', 'debug test');
         log('info', 'info test');
-        expect(debug.mock.calls).toMatchInlineSnapshot(`
+        expect(logger.debug.mock.calls).toMatchInlineSnapshot(`
           Array [
             Array [
               "debug test",
             ],
           ]
         `);
-        expect(logger.info.mock.calls).toMatchInlineSnapshot(`
+        expect(logger.output.mock.calls).toMatchInlineSnapshot(`
           Array [
             Array [
               "info test",

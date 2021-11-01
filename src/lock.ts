@@ -36,7 +36,7 @@ The release is done by its key and the current lock is removed. There
  said, it should not be hard to handle since the actual behavior of
  the library makes your code run sequentially.
 */
-export default singleton(autoService(initLock), true);
+export default singleton(autoService(initLock)) as typeof initLock;
 
 /**
  * Instantiate the lock service
@@ -85,12 +85,12 @@ export default singleton(autoService(initLock), true);
  *   });
  * }
  */
-async function initLock<K>({
+async function initLock<T>({
   LOCKS_MAP = new Map(),
   LOCK_TIMEOUT = Infinity,
   delay,
   log = noop,
-}: LockServiceDependencies<K>): Promise<LockService<K>> {
+}: LockServiceDependencies<T>): Promise<LockService<T>> {
   log('debug', '🔒 - Lock service initialized.');
 
   return {
@@ -120,7 +120,7 @@ async function initLock<K>({
       `🔐 - Taking the lock on "${key}" (queue length was ${locksLength})`,
     );
 
-    let _resolve: () => void;
+    let _resolve: () => void = () => undefined;
     const releasePromise: Promise<void> = new Promise((resolve, reject) => {
       _resolve = resolve;
 
@@ -160,7 +160,7 @@ async function initLock<K>({
       'debug',
       `🔓 - Releasing the lock on "${key}" (queue length was ${locksLength})`,
     );
-    actualLocks.shift().release();
+    (actualLocks.shift() as Lock).release();
 
     if (locksLength === 0) {
       LOCKS_MAP.delete(key);

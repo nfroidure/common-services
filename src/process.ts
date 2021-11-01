@@ -1,6 +1,6 @@
 import YError from 'yerror';
 import { autoProvider, singleton } from 'knifecycle';
-import type { Knifecycle, FatalErrorService } from 'knifecycle';
+import type { FatalErrorService, Knifecycle } from 'knifecycle';
 import type { LogService } from './log';
 
 const DEFAULT_NODE_ENVS = ['development', 'test', 'production'];
@@ -19,7 +19,7 @@ export type ProcessServiceConfig = {
 export type ProcessServiceDependencies = ProcessServiceConfig & {
   NODE_ENV: string;
   exit: typeof process.exit;
-  $instance: Knifecycle<unknown>;
+  $instance: Knifecycle;
   $fatalError: FatalErrorService;
   log?: LogService;
 };
@@ -58,7 +58,7 @@ async function initProcess({
   const signalsListeners = SIGNALS.map<
     [NodeJS.Signals, NodeJS.SignalsListener]
   >((signal) => [signal, terminate.bind(null, signal)]);
-  let shuttingDown = null;
+  let shuttingDown = false;
 
   /* Architecture Note #1.5.1: Node environment filtering
 
@@ -94,7 +94,7 @@ async function initProcess({
   */
   $fatalError.promise.catch((err) => {
     log('error', '💀 - Fatal error');
-    log('stack', err.stack || err);
+    log('error-stack', err.stack || err);
     terminate('FATAL');
   });
 
@@ -108,7 +108,14 @@ async function initProcess({
 
   function catchUncaughtException(err: Error) {
     log('error', '💀 - Uncaught Exception');
-    log('stack', err.stack || err);
+    log(
+      'error-stack',
+      (err as Error).stack ||
+        // Catching anything that could be inside err
+        // since some people have the nice idea to
+        // throw undefined or just a string.
+        '' + (err as unknown as string),
+    );
     terminate('ERR');
   }
 
@@ -135,7 +142,14 @@ async function initProcess({
       exit(code);
     } catch (err) {
       log('error', '🤔 - Could not gracefully shutdown.');
-      log('stack', err.stack || err);
+      log(
+        'error-stack',
+        (err as Error).stack ||
+          // Catching anything that could be inside err
+          // since some people have the nice idea to
+          // throw undefined or just a string.
+          '' + (err as unknown as string),
+      );
       exit(code);
     }
   }

@@ -29,7 +29,7 @@ describe('index.mock', () => {
         assert.deepEqual(
           Object.keys(services).sort(),
           modules
-            .map((module) => (module as any).name as string)
+            .map((module) => (module as { name: string }).name as string)
             .map((name) => name.replace(/(bound )*/, ''))
             .sort(),
         );
