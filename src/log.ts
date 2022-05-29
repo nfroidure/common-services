@@ -106,9 +106,9 @@ async function initLog({
   function log(type: LogTypes, ...args: JsonValue[]): void {
     const output = args
       .map((arg) =>
-        LOG_CONFIG.stringify && typeof arg === 'object'
+        LOG_CONFIG.stringify
           ? JSON.stringify(arg)
-          : arg !== null
+          : arg != null
           ? arg.toString()
           : '',
       )
