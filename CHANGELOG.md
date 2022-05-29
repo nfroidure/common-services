@@ -1,3 +1,12 @@
+## [10.0.3](https://github.com/nfroidure/common-services/compare/v10.0.2...v10.0.3) (2022-05-29)
+
+
+### Bug Fixes
+
+* **log:** fix logs for undefined values ([12fdc04](https://github.com/nfroidure/common-services/commit/12fdc0415d275d5b4afec0260911d9af9d5b98d7))
+
+
+
 ## [10.0.2](https://github.com/nfroidure/common-services/compare/v10.0.1...v10.0.2) (2022-05-25)
 
 
