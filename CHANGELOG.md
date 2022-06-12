@@ -1,3 +1,7 @@
+# [11.0.0](https://github.com/nfroidure/common-services/compare/v10.0.3...v11.0.0) (2022-06-12)
+
+
+
 ## [10.0.3](https://github.com/nfroidure/common-services/compare/v10.0.2...v10.0.3) (2022-05-29)
 
 
