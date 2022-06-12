@@ -1,9 +1,11 @@
 /* eslint max-nested-callbacks:0 */
+import { jest } from '@jest/globals';
 import Knifecycle, { constant } from 'knifecycle';
-import initDelayService from './delay';
+import initDelayService from './delay.js';
+import type { LogService } from './log.js';
 
 describe('initDelayService', () => {
-  const log = jest.fn();
+  const log = jest.fn<LogService>();
 
   beforeEach(() => {
     log.mockReset();

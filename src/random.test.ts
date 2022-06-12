@@ -1,8 +1,10 @@
+import { jest } from '@jest/globals';
 import Knifecycle, { constant } from 'knifecycle';
-import initRandomService from './random';
+import initRandomService from './random.js';
+import type { LogService } from './log.js';
 
 describe('initRandomService', () => {
-  const log = jest.fn();
+  const log = jest.fn<LogService>();
 
   beforeEach(() => {
     log.mockReset();

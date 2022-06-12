@@ -1,8 +1,10 @@
+import { jest } from '@jest/globals';
 import Knifecycle, { constant } from 'knifecycle';
-import initCounterService from './counter';
+import initCounterService from './counter.js';
+import type { LogService } from './log.js';
 
 describe('initCounterService', () => {
-  const log = jest.fn();
+  const log = jest.fn<LogService>();
 
   beforeEach(() => {
     log.mockReset();

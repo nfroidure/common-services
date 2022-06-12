@@ -1,13 +1,16 @@
+import { jest } from '@jest/globals';
 import Knifecycle, { constant } from 'knifecycle';
-import initLockService from './lock';
-import initDelayService from './delay';
-import YError from 'yerror';
+import initLockService from './lock.js';
+import initDelayService from './delay.js';
+import { YError } from 'yerror';
+import type { DelayService } from './delay.js';
+import type { LogService } from './log.js';
 
 describe('initLockService', () => {
-  const log = jest.fn();
+  const log = jest.fn<LogService>();
   const delay = {
-    create: jest.fn(),
-    clear: jest.fn(),
+    create: jest.fn<DelayService['create']>(),
+    clear: jest.fn<DelayService['clear']>(),
   };
 
   beforeEach(() => {

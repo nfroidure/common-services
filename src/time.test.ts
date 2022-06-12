@@ -1,8 +1,10 @@
+import { jest } from '@jest/globals';
 import Knifecycle, { constant } from 'knifecycle';
-import initTimeService from './time';
+import initTimeService from './time.js';
+import type { LogService } from './log.js';
 
 describe('initTimeService', () => {
-  const log = jest.fn();
+  const log = jest.fn<LogService>();
 
   beforeEach(() => {
     log.mockReset();

@@ -1,7 +1,7 @@
-import YError from 'yerror';
+import { YError } from 'yerror';
 import { autoService, singleton } from 'knifecycle';
-import type { LogService } from './log';
-import type { DelayService } from './delay';
+import type { LogService } from './log.js';
+import type { DelayService } from './delay.js';
 
 const noop = () => undefined;
 
@@ -60,13 +60,15 @@ export default singleton(autoService(initLock)) as typeof initLock;
  * import initDelayService from 'common-services/dist/delay';
  * import initLock from 'common-services/dist/lock';
  * import ms from 'ms';
+ * import winston from 'winston';
+ * import debug from 'debug';
  *
  * const log = await initLogService({
- *   logger: require('winston'),
- *   debug: require('debug')('myapp'),
+ *   logger: winston,
+ *   debug: debug('myapp'),
  * });
  * const delay = await initDelayService({ log });
- * const lock = await initLock({ LOCK_TIMEOUT: ms('5s'), delay, log });
+ * const lock = await initLock ({ LOCK_TIMEOUT: ms('5s'), delay, log });
  *
  *
  * run();

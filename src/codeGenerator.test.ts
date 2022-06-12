@@ -1,9 +1,11 @@
-import initCodeGenerator from './codeGenerator';
-import type { RandomService } from './random';
+import { jest } from '@jest/globals';
+import initCodeGenerator from './codeGenerator.js';
+import type { RandomService } from './random.js';
+import type { LogService } from './log.js';
 
 describe('codeGenerator', () => {
-  const log = jest.fn();
-  const random = jest.fn() as jest.Mock<number, RandomService[]>;
+  const log = jest.fn<LogService>();
+  const random = jest.fn<RandomService>();
 
   beforeEach(() => {
     log.mockReset();

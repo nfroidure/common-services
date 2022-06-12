@@ -1,9 +1,11 @@
-import YError from 'yerror';
+import { jest } from '@jest/globals';
+import { YError } from 'yerror';
 import Knifecycle, { constant } from 'knifecycle';
-import initProcessService from './process';
+import initProcessService from './process.js';
+import type { LogService } from './log.js';
 
 describe('Process service', () => {
-  const log = jest.fn();
+  const log = jest.fn<LogService>();
   const savedProcessName = global.process.title;
   const processListenerStub = jest.spyOn(global.process, 'on');
   let exit;

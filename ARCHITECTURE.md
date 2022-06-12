@@ -9,13 +9,9 @@
 
 1. [Services](#1-services)
    1. [Logging](#11-logging)
-      1. [Mocking logs](#111-mocking-logs)
    2. [Time](#12-time)
-      1. [Mocking time](#121-mocking-time)
    3. [Randomness](#13-randomness)
-      1. [Mocking randomness](#131-mocking-randomness)
    4. [Delaying](#14-delaying)
-      1. [Mocking delays](#141-mocking-delays)
    5. [Process](#15-process)
       1. [Node environment filtering](#151-node-environment-filtering)
       2. [Signals handling](#152-signals-handling)
@@ -29,7 +25,7 @@
 ## 1. Services
 
 Since the services in this module are very common, we
- provide a helper to require them all with a single
+ provide a helper to import them all with a single
  line of code.
 
 Their goal is to encapsulate unpredictible states and
@@ -56,61 +52,6 @@ If provided, I route debug messages to the `debug`
 
 
 
-#### 1.1.1. Mocking logs
-
-The log mock uses the
- [`sinon`](https://github.com/sinonjs/sinon/)
- module under the hood. I inject it in my tests
- and make assertions on its given args.
-
-For example:
-```js1
-import initLogMock from 'common-services/dist/log.mock';
-import myTestedFunction from 'mylib';
-
-describe('my test', () => {
-  let log;
-
-  beforeAll((done) => {
-    initLogMock()
-    .then((_log_) => {
-      log = _log_;
-    })
-    .then(done)
-    .catch(done);
-  });
-
-  beforeEach(() => {
-    log.reset();
-  });
-
-  test('should not log when no arg', () => {
-    myTestedFunction();
-
-    // Here I could use `callCount` or other `sinon`
-    // helpers but the fact to always use
-    // `assert.deepEqual` and the `sinon` args property
-    // give immediate input on what was wrong:
-    // if it had been called, we would see how many
-    // times and with which args in the tests output.
-    assert.deepEqual(logs.args, [], 'No log');
-  });
-
-  test('should log its args', () => {
-    myTestedFunction('wadup', 'kikoo', 'lol');
-
-    assert.deepEqual(logs.args, [[
-      'info', 'wadup', 'kikoo', 'lol',
-    ]], 'Logger output args');
-  });
-
-});
-```
-
-[See in context](./src/log.mock.ts#L5-L55)
-
-
-
 ### 1.2. Time
 
 The time service is just proxying [`Date.now`
@@ -118,15 +59,6 @@ The time service is just proxying [`Date.now`
  in a stubbable manner.
 
 [See in context](./src/time.ts#L12-L17)
-
-
-
-#### 1.2.1. Mocking time
-
-The time mock uses the [`sinon`](https://github.com/sinonjs/sinon/)
- module under the hood like for the logging mock.
-
-[See in context](./src/time.mock.ts#L6-L10)
 
 
 
@@ -140,34 +72,12 @@ The random service is just proxying [`Math.random`
 
 
 
-#### 1.3.1. Mocking randomness
-
-The random mock uses the [`sinon`](https://github.com/sinonjs/sinon/)
- module under the hood like for the logging mock.
-
-[See in context](./src/random.mock.ts#L5-L9)
-
-
-
 ### 1.4. Delaying
 
 The delay service is `setTimeout` like I would like it
  to be.
 
 [See in context](./src/delay.ts#L18-L22)
-
-
-
-#### 1.4.1. Mocking delays
-
-This mock is largely inspired by the `$timeout` one of
- AngularJS. It allows to resolve/reject pending delays
- for testing. That said, it does it asynchronously
- where the former one was synchronous. This is not a
- bug but a design choice to keep the closest possible
- to what would happen in actual code.
-
-[See in context](./src/delay.mock.ts#L5-L13)
 
 
 

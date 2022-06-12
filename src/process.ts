@@ -1,7 +1,7 @@
-import YError from 'yerror';
+import { YError } from 'yerror';
 import { autoProvider, singleton } from 'knifecycle';
 import type { FatalErrorService, Knifecycle } from 'knifecycle';
-import type { LogService } from './log';
+import type { LogService } from './log.js';
 
 const DEFAULT_NODE_ENVS = ['development', 'test', 'production'];
 const DEFAULT_SIGNALS: NodeJS.Signals[] = ['SIGTERM', 'SIGINT'];

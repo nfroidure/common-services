@@ -1,6 +1,7 @@
+import { jest } from '@jest/globals';
 import Knifecycle, { constant } from 'knifecycle';
-import initLogService from './log';
-import type { LogService } from '.';
+import initLogService from './log.js';
+import type { LogService } from './index.js';
 
 describe('initLogService', () => {
   const logger = { output: jest.fn(), error: jest.fn(), debug: jest.fn() };

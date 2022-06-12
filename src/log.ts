@@ -78,10 +78,12 @@ export default singleton(autoService(initLog));
  * A promise of the logging function
  * @example
  * import initLog from 'common-services/dist/log';
+ * import debug from 'debug';
+ * import winston from 'winston';
  *
  * const log = await initLog({
- *   logger: require('winston'),
- *   debug: require('debug')('myapp'),
+ *   logger: winston,
+ *   debug: debug('myapp'),
  *  });
  */
 async function initLog({

@@ -5,10 +5,9 @@
 [//]: # (be overridden.)
 [//]: # ( )
 # common-services
-> A module to gather very common services and their mocks.
+> A module to gather very common services.
 
 [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/nfroidure/common-services/blob/master/LICENSE)
-[![Build status](https://travis-ci.com/nfroidure/common-services.svg?branch=master)](https://travis-ci.com/github/nfroidure/common-services)
 [![Coverage Status](https://coveralls.io/repos/github/nfroidure/common-services/badge.svg?branch=master)](https://coveralls.io/github/nfroidure/common-services?branch=master)
 
 
@@ -32,35 +31,20 @@ This module contains various common injectable
 <dt><a href="#initDelay">initDelay(services)</a> ⇒ <code>Promise.&lt;Object&gt;</code></dt>
 <dd><p>Instantiate the delay service</p>
 </dd>
-<dt><a href="#initDelayMock">initDelayMock()</a> ⇒ <code>Promise.&lt;Object&gt;</code></dt>
-<dd><p>Instantiate the delay service mock</p>
-</dd>
 <dt><a href="#initLock">initLock(services)</a> ⇒ <code>Promise.&lt;Object&gt;</code></dt>
 <dd><p>Instantiate the lock service</p>
 </dd>
 <dt><a href="#initLog">initLog(services)</a> ⇒ <code>Promise.&lt;function()&gt;</code></dt>
 <dd><p>Instantiate the logging service</p>
 </dd>
-<dt><a href="#initLogMock">initLogMock()</a> ⇒ <code>Promise.&lt;function()&gt;</code></dt>
-<dd><p>Instantiate the logging mock</p>
-</dd>
 <dt><a href="#initProcess">initProcess(services)</a> ⇒ <code>Promise.&lt;Object&gt;</code></dt>
-<dd><p>Instantiate the process service</p>
-</dd>
-<dt><a href="#initProcessMock">initProcessMock()</a> ⇒ <code>Promise.&lt;Object&gt;</code></dt>
 <dd><p>Instantiate the process service</p>
 </dd>
 <dt><a href="#initRandom">initRandom(services)</a> ⇒ <code>Promise.&lt;function()&gt;</code></dt>
 <dd><p>Instantiate the random service</p>
 </dd>
-<dt><a href="#initRandomMock">initRandomMock()</a> ⇒ <code>Promise.&lt;function()&gt;</code></dt>
-<dd><p>Instantiate the random service mock</p>
-</dd>
 <dt><a href="#initTime">initTime(services)</a> ⇒ <code>Promise.&lt;function()&gt;</code></dt>
 <dd><p>Instantiate the time service</p>
-</dd>
-<dt><a href="#initTimeMock">initTimeMock()</a> ⇒ <code>Promise.&lt;function()&gt;</code></dt>
-<dd><p>Instantiate the time service mock</p>
 </dd>
 </dl>
 
@@ -216,29 +200,6 @@ try {
 }
 // Prints: Cancelled!
 ```
-<a name="initDelayMock"></a>
-
-## initDelayMock() ⇒ <code>Promise.&lt;Object&gt;</code>
-Instantiate the delay service mock
-
-**Kind**: global function  
-**Returns**: <code>Promise.&lt;Object&gt;</code> - A promise of the mocked delay service  
-**Example**  
-```js
-import initDelayMock from 'common-services/dist/delay.mock';
-import assert from 'assert';
-
-const delay = await initDelayMock();
-
-const delayPromise = delay.create(1000);
-
-delay.resolve(delayPromise);
-
-delayPromise.then(() => {
-  // Any code here will execute immediatly
-  // instead of after a 1000ms delay
-});
-```
 <a name="initLock"></a>
 
 ## initLock(services) ⇒ <code>Promise.&lt;Object&gt;</code>
@@ -261,13 +222,15 @@ import initLog from 'common-services/dist/log';
 import initDelayService from 'common-services/dist/delay';
 import initLock from 'common-services/dist/lock';
 import ms from 'ms';
+import winston from 'winston';
+import debug from 'debug';
 
 const log = await initLogService({
-  logger: require('winston'),
-  debug: require('debug')('myapp'),
+  logger: winston,
+  debug: debug('myapp'),
 });
 const delay = await initDelayService({ log });
-const lock = await initLock({ LOCK_TIMEOUT: ms('5s'), delay, log });
+const lock = await initLock ({ LOCK_TIMEOUT: ms('5s'), delay, log });
 
 
 run();
@@ -333,10 +296,12 @@ Instantiate the logging service
 **Example**  
 ```js
 import initLog from 'common-services/dist/log';
+import debug from 'debug';
+import winston from 'winston';
 
 const log = await initLog({
-  logger: require('winston'),
-  debug: require('debug')('myapp'),
+  logger: winston,
+  debug: debug('myapp'),
  });
 ```
 <a name="initLog..log"></a>
@@ -355,34 +320,6 @@ Logging function
 ```js
 log('debug', 'Luke, I am your father!')
 ```
-<a name="initLogMock"></a>
-
-## initLogMock() ⇒ <code>Promise.&lt;function()&gt;</code>
-Instantiate the logging mock
-
-**Kind**: global function  
-**Returns**: <code>Promise.&lt;function()&gt;</code> - A promise of the mocked
- logging function  
-**Example**  
-```js
-import initLogMock from 'common-services/dist/log.mock';
-import assert from 'assert';
-
-const log = await initLogMock();
-
-log('info', 'Hello!');
-log('error', 'Aouch!');
-
-assert.deepEqual(log.args, [[
-  'info', 'Hello!'
-], [
-  'error', 'Aouch!'
-]]);
-
-log.reset();
-
-assert.deepEqual(log.args, []);
-```
 <a name="initProcess"></a>
 
 ## initProcess(services) ⇒ <code>Promise.&lt;Object&gt;</code>
@@ -395,13 +332,6 @@ Instantiate the process service
 | --- | --- | --- |
 | services | <code>Object</code> | The services to inject |
 
-<a name="initProcessMock"></a>
-
-## initProcessMock() ⇒ <code>Promise.&lt;Object&gt;</code>
-Instantiate the process service
-
-**Kind**: global function  
-**Returns**: <code>Promise.&lt;Object&gt;</code> - A promise of the process object  
 <a name="initRandom"></a>
 
 ## initRandom(services) ⇒ <code>Promise.&lt;function()&gt;</code>
@@ -435,30 +365,6 @@ Returns a new random number
 random()
 // Prints: 0.3141592653589793
 ```
-<a name="initRandomMock"></a>
-
-## initRandomMock() ⇒ <code>Promise.&lt;function()&gt;</code>
-Instantiate the random service mock
-
-**Kind**: global function  
-**Returns**: <code>Promise.&lt;function()&gt;</code> - A promise of the mocked
- random function  
-**Example**  
-```js
-import initRandomMock from 'common-services/dist/random.mock';
-import assert from 'assert';
-
-const random = await initRandomMock();
-
-random.returns(0.5); // A good limit value to test ;)
-
-assert.equal(random(), 0.5);
-assert.deepEqual(random.args, [[]], 'Called once');
-
-random.reset();
-
-assert.deepEqual(random.args, []);
-```
 <a name="initTime"></a>
 
 ## initTime(services) ⇒ <code>Promise.&lt;function()&gt;</code>
@@ -491,32 +397,6 @@ Returns the current timestamp
 ```js
 time()
 // Prints: 1326585600000
-```
-<a name="initTimeMock"></a>
-
-## initTimeMock() ⇒ <code>Promise.&lt;function()&gt;</code>
-Instantiate the time service mock
-
-**Kind**: global function  
-**Returns**: <code>Promise.&lt;function()&gt;</code> - A promise of the mocked
- time function  
-**Example**  
-```js
-import initTimeMock from 'common-services/dist/time.mock';
-import assert from 'assert';
-
-const time = await initTimeMock();
-
-// Let's returns Thomas birth date (OMG ya father
-// talking me about its childrens :D).
-time.returns(new Date('2014-01-26T00:00:00.000Z'));
-
-assert.equal(time(), 1390694400000);
-assert.deepEqual(time.args, [[]], 'Called once');
-
-time.reset();
-
-assert.deepEqual(time.args, []);
 ```
 
 # Authors

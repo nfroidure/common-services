@@ -1,5 +1,5 @@
 import { autoService, singleton } from 'knifecycle';
-import type { LogService } from './log';
+import type { LogService } from './log.js';
 
 function noop(): void {
   return undefined;

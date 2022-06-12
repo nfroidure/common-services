@@ -1,6 +1,6 @@
-import YError from 'yerror';
+import { YError } from 'yerror';
 import { autoProvider, singleton } from 'knifecycle';
-import type { LogService } from './log';
+import type { LogService } from './log.js';
 
 function noop(): void {
   return undefined;
