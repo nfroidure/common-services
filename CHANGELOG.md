@@ -1,3 +1,13 @@
+## [11.0.1](https://github.com/nfroidure/common-services/compare/v11.0.0...v11.0.1) (2022-06-15)
+
+
+### Bug Fixes
+
+* **ci:** remove old travis file ([5ef03e8](https://github.com/nfroidure/common-services/commit/5ef03e80d9a92d38ea87b8c35206249ae7338977))
+* **locks:** fix the lock service ([a9b75a1](https://github.com/nfroidure/common-services/commit/a9b75a12d781621340cb43369040ed961d8ddd9d))
+
+
+
 # [11.0.0](https://github.com/nfroidure/common-services/compare/v10.0.3...v11.0.0) (2022-06-12)
 
 
