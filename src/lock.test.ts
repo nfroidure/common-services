@@ -46,11 +46,19 @@ describe('initLockService', () => {
       Array [
         Array [
           "debug",
-          "🔐 - Taking the lock on \\"key\\" (queue length was 0)",
+          "🔐 - Demanding the lock on \\"key\\" (queue length was 0)",
         ],
         Array [
           "debug",
-          "🔐 - Taking the lock on \\"key2\\" (queue length was 0)",
+          "🔐 - Obtaining the lock on \\"key\\" (queue length was 0)",
+        ],
+        Array [
+          "debug",
+          "🔐 - Demanding the lock on \\"key2\\" (queue length was 0)",
+        ],
+        Array [
+          "debug",
+          "🔐 - Obtaining the lock on \\"key2\\" (queue length was 0)",
         ],
         Array [
           "debug",
@@ -105,19 +113,35 @@ describe('initLockService', () => {
         "logCalls": Array [
           Array [
             "debug",
-            "🔐 - Taking the lock on \\"key\\" (queue length was 0)",
+            "🔐 - Demanding the lock on \\"key\\" (queue length was 0)",
           ],
           Array [
             "debug",
-            "🔐 - Taking the lock on \\"key\\" (queue length was 1)",
+            "🔐 - Obtaining the lock on \\"key\\" (queue length was 0)",
           ],
           Array [
             "debug",
-            "🔐 - Taking the lock on \\"key\\" (queue length was 2)",
+            "🔐 - Demanding the lock on \\"key\\" (queue length was 1)",
           ],
           Array [
             "debug",
-            "🔐 - Taking the lock on \\"key\\" (queue length was 3)",
+            "🔐 - Waiting the lock on \\"key\\" (queue length was 1)",
+          ],
+          Array [
+            "debug",
+            "🔐 - Demanding the lock on \\"key\\" (queue length was 2)",
+          ],
+          Array [
+            "debug",
+            "🔐 - Waiting the lock on \\"key\\" (queue length was 2)",
+          ],
+          Array [
+            "debug",
+            "🔐 - Demanding the lock on \\"key\\" (queue length was 3)",
+          ],
+          Array [
+            "debug",
+            "🔐 - Waiting the lock on \\"key\\" (queue length was 3)",
           ],
           Array [
             "debug",
@@ -125,11 +149,23 @@ describe('initLockService', () => {
           ],
           Array [
             "debug",
+            "🔐 - Obtaining the lock on \\"key\\" (queue length was 1)",
+          ],
+          Array [
+            "debug",
             "🔓 - Releasing the lock on \\"key\\" (queue length was 3)",
           ],
           Array [
             "debug",
+            "🔐 - Obtaining the lock on \\"key\\" (queue length was 2)",
+          ],
+          Array [
+            "debug",
             "🔓 - Releasing the lock on \\"key\\" (queue length was 2)",
+          ],
+          Array [
+            "debug",
+            "🔐 - Obtaining the lock on \\"key\\" (queue length was 3)",
           ],
           Array [
             "debug",

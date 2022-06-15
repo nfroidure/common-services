@@ -21,7 +21,7 @@ type LockServiceDependencies<K> = LockServiceConfig<K> & {
 };
 
 export interface LockService<K> {
-  take: (key: K) => Promise<void>;
+  take: (key: K, timeout?: number) => Promise<void>;
   release: (key: K) => Promise<void>;
 }
 
@@ -109,27 +109,28 @@ async function initLock<T>({
    *  is gained or rejected if the lock release
    *  timeout is reached.
    */
-  async function take(key) {
-    const previousLocks = LOCKS_MAP.get(key) || [];
-    const locksLength = previousLocks.length;
+  async function take(key, timeout = LOCK_TIMEOUT) {
+    const keyLocks = LOCKS_MAP.get(key) || [];
+    const locksLength = keyLocks.length;
+    const previousLock = keyLocks[locksLength - 1];
 
     if (locksLength === 0) {
-      LOCKS_MAP.set(key, previousLocks);
+      LOCKS_MAP.set(key, keyLocks);
     }
 
     log(
       'debug',
-      `🔐 - Taking the lock on "${key}" (queue length was ${locksLength})`,
+      `🔐 - Demanding the lock on "${key}" (queue length was ${locksLength})`,
     );
 
     let _resolve: () => void = () => undefined;
     const releasePromise: Promise<void> = new Promise((resolve, reject) => {
       _resolve = resolve;
 
-      if (LOCK_TIMEOUT !== Infinity) {
+      if (timeout !== Infinity) {
         delay
-          .create(LOCK_TIMEOUT)
-          .then(() => reject(new YError('E_LOCK_TIMEOUT')));
+          .create(timeout)
+          .then(() => reject(new YError('E_LOCK_TIMEOUT', timeout)));
       }
     });
 
@@ -138,11 +139,20 @@ async function initLock<T>({
       release: _resolve,
     };
 
-    previousLocks.push(newLock);
+    keyLocks.push(newLock);
 
-    if (locksLength > 1) {
-      await previousLocks[locksLength - 2].releasePromise;
+    if (previousLock) {
+      log(
+        'debug',
+        `🔐 - Waiting the lock on "${key}" (queue length was ${locksLength})`,
+      );
+      await previousLock.releasePromise;
     }
+
+    log(
+      'debug',
+      `🔐 - Obtaining the lock on "${key}" (queue length was ${locksLength})`,
+    );
   }
 
   /**
@@ -151,8 +161,8 @@ async function initLock<T>({
    * @return {void}
    */
   async function release(key) {
-    const actualLocks = LOCKS_MAP.get(key) || [];
-    const locksLength = actualLocks.length;
+    const keyLocks = LOCKS_MAP.get(key) || [];
+    const locksLength = keyLocks.length;
 
     if (!locksLength) {
       throw new YError('E_NO_LOCK', key);
@@ -162,9 +172,9 @@ async function initLock<T>({
       'debug',
       `🔓 - Releasing the lock on "${key}" (queue length was ${locksLength})`,
     );
-    (actualLocks.shift() as Lock).release();
+    (keyLocks.shift() as Lock).release();
 
-    if (locksLength === 0) {
+    if (keyLocks.length === 0) {
       LOCKS_MAP.delete(key);
     }
   }
