@@ -37,6 +37,8 @@ import type { TimeService } from './time.js';
 import type { RandomService } from './random.js';
 import type { ProcessServiceConfig } from './process.js';
 
+let x: ImportMeta;
+
 /**
  * All services of the `common-services` module as
  *  properties.
@@ -44,7 +46,7 @@ import type { ProcessServiceConfig } from './process.js';
  * @type {Object}
  * @example
  * import * as COMMON_SERVICES from 'common-services';
- * import Knifecycle from 'knifecycle';
+ * import { Knifecycle } from 'knifecycle';
  *
  * new Knifecycle().register(
  *   ...Object.keys(COMMON_SERVICES)

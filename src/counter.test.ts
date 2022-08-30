@@ -1,5 +1,5 @@
-import { jest } from '@jest/globals';
-import Knifecycle, { constant } from 'knifecycle';
+import { describe, beforeEach, test, expect, jest } from '@jest/globals';
+import { Knifecycle, constant } from 'knifecycle';
 import initCounterService from './counter.js';
 import type { LogService } from './log.js';
 
@@ -17,8 +17,8 @@ describe('initCounterService', () => {
 
     expect('function' === typeof counter);
     expect(log.mock.calls).toMatchInlineSnapshot(`
-      Array [
-        Array [
+      [
+        [
           "debug",
           "📇 - Counter service initialized.",
         ],
@@ -48,8 +48,8 @@ describe('initCounterService', () => {
 
     expect(counter).toBeDefined();
     expect(log.mock.calls).toMatchInlineSnapshot(`
-      Array [
-        Array [
+      [
+        [
           "debug",
           "📇 - Counter service initialized.",
         ],

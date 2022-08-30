@@ -1,5 +1,5 @@
-import { jest } from '@jest/globals';
-import Knifecycle, { constant } from 'knifecycle';
+import { describe, beforeEach, test, expect, jest } from '@jest/globals';
+import { Knifecycle, constant } from 'knifecycle';
 import initLogService from './log.js';
 import type { LogService } from './index.js';
 
@@ -19,14 +19,14 @@ describe('initLogService', () => {
       .then((fn) => {
         expect('function' === typeof fn);
         expect(logger.debug.mock.calls).toMatchInlineSnapshot(`
-          Array [
-            Array [
+          [
+            [
               "👣 - Logging service initialized.",
             ],
           ]
         `);
-        expect(logger.output.mock.calls).toMatchInlineSnapshot(`Array []`);
-        expect(logger.error.mock.calls).toMatchInlineSnapshot(`Array []`);
+        expect(logger.output.mock.calls).toMatchInlineSnapshot(`[]`);
+        expect(logger.error.mock.calls).toMatchInlineSnapshot(`[]`);
       })
       .then(() => done())
       .catch(done);
@@ -46,31 +46,31 @@ describe('initLogService', () => {
           log('error-stack', 'error stack test');
           log('warning', 'warning test');
           expect(logger.debug.mock.calls).toMatchInlineSnapshot(`
-            Array [
-              Array [
+            [
+              [
                 "debug test",
               ],
-              Array [
+              [
                 "debug stack test",
               ],
             ]
           `);
           expect(logger.output.mock.calls).toMatchInlineSnapshot(`
-            Array [
-              Array [
+            [
+              [
                 "info test",
               ],
             ]
           `);
           expect(logger.error.mock.calls).toMatchInlineSnapshot(`
-            Array [
-              Array [
+            [
+              [
                 "error test",
               ],
-              Array [
+              [
                 "error stack test",
               ],
-              Array [
+              [
                 "warning test",
               ],
             ]
@@ -91,20 +91,20 @@ describe('initLogService', () => {
         log('debug', 'debug test');
         log('info', 'info test');
         expect(logger.debug.mock.calls).toMatchInlineSnapshot(`
-          Array [
-            Array [
+          [
+            [
               "debug test",
             ],
           ]
         `);
         expect(logger.output.mock.calls).toMatchInlineSnapshot(`
-          Array [
-            Array [
+          [
+            [
               "info test",
             ],
           ]
         `);
-        expect(logger.error.mock.calls).toMatchInlineSnapshot(`Array []`);
+        expect(logger.error.mock.calls).toMatchInlineSnapshot(`[]`);
       })
       .then(() => done())
       .catch(done);

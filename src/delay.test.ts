@@ -1,6 +1,13 @@
 /* eslint max-nested-callbacks:0 */
-import { jest } from '@jest/globals';
-import Knifecycle, { constant } from 'knifecycle';
+import {
+  describe,
+  afterEach,
+  beforeEach,
+  test,
+  expect,
+  jest,
+} from '@jest/globals';
+import { Knifecycle, constant } from 'knifecycle';
 import initDelayService from './delay.js';
 import type { LogService } from './log.js';
 
@@ -20,8 +27,8 @@ describe('initDelayService', () => {
     expect('function' === typeof delay.service.clear);
     expect('function' === typeof delay.dispose);
     expect(log.mock.calls).toMatchInlineSnapshot(`
-      Array [
-        Array [
+      [
+        [
           "debug",
           "⌛ - Delay service initialized.",
         ],
@@ -52,8 +59,8 @@ describe('initDelayService', () => {
       expect(setTimeoutStub.mock.calls.length).toEqual(1);
       expect(setTimeoutStub.mock.calls[0][1]).toEqual(1000);
       expect(log.mock.calls).toMatchInlineSnapshot(`
-        Array [
-          Array [
+        [
+          [
             "debug",
             "⏳ - Created a delay:",
             1000,
@@ -110,8 +117,8 @@ describe('initDelayService', () => {
         }),
       ]);
       expect(log.mock.calls).toMatchInlineSnapshot(`
-        Array [
-          Array [
+        [
+          [
             "debug",
             "⏳ - Cleared a delay",
           ],
@@ -128,8 +135,8 @@ describe('initDelayService', () => {
 
     expect(delay);
     expect(log.mock.calls).toMatchInlineSnapshot(`
-      Array [
-        Array [
+      [
+        [
           "debug",
           "⌛ - Delay service initialized.",
         ],

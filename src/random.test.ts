@@ -1,5 +1,5 @@
-import { jest } from '@jest/globals';
-import Knifecycle, { constant } from 'knifecycle';
+import { describe, beforeEach, test, expect, jest } from '@jest/globals';
+import { Knifecycle, constant } from 'knifecycle';
 import initRandomService from './random.js';
 import type { LogService } from './log.js';
 
@@ -17,8 +17,8 @@ describe('initRandomService', () => {
       .then((random) => {
         expect('function' === typeof random);
         expect(log.mock.calls).toMatchInlineSnapshot(`
-          Array [
-            Array [
+          [
+            [
               "debug",
               "🎲 - Random service initialized.",
             ],
@@ -55,8 +55,8 @@ describe('initRandomService', () => {
       .then(({ random }) => {
         expect(random).toBeDefined();
         expect(log.mock.calls).toMatchInlineSnapshot(`
-          Array [
-            Array [
+          [
+            [
               "debug",
               "🎲 - Random service initialized.",
             ],

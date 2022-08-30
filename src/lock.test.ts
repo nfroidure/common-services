@@ -1,5 +1,5 @@
-import { jest } from '@jest/globals';
-import Knifecycle, { constant } from 'knifecycle';
+import { describe, beforeEach, test, expect, jest } from '@jest/globals';
+import { Knifecycle, constant } from 'knifecycle';
 import initLockService from './lock.js';
 import initDelayService from './delay.js';
 import { YError } from 'yerror';
@@ -28,8 +28,8 @@ describe('initLockService', () => {
 
     expect(typeof lock).toEqual('object');
     expect(log.mock.calls).toMatchInlineSnapshot(`
-      Array [
-        Array [
+      [
+        [
           "debug",
           "🔒 - Lock service initialized.",
         ],
@@ -43,30 +43,30 @@ describe('initLockService', () => {
     lock.release('key2');
 
     expect(log.mock.calls).toMatchInlineSnapshot(`
-      Array [
-        Array [
+      [
+        [
           "debug",
-          "🔐 - Demanding the lock on \\"key\\" (queue length was 0)",
+          "🔐 - Demanding the lock on "key" (queue length was 0)",
         ],
-        Array [
+        [
           "debug",
-          "🔐 - Obtaining the lock on \\"key\\" (queue length was 0)",
+          "🔐 - Obtaining the lock on "key" (queue length was 0)",
         ],
-        Array [
+        [
           "debug",
-          "🔐 - Demanding the lock on \\"key2\\" (queue length was 0)",
+          "🔐 - Demanding the lock on "key2" (queue length was 0)",
         ],
-        Array [
+        [
           "debug",
-          "🔐 - Obtaining the lock on \\"key2\\" (queue length was 0)",
+          "🔐 - Obtaining the lock on "key2" (queue length was 0)",
         ],
-        Array [
+        [
           "debug",
-          "🔓 - Releasing the lock on \\"key\\" (queue length was 1)",
+          "🔓 - Releasing the lock on "key" (queue length was 1)",
         ],
-        Array [
+        [
           "debug",
-          "🔓 - Releasing the lock on \\"key2\\" (queue length was 1)",
+          "🔓 - Releasing the lock on "key2" (queue length was 1)",
         ],
       ]
     `);
@@ -103,76 +103,76 @@ describe('initLockService', () => {
       lockOrder,
       logCalls: log.mock.calls,
     }).toMatchInlineSnapshot(`
-      Object {
-        "lockOrder": Array [
+      {
+        "lockOrder": [
           1,
           2,
           3,
           4,
         ],
-        "logCalls": Array [
-          Array [
+        "logCalls": [
+          [
             "debug",
-            "🔐 - Demanding the lock on \\"key\\" (queue length was 0)",
+            "🔐 - Demanding the lock on "key" (queue length was 0)",
           ],
-          Array [
+          [
             "debug",
-            "🔐 - Obtaining the lock on \\"key\\" (queue length was 0)",
+            "🔐 - Obtaining the lock on "key" (queue length was 0)",
           ],
-          Array [
+          [
             "debug",
-            "🔐 - Demanding the lock on \\"key\\" (queue length was 1)",
+            "🔐 - Demanding the lock on "key" (queue length was 1)",
           ],
-          Array [
+          [
             "debug",
-            "🔐 - Waiting the lock on \\"key\\" (queue length was 1)",
+            "🔐 - Waiting the lock on "key" (queue length was 1)",
           ],
-          Array [
+          [
             "debug",
-            "🔐 - Demanding the lock on \\"key\\" (queue length was 2)",
+            "🔐 - Demanding the lock on "key" (queue length was 2)",
           ],
-          Array [
+          [
             "debug",
-            "🔐 - Waiting the lock on \\"key\\" (queue length was 2)",
+            "🔐 - Waiting the lock on "key" (queue length was 2)",
           ],
-          Array [
+          [
             "debug",
-            "🔐 - Demanding the lock on \\"key\\" (queue length was 3)",
+            "🔐 - Demanding the lock on "key" (queue length was 3)",
           ],
-          Array [
+          [
             "debug",
-            "🔐 - Waiting the lock on \\"key\\" (queue length was 3)",
+            "🔐 - Waiting the lock on "key" (queue length was 3)",
           ],
-          Array [
+          [
             "debug",
-            "🔓 - Releasing the lock on \\"key\\" (queue length was 4)",
+            "🔓 - Releasing the lock on "key" (queue length was 4)",
           ],
-          Array [
+          [
             "debug",
-            "🔐 - Obtaining the lock on \\"key\\" (queue length was 1)",
+            "🔐 - Obtaining the lock on "key" (queue length was 1)",
           ],
-          Array [
+          [
             "debug",
-            "🔓 - Releasing the lock on \\"key\\" (queue length was 3)",
+            "🔓 - Releasing the lock on "key" (queue length was 3)",
           ],
-          Array [
+          [
             "debug",
-            "🔐 - Obtaining the lock on \\"key\\" (queue length was 2)",
+            "🔐 - Obtaining the lock on "key" (queue length was 2)",
           ],
-          Array [
+          [
             "debug",
-            "🔓 - Releasing the lock on \\"key\\" (queue length was 2)",
+            "🔓 - Releasing the lock on "key" (queue length was 2)",
           ],
-          Array [
+          [
             "debug",
-            "🔐 - Obtaining the lock on \\"key\\" (queue length was 3)",
+            "🔐 - Obtaining the lock on "key" (queue length was 3)",
           ],
-          Array [
+          [
             "debug",
-            "🔓 - Releasing the lock on \\"key\\" (queue length was 1)",
+            "🔓 - Releasing the lock on "key" (queue length was 1)",
           ],
         ],
-        "releaseOrder": Array [
+        "releaseOrder": [
           1,
           2,
           3,
@@ -196,16 +196,16 @@ describe('initLockService', () => {
         code: (err as YError).code,
         params: (err as YError).params,
       }).toMatchInlineSnapshot(`
-        Object {
+        {
           "code": "E_NO_LOCK",
-          "params": Array [
+          "params": [
             "key",
           ],
         }
       `);
       expect(log.mock.calls).toMatchInlineSnapshot(`
-        Array [
-          Array [
+        [
+          [
             "debug",
             "🔒 - Lock service initialized.",
           ],
@@ -223,8 +223,8 @@ describe('initLockService', () => {
       .then(({ lock }) => {
         expect(lock).toBeTruthy();
         expect(log.mock.calls).toMatchInlineSnapshot(`
-          Array [
-            Array [
+          [
+            [
               "debug",
               "🔒 - Lock service initialized.",
             ],

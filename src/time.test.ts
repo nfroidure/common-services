@@ -1,5 +1,5 @@
-import { jest } from '@jest/globals';
-import Knifecycle, { constant } from 'knifecycle';
+import { describe, beforeEach, test, expect, jest } from '@jest/globals';
+import { Knifecycle, constant } from 'knifecycle';
 import initTimeService from './time.js';
 import type { LogService } from './log.js';
 
@@ -17,8 +17,8 @@ describe('initTimeService', () => {
       .then((time) => {
         expect('function' === typeof time);
         expect(log.mock.calls).toMatchInlineSnapshot(`
-          Array [
-            Array [
+          [
+            [
               "debug",
               "⏰ - Time service initialized.",
             ],
@@ -56,8 +56,8 @@ describe('initTimeService', () => {
       .then(({ time }) => {
         expect(time).toBeDefined();
         expect(log.mock.calls).toMatchInlineSnapshot(`
-          Array [
-            Array [
+          [
+            [
               "debug",
               "⏰ - Time service initialized.",
             ],

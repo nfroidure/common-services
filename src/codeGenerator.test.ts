@@ -1,4 +1,4 @@
-import { jest } from '@jest/globals';
+import { describe, beforeEach, test, expect, jest } from '@jest/globals';
 import initCodeGenerator from './codeGenerator.js';
 import type { RandomService } from './random.js';
 import type { LogService } from './log.js';
