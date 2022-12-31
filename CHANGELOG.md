@@ -1,3 +1,12 @@
+# [12.1.0](https://github.com/nfroidure/common-services/compare/v12.0.0...v12.1.0) (2022-12-31)
+
+
+### Features
+
+* **services:** add new resolve and importer services ([503d556](https://github.com/nfroidure/common-services/commit/503d556c8f941c0c7ea2e786bfae9abe8ba78bf8))
+
+
+
 # [12.0.0](https://github.com/nfroidure/common-services/compare/v11.1.0...v12.0.0) (2022-11-10)
 
 
