@@ -31,6 +31,9 @@ This module contains various common injectable
 <dt><a href="#initDelay">initDelay(services)</a> ⇒ <code>Promise.&lt;Object&gt;</code></dt>
 <dd><p>Instantiate the delay service</p>
 </dd>
+<dt><a href="#initImporter">initImporter(path)</a> ⇒ <code>Promise.&lt;Object&gt;</code></dt>
+<dd><p>Allow to import ES modules.</p>
+</dd>
 <dt><a href="#initLock">initLock(services)</a> ⇒ <code>Promise.&lt;Object&gt;</code></dt>
 <dd><p>Instantiate the lock service</p>
 </dd>
@@ -42,6 +45,9 @@ This module contains various common injectable
 </dd>
 <dt><a href="#initRandom">initRandom(services)</a> ⇒ <code>Promise.&lt;function()&gt;</code></dt>
 <dd><p>Instantiate the random service</p>
+</dd>
+<dt><a href="#initResolve">initResolve(path)</a> ⇒ <code>Promise.&lt;string&gt;</code></dt>
+<dd><p>Allow to resolve a path with the module system.</p>
 </dd>
 <dt><a href="#initTime">initTime(services)</a> ⇒ <code>Promise.&lt;function()&gt;</code></dt>
 <dd><p>Instantiate the time service</p>
@@ -200,6 +206,18 @@ try {
 }
 // Prints: Cancelled!
 ```
+<a name="initImporter"></a>
+
+## initImporter(path) ⇒ <code>Promise.&lt;Object&gt;</code>
+Allow to import ES modules.
+
+**Kind**: global function  
+**Returns**: <code>Promise.&lt;Object&gt;</code> - A promise of an imported module.  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| path | <code>string</code> | The module path |
+
 <a name="initLock"></a>
 
 ## initLock(services) ⇒ <code>Promise.&lt;Object&gt;</code>
@@ -365,6 +383,18 @@ Returns a new random number
 random()
 // Prints: 0.3141592653589793
 ```
+<a name="initResolve"></a>
+
+## initResolve(path) ⇒ <code>Promise.&lt;string&gt;</code>
+Allow to resolve a path with the module system.
+
+**Kind**: global function  
+**Returns**: <code>Promise.&lt;string&gt;</code> - A promise of a fully qualified module path  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| path | <code>string</code> | The serializable constants to gather |
+
 <a name="initTime"></a>
 
 ## initTime(services) ⇒ <code>Promise.&lt;function()&gt;</code>

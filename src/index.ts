@@ -19,6 +19,8 @@ import initLog, { DEFAULT_LOG_ROUTING, DEFAULT_LOG_CONFIG } from './log.js';
 import initTime from './time.js';
 import initRandom from './random.js';
 import initProcess from './process.js';
+import initResolve from './resolve.js';
+import initImporter from './importer.js';
 import type {
   CodeGeneratorService,
   CodeGeneratorServiceConfig,
@@ -36,8 +38,8 @@ import type {
 import type { TimeService } from './time.js';
 import type { RandomService } from './random.js';
 import type { ProcessServiceConfig } from './process.js';
-
-let x: ImportMeta;
+import type { ResolveService } from './resolve.js';
+import type { ImporterService } from './importer.js';
 
 /**
  * All services of the `common-services` module as
@@ -70,6 +72,8 @@ export type {
   TimeService,
   RandomService,
   ProcessServiceConfig,
+  ResolveService,
+  ImporterService,
 };
 export {
   initCodeGenerator as initCodeGeneratorService,
@@ -82,4 +86,6 @@ export {
   initTime as initTimeService,
   initRandom as initRandomService,
   initProcess as initProcessService,
+  initResolve as initResolveService,
+  initImporter as initImporterService,
 };
