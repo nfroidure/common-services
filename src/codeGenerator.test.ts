@@ -24,6 +24,29 @@ describe('codeGenerator', () => {
       code,
       logCalls: log.mock.calls,
       randomCalls: random.mock.calls,
-    }).toMatchSnapshot();
+    }).toMatchInlineSnapshot(`
+      {
+        "code": "S",
+        "logCalls": [
+          [
+            "debug",
+            "↪️ - Code generation service Initialized!",
+          ],
+          [
+            "debug",
+            "↪️ - Generated a new code:",
+            "S",
+          ],
+        ],
+        "randomCalls": [
+          [],
+          [],
+          [],
+          [],
+          [],
+          [],
+        ],
+      }
+    `);
   });
 });

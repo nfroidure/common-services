@@ -32,10 +32,11 @@ describe('Process service', () => {
   });
 
   describe('', () => {
-    beforeEach((done) => {
-      initProcessService({
-        NODE_ENV: 'development',
+    beforeEach(async () => {
+      await initProcessService({
         PROCESS_NAME: 'Kikooolol',
+        APP_ENV: 'local',
+        NODE_ENV: 'development',
         log,
         exit,
         $instance: { destroy: () => Promise.resolve() } as Knifecycle,
@@ -44,48 +45,43 @@ describe('Process service', () => {
             fatalErrorDeferred = { resolve, reject };
           }),
         },
-      })
-        .then(() => done())
-        .catch(done);
+      });
     });
 
     test('should work', () => {
-      expect(log.mock.calls).toEqual([
-        ['warning', '🔂 - Running in "development" environment.'],
-        ['debug', '📇 - Process service initialized.'],
-      ]);
-      expect(global.process.title).toEqual('Kikooolol - development');
+      expect(log.mock.calls).toMatchInlineSnapshot(`
+        [
+          [
+            "debug",
+            "📇 - Process service initialized.",
+          ],
+        ]
+      `);
+      expect(global.process.title).toEqual('Kikooolol - local:development');
       expect(processListenerStub.mock.calls.length).toEqual(3);
     });
 
-    test('should handle fatal errors', (done) => {
+    test('should handle fatal errors', async () => {
       fatalErrorDeferred.reject(new YError('E_AOUCH'));
 
-      exitPromise
-        .then(() => {
-          expect(exit.mock.calls).toEqual([[1]]);
-        })
-        .then(() => done())
-        .catch(done);
+      await exitPromise;
+
+      expect(exit.mock.calls).toEqual([[1]]);
     });
 
-    test('should handle uncaught exceptions', (done) => {
+    test('should handle uncaught exceptions', async () => {
       (
         processListenerStub.mock.calls.find(
           (call) => 'uncaughtException' === call[0],
         ) as [unknown, (err: Error) => void]
       )[1](new YError('E_AOUCH'));
 
-      exitPromise
-        .then(() => {
-          expect(exit.mock.calls).toEqual([[1]]);
-        })
-        .then(() => done())
-        .catch(done);
+      await exitPromise;
+      expect(exit.mock.calls).toEqual([[1]]);
     });
 
     ['SIGINT', 'SIGTERM'].forEach((signal) =>
-      test('should handle `signal`', (done) => {
+      test('should handle `signal`', async () => {
         (
           processListenerStub.mock.calls.find((call) => signal === call[0]) as [
             unknown,
@@ -93,30 +89,28 @@ describe('Process service', () => {
           ]
         )[1](new YError('E_AOUCH'));
 
-        exitPromise
-          .then(() => {
-            expect(exit.mock.calls).toEqual([[0]]);
-          })
-          .then(() => done())
-          .catch(done);
+        await exitPromise;
+        expect(exit.mock.calls).toEqual([[0]]);
       }),
     );
   });
 
-  test('should work with Knifecycle', (done) => {
-    new Knifecycle()
+  test('should work with Knifecycle', async () => {
+    await new Knifecycle()
       .register(initProcessService)
+      .register(constant('APP_ENV', 'local'))
+      .register(constant('NODE_ENV', 'test'))
       .register(constant('log', log))
-      .register(constant('NODE_ENV', 'production'))
       .register(constant('exit', exit))
-      .run(['process'])
-      .then(() => {
-        expect(log.mock.calls).toEqual([
-          ['warning', '🔂 - Running in "production" environment.'],
-          ['debug', '📇 - Process service initialized.'],
-        ]);
-      })
-      .then(() => done())
-      .catch(done);
+      .run(['process']);
+
+    expect(log.mock.calls).toMatchInlineSnapshot(`
+      [
+        [
+          "debug",
+          "📇 - Process service initialized.",
+        ],
+      ]
+    `);
   });
 });

@@ -12,40 +12,37 @@ describe('initLogService', () => {
     logger.debug.mockReset();
   });
 
-  test('should work', (done) => {
-    initLogService({
+  test('should work', async () => {
+    const log = await initLogService({
       logger,
-    })
-      .then((fn) => {
-        expect('function' === typeof fn);
-        expect(logger.debug.mock.calls).toMatchInlineSnapshot(`
+    });
+
+    expect('function' === typeof log);
+    expect(logger.debug.mock.calls).toMatchInlineSnapshot(`
           [
             [
               "👣 - Logging service initialized.",
             ],
           ]
         `);
-        expect(logger.output.mock.calls).toMatchInlineSnapshot(`[]`);
-        expect(logger.error.mock.calls).toMatchInlineSnapshot(`[]`);
-      })
-      .then(() => done())
-      .catch(done);
+    expect(logger.output.mock.calls).toMatchInlineSnapshot(`[]`);
+    expect(logger.error.mock.calls).toMatchInlineSnapshot(`[]`);
   });
 
   describe('log', () => {
-    test('should work', (done) => {
-      initLogService({
+    test('should work', async () => {
+      const log = await initLogService({
         logger,
-      })
-        .then((log) => {
-          logger.debug.mockClear();
-          log('debug', 'debug test');
-          log('debug-stack', 'debug stack test');
-          log('info', 'info test');
-          log('error', 'error test');
-          log('error-stack', 'error stack test');
-          log('warning', 'warning test');
-          expect(logger.debug.mock.calls).toMatchInlineSnapshot(`
+      });
+
+      logger.debug.mockClear();
+      log('debug', 'debug test');
+      log('debug-stack', 'debug stack test');
+      log('info', 'info test');
+      log('error', 'error test');
+      log('error-stack', 'error stack test');
+      log('warning', 'warning test');
+      expect(logger.debug.mock.calls).toMatchInlineSnapshot(`
             [
               [
                 "debug test",
@@ -55,14 +52,14 @@ describe('initLogService', () => {
               ],
             ]
           `);
-          expect(logger.output.mock.calls).toMatchInlineSnapshot(`
+      expect(logger.output.mock.calls).toMatchInlineSnapshot(`
             [
               [
                 "info test",
               ],
             ]
           `);
-          expect(logger.error.mock.calls).toMatchInlineSnapshot(`
+      expect(logger.error.mock.calls).toMatchInlineSnapshot(`
             [
               [
                 "error test",
@@ -75,38 +72,32 @@ describe('initLogService', () => {
               ],
             ]
           `);
-        })
-        .then(() => done())
-        .catch(done);
     });
   });
 
-  test('should work with Knifecycle', (done) => {
-    new Knifecycle()
+  test('should work with Knifecycle', async () => {
+    const { log } = await new Knifecycle()
       .register(initLogService)
       .register(constant('logger', logger))
-      .run<{ log: LogService }>(['log'])
-      .then(({ log }) => {
-        logger.debug.mockClear();
-        log('debug', 'debug test');
-        log('info', 'info test');
-        expect(logger.debug.mock.calls).toMatchInlineSnapshot(`
+      .run<{ log: LogService }>(['log']);
+
+    logger.debug.mockClear();
+    log('debug', 'debug test');
+    log('info', 'info test');
+    expect(logger.debug.mock.calls).toMatchInlineSnapshot(`
           [
             [
               "debug test",
             ],
           ]
         `);
-        expect(logger.output.mock.calls).toMatchInlineSnapshot(`
+    expect(logger.output.mock.calls).toMatchInlineSnapshot(`
           [
             [
               "info test",
             ],
           ]
         `);
-        expect(logger.error.mock.calls).toMatchInlineSnapshot(`[]`);
-      })
-      .then(() => done())
-      .catch(done);
+    expect(logger.error.mock.calls).toMatchInlineSnapshot(`[]`);
   });
 });

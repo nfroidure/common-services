@@ -13,7 +13,7 @@
    3. [Randomness](#13-randomness)
    4. [Delaying](#14-delaying)
    5. [Process](#15-process)
-      1. [Node environment filtering](#151-node-environment-filtering)
+      1. [Process name](#151-process-name)
       2. [Signals handling](#152-signals-handling)
       3. [Handling services fatal errors](#153-handling-services-fatal-errors)
       4. [Uncaught exceptions](#154-uncaught-exceptions)
@@ -88,18 +88,15 @@ The `process` service takes care of the process status.
 It returns nothing and should be injected only for its
  side effects.
 
-[See in context](./src/process.ts#L27-L32)
+[See in context](./src/process.ts#L24-L29)
 
 
 
-#### 1.5.1. Node environment filtering
+#### 1.5.1. Process name
 
-It also forces NODE_ENV to be set to avoid unintentionnal
- development version shipping to production. You can specify
- your own list of valid environments by injecting the
- `SIGNALS` optional dependency.
+It also set the process name with the actual NODE_ENV.
 
-[See in context](./src/process.ts#L63-L69)
+[See in context](./src/process.ts#L60-L63)
 
 
 
@@ -110,7 +107,7 @@ It also handle SIGINT and SIGTERM signals to allow to
  to handle can be customized by injecting the `SIGNALS`
  optional dependencies.
 
-[See in context](./src/process.ts#L79-L85)
+[See in context](./src/process.ts#L68-L74)
 
 
 
@@ -119,17 +116,17 @@ It also handle SIGINT and SIGTERM signals to allow to
 If an error occurs it attempts to gracefully exit
 to give it a chance to finish properly.
 
-[See in context](./src/process.ts#L90-L94)
+[See in context](./src/process.ts#L79-L83)
 
 
 
 #### 1.5.4. Uncaught exceptions
 
-If an uncaught exeption occurs it also attempts to
+If an uncaught exception occurs it also attempts to
  gracefully exit since a process should never be kept
  alive when an uncaught exception is raised.
 
-[See in context](./src/process.ts#L101-L106)
+[See in context](./src/process.ts#L90-L95)
 
 
 

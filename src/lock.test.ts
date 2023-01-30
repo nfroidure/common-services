@@ -214,15 +214,15 @@ describe('initLockService', () => {
     }
   });
 
-  test('should work with Knifecycle', (done) => {
-    new Knifecycle()
+  test('should work with Knifecycle', async () => {
+    const { lock } = await new Knifecycle()
       .register(initLockService)
       .register(constant('log', log))
       .register(constant('delay', delay))
-      .run(['lock'])
-      .then(({ lock }) => {
-        expect(lock).toBeTruthy();
-        expect(log.mock.calls).toMatchInlineSnapshot(`
+      .run(['lock']);
+
+    expect(lock).toBeTruthy();
+    expect(log.mock.calls).toMatchInlineSnapshot(`
           [
             [
               "debug",
@@ -230,8 +230,5 @@ describe('initLockService', () => {
             ],
           ]
         `);
-      })
-      .then(() => done())
-      .catch(done);
   });
 });

@@ -1,9 +1,7 @@
-import { YError } from 'yerror';
 import { autoProvider, singleton } from 'knifecycle';
 import type { FatalErrorService, Knifecycle } from 'knifecycle';
 import type { LogService } from './log.js';
 
-const DEFAULT_NODE_ENVS = ['development', 'test', 'production'];
 const DEFAULT_SIGNALS: NodeJS.Signals[] = ['SIGTERM', 'SIGINT'];
 
 function noop(): void {
@@ -11,13 +9,12 @@ function noop(): void {
 }
 
 export type ProcessServiceConfig = {
-  NODE_ENV?: string;
   PROCESS_NAME?: string;
   SIGNALS?: NodeJS.Signals[];
-  NODE_ENVS?: string[];
 };
 export type ProcessServiceDependencies = ProcessServiceConfig & {
   NODE_ENV: string;
+  APP_ENV: string;
   exit: typeof process.exit;
   $instance: Knifecycle;
   $fatalError: FatalErrorService;
@@ -44,9 +41,9 @@ export default singleton(autoProvider(initProcess));
  */
 async function initProcess({
   NODE_ENV,
+  APP_ENV,
   PROCESS_NAME = '',
   SIGNALS = DEFAULT_SIGNALS,
-  NODE_ENVS = DEFAULT_NODE_ENVS,
   log = noop,
   exit,
   $instance,
@@ -60,21 +57,13 @@ async function initProcess({
   >((signal) => [signal, terminate.bind(null, signal)]);
   let shuttingDown = false;
 
-  /* Architecture Note #1.5.1: Node environment filtering
+  /* Architecture Note #1.5.1: Process name
 
-  It also forces NODE_ENV to be set to avoid unintentionnal
-   development version shipping to production. You can specify
-   your own list of valid environments by injecting the
-   `SIGNALS` optional dependency.
+  It also set the process name with the actual NODE_ENV.
   */
-  if (!NODE_ENVS.includes(NODE_ENV)) {
-    throw new YError('E_NODE_ENV', NODE_ENV);
-  }
-
-  log('warning', `🔂 - Running in "${NODE_ENV}" environment.`);
-
-  global.process.title =
-    (PROCESS_NAME || global.process.title) + ' - ' + NODE_ENV;
+  global.process.title = `${
+    PROCESS_NAME || global.process.title
+  } - ${APP_ENV}:${NODE_ENV}`;
 
   /* Architecture Note #1.5.2: Signals handling
 
@@ -100,7 +89,7 @@ async function initProcess({
 
   /* Architecture Note #1.5.4: Uncaught exceptions
 
-  If an uncaught exeption occurs it also attempts to
+  If an uncaught exception occurs it also attempts to
    gracefully exit since a process should never be kept
    alive when an uncaught exception is raised.
   */
