@@ -2,6 +2,13 @@ import { autoProvider, singleton } from 'knifecycle';
 import type { FatalErrorService, Knifecycle } from 'knifecycle';
 import type { LogService } from './log.js';
 
+export enum NodeEnv {
+  Test = 'test',
+  Development = 'development',
+  Production = 'production',
+}
+export type BaseAppEnv = 'local';
+
 const DEFAULT_SIGNALS: NodeJS.Signals[] = ['SIGTERM', 'SIGINT'];
 
 function noop(): void {
@@ -12,14 +19,15 @@ export type ProcessServiceConfig = {
   PROCESS_NAME?: string;
   SIGNALS?: NodeJS.Signals[];
 };
-export type ProcessServiceDependencies = ProcessServiceConfig & {
-  NODE_ENV: string;
-  APP_ENV: string;
-  exit: typeof process.exit;
-  $instance: Knifecycle;
-  $fatalError: FatalErrorService;
-  log?: LogService;
-};
+export type ProcessServiceDependencies<T extends BaseAppEnv> =
+  ProcessServiceConfig & {
+    NODE_ENV: NodeEnv;
+    APP_ENV: T;
+    exit: typeof process.exit;
+    $instance: Knifecycle;
+    $fatalError: FatalErrorService;
+    log?: LogService;
+  };
 
 /* Architecture Note #1.5: Process
 The `process` service takes care of the process status.
@@ -28,7 +36,7 @@ It returns nothing and should be injected only for its
  side effects.
 */
 
-export default singleton(autoProvider(initProcess));
+export default singleton(autoProvider(initProcess)) as typeof initProcess;
 
 /**
  * Instantiate the process service
@@ -39,7 +47,7 @@ export default singleton(autoProvider(initProcess));
  * @return {Promise<Object>}
  * A promise of the process object
  */
-async function initProcess({
+async function initProcess<T extends BaseAppEnv>({
   NODE_ENV,
   APP_ENV,
   PROCESS_NAME = '',
@@ -48,7 +56,7 @@ async function initProcess({
   exit,
   $instance,
   $fatalError,
-}: ProcessServiceDependencies): Promise<{
+}: ProcessServiceDependencies<T>): Promise<{
   service: NodeJS.Process;
   dispose: () => Promise<void>;
 }> {

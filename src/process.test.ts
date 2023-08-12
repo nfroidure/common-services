@@ -8,7 +8,7 @@ import {
 } from '@jest/globals';
 import { YError } from 'yerror';
 import { Knifecycle, constant } from 'knifecycle';
-import initProcessService from './process.js';
+import initProcessService, { NodeEnv } from './process.js';
 import type { LogService } from './log.js';
 
 describe('Process service', () => {
@@ -36,7 +36,7 @@ describe('Process service', () => {
       await initProcessService({
         PROCESS_NAME: 'Kikooolol',
         APP_ENV: 'local',
-        NODE_ENV: 'development',
+        NODE_ENV: NodeEnv.Development,
         log,
         exit,
         $instance: { destroy: () => Promise.resolve() } as Knifecycle,

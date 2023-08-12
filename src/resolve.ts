@@ -1,11 +1,11 @@
-import { autoService } from 'knifecycle';
+import { autoService, singleton } from 'knifecycle';
 import type { LogService } from './log.js';
 
 function noop(): void {
   return undefined;
 }
 
-export default autoService(initResolve);
+export default singleton(autoService(initResolve));
 
 export type ResolveService = (
   id: string,
