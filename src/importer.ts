@@ -28,7 +28,7 @@ async function initImporter<M>({
       return await import(path);
     } catch (err) {
       log('debug', `⚠️ - Got a runtime import error for "${path}" !`);
-      log('debug-stack', printStackTrace(err));
+      log('debug-stack', printStackTrace(err as Error));
       throw YError.wrap(err as Error, 'E_RUNTIME_IMPORT_FAILURE', path);
     }
   };

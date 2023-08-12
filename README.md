@@ -7,8 +7,8 @@
 # common-services
 > A module to gather very common services.
 
-[![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/nfroidure/common-services/blob/master/LICENSE)
-[![Coverage Status](https://coveralls.io/repos/github/nfroidure/common-services/badge.svg?branch=master)](https://coveralls.io/github/nfroidure/common-services?branch=master)
+[![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/nfroidure/common-services/blob/main/LICENSE)
+[![Coverage Status](https://coveralls.io/repos/github/nfroidure/common-services/badge.svg?branch=main)](https://coveralls.io/github/nfroidure/common-services?branch=main)
 
 
 [//]: # (::contents:start)
@@ -433,4 +433,4 @@ time()
 - [Nicolas Froidure](http://insertafter.com/en/index.html)
 
 # License
-[MIT](https://github.com/nfroidure/common-services/blob/master/LICENSE)
+[MIT](https://github.com/nfroidure/common-services/blob/main/LICENSE)
