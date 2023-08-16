@@ -1,4 +1,4 @@
-import { autoService } from 'knifecycle';
+import { autoService, singleton } from 'knifecycle';
 import { printStackTrace, YError } from 'yerror';
 import type { LogService } from './log.js';
 
@@ -6,7 +6,7 @@ function noop(): void {
   return undefined;
 }
 
-export default autoService(initImporter) as typeof initImporter;
+export default singleton(autoService(initImporter)) as typeof initImporter;
 
 export type ImporterService<M> = (path: string) => Promise<M>;
 
