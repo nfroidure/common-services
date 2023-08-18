@@ -20,9 +20,6 @@
 <dt><a href="#initLog">initLog(services)</a> ⇒ <code>Promise.&lt;function()&gt;</code></dt>
 <dd><p>Instantiate the logging service</p>
 </dd>
-<dt><a href="#initProcess">initProcess(services)</a> ⇒ <code>Promise.&lt;Object&gt;</code></dt>
-<dd><p>Instantiate the process service</p>
-</dd>
 <dt><a href="#initRandom">initRandom(services)</a> ⇒ <code>Promise.&lt;function()&gt;</code></dt>
 <dd><p>Instantiate the random service</p>
 </dd>
@@ -318,18 +315,6 @@ Logging function
 ```js
 log('debug', 'Luke, I am your father!')
 ```
-<a name="initProcess"></a>
-
-## initProcess(services) ⇒ <code>Promise.&lt;Object&gt;</code>
-Instantiate the process service
-
-**Kind**: global function  
-**Returns**: <code>Promise.&lt;Object&gt;</code> - A promise of the process object  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| services | <code>Object</code> | The services to inject |
-
 <a name="initRandom"></a>
 
 ## initRandom(services) ⇒ <code>Promise.&lt;function()&gt;</code>

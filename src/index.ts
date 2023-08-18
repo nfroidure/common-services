@@ -18,7 +18,6 @@ import initLock from './lock.js';
 import initLog, { DEFAULT_LOG_ROUTING, DEFAULT_LOG_CONFIG } from './log.js';
 import initTime from './time.js';
 import initRandom from './random.js';
-import initProcess, { NodeEnv } from './process.js';
 import initResolve from './resolve.js';
 import initImporter from './importer.js';
 
@@ -52,11 +51,9 @@ export type {
 } from './log.js';
 export type { TimeService } from './time.js';
 export type { RandomService } from './random.js';
-export type { BaseAppEnv, ProcessServiceConfig } from './process.js';
 export type { ResolveService } from './resolve.js';
 export type { ImporterService } from './importer.js';
 export {
-  NodeEnv,
   initCodeGenerator as initCodeGeneratorService,
   initCounter as initCounterService,
   initDelay as initDelayService,
@@ -66,7 +63,6 @@ export {
   DEFAULT_LOG_ROUTING,
   initTime as initTimeService,
   initRandom as initRandomService,
-  initProcess as initProcessService,
   initResolve as initResolveService,
   initImporter as initImporterService,
 };
