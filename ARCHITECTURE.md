@@ -12,11 +12,6 @@
    2. [Time](#12-time)
    3. [Randomness](#13-randomness)
    4. [Delaying](#14-delaying)
-   5. [Process](#15-process)
-      1. [Process name](#151-process-name)
-      2. [Signals handling](#152-signals-handling)
-      3. [Handling services fatal errors](#153-handling-services-fatal-errors)
-      4. [Uncaught exceptions](#154-uncaught-exceptions)
    6. [Counter](#16-counter)
    7. [Code generator](#17-code-generator)
    8. [Lock](#18-lock)
@@ -78,55 +73,6 @@ The delay service is `setTimeout` like I would like it
  to be.
 
 [See in context](./src/delay.ts#L18-L22)
-
-
-
-### 1.5. Process
-
-The `process` service takes care of the process status.
-
-It returns nothing and should be injected only for its
- side effects.
-
-[See in context](./src/process.ts#L32-L37)
-
-
-
-#### 1.5.1. Process name
-
-It also set the process name with the actual NODE_ENV.
-
-[See in context](./src/process.ts#L68-L71)
-
-
-
-#### 1.5.2. Signals handling
-
-It also handle SIGINT and SIGTERM signals to allow to
- gracefully shutdown the running process. The signals
- to handle can be customized by injecting the `SIGNALS`
- optional dependencies.
-
-[See in context](./src/process.ts#L76-L82)
-
-
-
-#### 1.5.3. Handling services fatal errors
-
-If an error occurs it attempts to gracefully exit
-to give it a chance to finish properly.
-
-[See in context](./src/process.ts#L87-L91)
-
-
-
-#### 1.5.4. Uncaught exceptions
-
-If an uncaught exception occurs it also attempts to
- gracefully exit since a process should never be kept
- alive when an uncaught exception is raised.
-
-[See in context](./src/process.ts#L98-L103)
 
 
 
