@@ -1,3 +1,17 @@
+# [15.0.0](https://github.com/nfroidure/common-services/compare/v14.0.0...v15.0.0) (2023-08-20)
+
+
+### Code Refactoring
+
+* **process:** remove the process service ([59051e2](https://github.com/nfroidure/common-services/commit/59051e27deb76642b14b24be7943f1c0675c0cc5))
+
+
+### BREAKING CHANGES
+
+* **process:** No more `process` service.
+
+
+
 # [14.0.0](https://github.com/nfroidure/common-services/compare/v13.0.0...v14.0.0) (2023-08-16)
 
 
