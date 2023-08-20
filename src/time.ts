@@ -11,7 +11,7 @@ export interface TimeService {
 
 /* Architecture Note #1.2: Time
 
-The time service is just proxying [`Date.now`
+The `time` service is just proxying [`Date.now`
 ](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Date/now)
  in a stubbable manner.
 */

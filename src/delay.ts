@@ -15,9 +15,9 @@ export interface DelayService {
   clear: (promise: Promise<void>) => Promise<void>;
 }
 
-/* Architecture Note #1.4: Delaying
+/* Architecture Note #1.4: Delay
 
-The delay service is `setTimeout` like I would like it
+The `delay` service is `setTimeout` like I would like it
  to be.
 */
 

@@ -20,7 +20,7 @@ const DEFAULT_COUNTER = {
   firstCount: 1,
 };
 
-/* Architecture Note #1.6: Counter
+/* Architecture Note #1.9: Counter
 
 The `counter` service provide a simple, local and
  stubbable counter.

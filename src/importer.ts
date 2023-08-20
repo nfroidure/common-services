@@ -6,6 +6,12 @@ function noop(): void {
   return undefined;
 }
 
+/* Architecture Note #1.6: Importer
+
+The `importer` service is just proxying [`import`
+](https://developer.mozilla.org/fr/docs/Web/JavaScript/Reference/Operators/import)
+ in a stubbable manner.
+*/
 export default singleton(autoService(initImporter)) as typeof initImporter;
 
 export type ImporterService<M> = (path: string) => Promise<M>;

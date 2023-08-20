@@ -8,13 +8,15 @@
 ## Summary
 
 1. [Services](#1-services)
-   1. [Logging](#11-logging)
+   1. [Log](#11-log)
    2. [Time](#12-time)
-   3. [Randomness](#13-randomness)
-   4. [Delaying](#14-delaying)
-   6. [Counter](#16-counter)
+   3. [Random](#13-random)
+   4. [Delay](#14-delay)
+   5. [Resolve](#15-resolve)
+   6. [Importer](#16-importer)
    7. [Code generator](#17-code-generator)
    8. [Lock](#18-lock)
+   9. [Counter](#19-counter)
 
 
 ## 1. Services
@@ -33,9 +35,9 @@ Their goal is to encapsulate unpredictible states and
 
 
 
-### 1.1. Logging
+### 1.1. Log
 
-I prefer using a unique function with the log type
+I prefer using a unique function with the `log` type
  in parameter instead of several methods for each
  log types. It is far easyer to mock and to assert
  on logs in my tests.
@@ -49,7 +51,7 @@ If provided, I route debug messages to the `debug`
 
 ### 1.2. Time
 
-The time service is just proxying [`Date.now`
+The `time` service is just proxying [`Date.now`
 ](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Date/now)
  in a stubbable manner.
 
@@ -57,9 +59,9 @@ The time service is just proxying [`Date.now`
 
 
 
-### 1.3. Randomness
+### 1.3. Random
 
-The random service is just proxying [`Math.random`
+The `random` service is just proxying [`Math.random`
 ](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Math/random)
  in a stubbable manner.
 
@@ -67,26 +69,32 @@ The random service is just proxying [`Math.random`
 
 
 
-### 1.4. Delaying
+### 1.4. Delay
 
-The delay service is `setTimeout` like I would like it
+The `delay` service is `setTimeout` like I would like it
  to be.
 
 [See in context](./src/delay.ts#L18-L22)
 
 
 
-### 1.6. Counter
+### 1.5. Resolve
 
-The `counter` service provide a simple, local and
- stubbable counter.
+The `resolve` service is just proxying [`import.meta.resolve`
+](https://developer.mozilla.org/fr/docs/Web/JavaScript/Reference/Operators/import.meta/resolve)
+ in a stubbable manner.
 
-The count are returned asynchronously in order
- to be easily maintained across several instances
- if needed later via another service with the same
- surface API.
+[See in context](./src/resolve.ts#L8-L13)
 
-[See in context](./src/counter.ts#L23-L32)
+
+
+### 1.6. Importer
+
+The `importer` service is just proxying [`import`
+](https://developer.mozilla.org/fr/docs/Web/JavaScript/Reference/Operators/import)
+ in a stubbable manner.
+
+[See in context](./src/importer.ts#L9-L14)
 
 
 
@@ -103,8 +111,9 @@ The `codeGenerator` service provide a service
 
 ### 1.8. Lock
 
-This service allows to maintain a lock on a given resource in order
- to ensure a sequential access to it in asynchronous code.
+The `lock` service allows to maintain a lock on a given
+ resource in order to ensure a sequential access to it in
+ asynchronous code.
 
 The release is done by its key and the current lock is removed. There
  is no check on the fact the lock is well released. By design, it is
@@ -112,5 +121,19 @@ The release is done by its key and the current lock is removed. There
  said, it should not be hard to handle since the actual behavior of
  the library makes your code run sequentially.
 
-[See in context](./src/lock.ts#L28-L38)
+[See in context](./src/lock.ts#L28-L39)
+
+
+
+### 1.9. Counter
+
+The `counter` service provide a simple, local and
+ stubbable counter.
+
+The count are returned asynchronously in order
+ to be easily maintained across several instances
+ if needed later via another service with the same
+ surface API.
+
+[See in context](./src/counter.ts#L23-L32)
 

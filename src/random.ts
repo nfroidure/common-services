@@ -9,9 +9,9 @@ export interface RandomService {
   (): number;
 }
 
-/* Architecture Note #1.3: Randomness
+/* Architecture Note #1.3: Random
 
-The random service is just proxying [`Math.random`
+The `random` service is just proxying [`Math.random`
 ](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Math/random)
  in a stubbable manner.
 */

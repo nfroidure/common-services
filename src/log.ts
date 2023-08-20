@@ -50,9 +50,9 @@ export type LogServiceDependencies = LogServiceConfig & {
   logger: Logger;
 };
 
-/* Architecture Note #1.1: Logging
+/* Architecture Note #1.1: Log
 
-I prefer using a unique function with the log type
+I prefer using a unique function with the `log` type
  in parameter instead of several methods for each
  log types. It is far easyer to mock and to assert
  on logs in my tests.

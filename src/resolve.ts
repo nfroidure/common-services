@@ -5,6 +5,12 @@ function noop(): void {
   return undefined;
 }
 
+/* Architecture Note #1.5: Resolve
+
+The `resolve` service is just proxying [`import.meta.resolve`
+](https://developer.mozilla.org/fr/docs/Web/JavaScript/Reference/Operators/import.meta/resolve)
+ in a stubbable manner.
+*/
 export default singleton(autoService(initResolve));
 
 export type ResolveService = (

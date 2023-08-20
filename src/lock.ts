@@ -27,8 +27,9 @@ export interface LockService<K> {
 
 /* Architecture Note #1.8: Lock
 
-This service allows to maintain a lock on a given resource in order
- to ensure a sequential access to it in asynchronous code.
+The `lock` service allows to maintain a lock on a given
+ resource in order to ensure a sequential access to it in
+ asynchronous code.
 
 The release is done by its key and the current lock is removed. There
  is no check on the fact the lock is well released. By design, it is
