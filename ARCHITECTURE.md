@@ -92,7 +92,7 @@ The `resolve` service is just proxying [`import.meta.resolve`
 
 The `importer` service is just proxying [`import`
 ](https://developer.mozilla.org/fr/docs/Web/JavaScript/Reference/Operators/import)
- in a stubbable manner.
+ in a simply stubbable manner.
 
 [See in context](./src/services/importer.ts#L6-L11)
 

@@ -7,7 +7,7 @@ import type { LogService } from './log.js';
 
 The `importer` service is just proxying [`import`
 ](https://developer.mozilla.org/fr/docs/Web/JavaScript/Reference/Operators/import)
- in a stubbable manner.
+ in a simply stubbable manner.
 */
 export default singleton(autoService(initImporter)) as typeof initImporter;
 
