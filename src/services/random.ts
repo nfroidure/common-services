@@ -1,9 +1,6 @@
 import { autoService, singleton } from 'knifecycle';
+import { noop } from '../utils/utils.js';
 import type { LogService } from './log.js';
-
-function noop(): void {
-  return undefined;
-}
 
 export interface RandomService {
   (): number;

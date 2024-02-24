@@ -51,28 +51,28 @@ describe('Importer', () => {
         errorParams: (err as YError).params,
         logCalls: log.mock.calls.filter(([type]) => !type.startsWith('debug-')),
       }).toMatchInlineSnapshot(`
-        {
-          "errorCode": "E_RUNTIME_IMPORT_FAILURE",
-          "errorParams": [
-            "@nowhere/anywhere",
-            "Cannot find module '@nowhere/anywhere' from 'src/importer.ts'",
-          ],
-          "logCalls": [
-            [
-              "debug",
-              "🛂 - Initializing the importer!",
-            ],
-            [
-              "debug",
-              "🛂 - Dynamic import of "@nowhere/anywhere".",
-            ],
-            [
-              "debug",
-              "⚠️ - Got a runtime import error for "@nowhere/anywhere" !",
-            ],
-          ],
-        }
-      `);
+{
+  "errorCode": "E_RUNTIME_IMPORT_FAILURE",
+  "errorParams": [
+    "@nowhere/anywhere",
+    "Cannot find module '@nowhere/anywhere' from 'src/services/importer.ts'",
+  ],
+  "logCalls": [
+    [
+      "debug",
+      "🛂 - Initializing the importer!",
+    ],
+    [
+      "debug",
+      "🛂 - Dynamic import of "@nowhere/anywhere".",
+    ],
+    [
+      "debug",
+      "⚠️ - Got a runtime import error for "@nowhere/anywhere" !",
+    ],
+  ],
+}
+`);
     }
   });
 });

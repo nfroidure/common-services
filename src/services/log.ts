@@ -72,8 +72,6 @@ export default singleton(autoService(initLog));
  * The services to inject
  * @param  {Object}   services.logger
  * The logger object that output the logs
- * @param  {Function} [services.debug = noop]
- * A debugging function
  * @return {Promise<Function>}
  * A promise of the logging function
  * @example
@@ -111,8 +109,8 @@ async function initLog({
         LOG_CONFIG.stringify
           ? JSON.stringify(arg)
           : arg != null
-          ? arg.toString()
-          : '',
+            ? arg.toString()
+            : '',
       )
       .join(' ');
 

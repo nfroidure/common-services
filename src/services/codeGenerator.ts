@@ -1,10 +1,7 @@
 import { autoService } from 'knifecycle';
+import { noop } from '../utils/utils.js';
 import type { LogService } from './log.js';
 import type { RandomService } from './random.js';
-
-function noop(): void {
-  return undefined;
-}
 
 export type CodeGeneratorServiceConfig = {
   CHARS_SET?: string;
@@ -23,6 +20,9 @@ The `codeGenerator` service provide a service
  that generate random strings composed of
  a character set that avoid recognition
  mistake by humans.
+
+It generates codes that contains only easily
+ recognizable chars (by example, no `0` nor `O`).
 */
 
 const EXPLICIT_CHARS = 'ABCDEFGHJKMNPRSTUVWXYZ23456789';

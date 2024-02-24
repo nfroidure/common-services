@@ -11,15 +11,18 @@ Their goal is to encapsulate unpredictible states and
  but should be usable with any DI system or even rawly.
 */
 
-import initCodeGenerator from './codeGenerator.js';
-import initCounter from './counter.js';
-import initDelay from './delay.js';
-import initLock from './lock.js';
-import initLog, { DEFAULT_LOG_ROUTING, DEFAULT_LOG_CONFIG } from './log.js';
-import initTime from './time.js';
-import initRandom from './random.js';
-import initResolve from './resolve.js';
-import initImporter from './importer.js';
+import initCodeGenerator from './services/codeGenerator.js';
+import initCounter from './services/counter.js';
+import initDelay from './services/delay.js';
+import initLock from './services/lock.js';
+import initLog, {
+  DEFAULT_LOG_ROUTING,
+  DEFAULT_LOG_CONFIG,
+} from './services/log.js';
+import initTime from './services/time.js';
+import initRandom from './services/random.js';
+import initResolve from './services/resolve.js';
+import initImporter from './services/importer.js';
 
 /**
  * All services of the `common-services` module as
@@ -38,21 +41,24 @@ import initImporter from './importer.js';
 export type {
   CodeGeneratorService,
   CodeGeneratorServiceConfig,
-} from './codeGenerator.js';
-export type { CounterService, CounterServiceConfig } from './counter.js';
-export type { DelayProvider, DelayService } from './delay.js';
-export type { LockService, LockServiceConfig } from './lock.js';
+} from './services/codeGenerator.js';
+export type {
+  CounterService,
+  CounterServiceConfig,
+} from './services/counter.js';
+export type { DelayProvider, DelayService } from './services/delay.js';
+export type { LockService, LockServiceConfig } from './services/lock.js';
 export type {
   LogService,
   LogServiceConfig,
   LogTypes,
   LogFunction,
   Logger,
-} from './log.js';
-export type { TimeService } from './time.js';
-export type { RandomService } from './random.js';
-export type { ResolveService } from './resolve.js';
-export type { ImporterService } from './importer.js';
+} from './services/log.js';
+export type { TimeService } from './services/time.js';
+export type { RandomService } from './services/random.js';
+export type { ResolveService } from './services/resolve.js';
+export type { ImporterService } from './services/importer.js';
 export {
   initCodeGenerator as initCodeGeneratorService,
   initCounter as initCounterService,

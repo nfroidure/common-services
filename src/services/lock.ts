@@ -1,9 +1,8 @@
 import { YError } from 'yerror';
 import { autoService, singleton } from 'knifecycle';
+import { noop } from '../utils/utils.js';
 import type { LogService } from './log.js';
 import type { DelayService } from './delay.js';
-
-const noop = () => undefined;
 
 interface Lock {
   releasePromise: Promise<void>;

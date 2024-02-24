@@ -45,7 +45,7 @@ I prefer using a unique function with the `log` type
 If provided, I route debug messages to the `debug`
  node module.
 
-[See in context](./src/log.ts#L53-L63)
+[See in context](./src/services/log.ts#L53-L63)
 
 
 
@@ -55,7 +55,7 @@ The `time` service is just proxying [`Date.now`
 ](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Date/now)
  in a stubbable manner.
 
-[See in context](./src/time.ts#L12-L17)
+[See in context](./src/services/time.ts#L9-L14)
 
 
 
@@ -65,7 +65,7 @@ The `random` service is just proxying [`Math.random`
 ](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Math/random)
  in a stubbable manner.
 
-[See in context](./src/random.ts#L12-L17)
+[See in context](./src/services/random.ts#L9-L14)
 
 
 
@@ -74,7 +74,7 @@ The `random` service is just proxying [`Math.random`
 The `delay` service is `setTimeout` like I would like it
  to be.
 
-[See in context](./src/delay.ts#L18-L22)
+[See in context](./src/services/delay.ts#L15-L19)
 
 
 
@@ -84,7 +84,7 @@ The `resolve` service is just proxying [`import.meta.resolve`
 ](https://developer.mozilla.org/fr/docs/Web/JavaScript/Reference/Operators/import.meta/resolve)
  in a stubbable manner.
 
-[See in context](./src/resolve.ts#L8-L13)
+[See in context](./src/services/resolve.ts#L5-L10)
 
 
 
@@ -94,7 +94,7 @@ The `importer` service is just proxying [`import`
 ](https://developer.mozilla.org/fr/docs/Web/JavaScript/Reference/Operators/import)
  in a stubbable manner.
 
-[See in context](./src/importer.ts#L9-L14)
+[See in context](./src/services/importer.ts#L6-L11)
 
 
 
@@ -105,7 +105,10 @@ The `codeGenerator` service provide a service
  a character set that avoid recognition
  mistake by humans.
 
-[See in context](./src/codeGenerator.ts#L20-L26)
+It generates codes that contains only easily
+ recognizable chars (by example, no `0` nor `O`).
+
+[See in context](./src/services/codeGenerator.ts#L17-L26)
 
 
 
@@ -121,7 +124,7 @@ The release is done by its key and the current lock is removed. There
  said, it should not be hard to handle since the actual behavior of
  the library makes your code run sequentially.
 
-[See in context](./src/lock.ts#L28-L39)
+[See in context](./src/services/lock.ts#L27-L38)
 
 
 
@@ -135,5 +138,5 @@ The count are returned asynchronously in order
  if needed later via another service with the same
  surface API.
 
-[See in context](./src/counter.ts#L23-L32)
+[See in context](./src/services/counter.ts#L20-L29)
 

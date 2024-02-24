@@ -282,11 +282,10 @@ Instantiate the logging service
 **Kind**: global function  
 **Returns**: <code>Promise.&lt;function()&gt;</code> - A promise of the logging function  
 
-| Param | Type | Default | Description |
-| --- | --- | --- | --- |
-| services | <code>Object</code> |  | The services to inject |
-| services.logger | <code>Object</code> |  | The logger object that output the logs |
-| [services.debug] | <code>function</code> | <code>noop</code> | A debugging function |
+| Param | Type | Description |
+| --- | --- | --- |
+| services | <code>Object</code> | The services to inject |
+| services.logger | <code>Object</code> | The logger object that output the logs |
 
 **Example**  
 ```js
