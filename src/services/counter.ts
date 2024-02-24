@@ -43,11 +43,18 @@ export default singleton(autoService(initCounter), true);
  * @return {Promise<Function>}
  * A promise of the counter function
  * @example
- * import initCounter from 'common-services/dist/counter';
+ * import {
+ *   initCounter,
+ *   initLog,
+ * } from 'common-services';
+ *
+ * const log = await initLog({
+ *   logger: DEFAULT_LOGGER
+ * });
  *
  * const counter = await initCounter({
  *   COUNTER: { firstCount: 1 },
- *   log: console.log.bind(console),
+ *   log,
  * });
  */
 async function initCounter({

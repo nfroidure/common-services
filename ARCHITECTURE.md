@@ -45,7 +45,7 @@ I prefer using a unique function with the `log` type
 If provided, I route debug messages to the `debug`
  node module.
 
-[See in context](./src/services/log.ts#L53-L63)
+[See in context](./src/services/log.ts#L56-L66)
 
 
 

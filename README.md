@@ -13,8 +13,18 @@
 
 [//]: # (::contents:start)
 
-This module contains various common injectable
- services I use into a lot of applications.
+This module contains various common injectable services that are often used into
+a wide range of applications.
+
+The services provided here are meant to have a very tiny surface API in order to
+be easily mocked but also implemented with different technologies.
+
+For example, the `counter` service could be implemented with a distributed
+architecture, the `codeGenerator` though a database...
+
+The services are designed to be used with
+[Knifecycle](https://github.com/nfroidure/knifecycle) a simple but feature
+complete dependency injection tool but can also be used by hand.
 
 [//]: # (::contents:end)
 
@@ -43,7 +53,10 @@ This module contains various common injectable
 <dt><a href="#initRandom">initRandom(services)</a> ⇒ <code>Promise.&lt;function()&gt;</code></dt>
 <dd><p>Instantiate the random service</p>
 </dd>
-<dt><a href="#initResolve">initResolve(path)</a> ⇒ <code>Promise.&lt;string&gt;</code></dt>
+<dt><a href="#initResolve">initResolve(services)</a> ⇒ <code>Promise.&lt;function()&gt;</code></dt>
+<dd><p>Instantiate the <code>resolve</code> service</p>
+</dd>
+<dt><a href="#resolve">resolve(path)</a> ⇒ <code>Promise.&lt;string&gt;</code></dt>
 <dd><p>Allow to resolve a path with the module system.</p>
 </dd>
 <dt><a href="#initTime">initTime(services)</a> ⇒ <code>Promise.&lt;function()&gt;</code></dt>
@@ -67,10 +80,18 @@ Instantiate the codeGenerator service
 
 **Example**  
 ```js
-import initCodeGenerator from 'common-services/dist/codeGenerator';
+import {
+  DEFAULT_LOGGER,
+  initCodeGenerator,
+  initLog,
+} from 'common-services';
+
+const log = await initLog({
+  logger: DEFAULT_LOGGER,
+});
 
 const codeGenerator = await initCodeGenerator({
-  log: console.log.bind(console),
+  log,
 });
 ```
 <a name="initCodeGenerator..codeGenerator"></a>
@@ -110,11 +131,18 @@ Instantiate the counter service
 
 **Example**  
 ```js
-import initCounter from 'common-services/dist/counter';
+import {
+  initCounter,
+  initLog,
+} from 'common-services';
+
+const log = await initLog({
+  logger: DEFAULT_LOGGER
+});
 
 const counter = await initCounter({
   COUNTER: { firstCount: 1 },
-  log: console.log.bind(console),
+  log,
 });
 ```
 <a name="initCounter..counter"></a>
@@ -148,10 +176,18 @@ Instantiate the delay service
 
 **Example**  
 ```js
-import initDelay from 'common-services/dist/delay';
+import {
+  DEFAULT_LOGGER,
+  initDelay,
+  initLog,
+} from 'common-services';
+
+const log = await initLog({
+  logger: DEFAULT_LOGGER
+});
 
 const delay = await initDelay({
-  log: console.log.bind(console)
+  log,
 });
 ```
 
@@ -233,19 +269,23 @@ Instantiate the lock service
 
 **Example**  
 ```js
-import initLog from 'common-services/dist/log';
-import initDelayService from 'common-services/dist/delay';
-import initLock from 'common-services/dist/lock';
+import {
+  DEFAULT_LOGGER,
+  initLog,
+  initDelay,
+  initLock
+} from 'common-services';
 import ms from 'ms';
-import winston from 'winston';
-import debug from 'debug';
 
-const log = await initLogService({
-  logger: winston,
-  debug: debug('myapp'),
+const log = await initLog({
+  logger: DEFAULT_LOGGER
 });
-const delay = await initDelayService({ log });
-const lock = await initLock ({ LOCK_TIMEOUT: ms('5s'), delay, log });
+const delay = await initDelay({ log });
+const lock = await initLock({
+  LOCK_TIMEOUT: ms('5s'),
+  delay,
+  log,
+});
 
 
 run();
@@ -309,14 +349,14 @@ Instantiate the logging service
 
 **Example**  
 ```js
-import initLog from 'common-services/dist/log';
-import debug from 'debug';
-import winston from 'winston';
+import {
+  DEFAULT_LOGGER,
+  initLog,
+} from 'common-services';
 
 const log = await initLog({
-  logger: winston,
-  debug: debug('myapp'),
- });
+  logger: DEFAULT_LOGGER,
+});
 ```
 <a name="initLog..log"></a>
 
@@ -349,10 +389,18 @@ Instantiate the random service
 
 **Example**  
 ```js
-import initRandom from 'common-services/dist/random';
+import {
+  DEFAULT_LOGGER,
+  initLog,
+  initRandom
+} from 'common-services';
+
+const log = await initLog({
+  logger: DEFAULT_LOGGER,
+});
 
 const random = await initRandom({
-  log: console.log.bind(console),
+  log,
 });
 ```
 <a name="initRandom..random"></a>
@@ -369,7 +417,41 @@ random()
 ```
 <a name="initResolve"></a>
 
-## initResolve(path) ⇒ <code>Promise.&lt;string&gt;</code>
+## initResolve(services) ⇒ <code>Promise.&lt;function()&gt;</code>
+Instantiate the `resolve` service
+
+**Kind**: global function  
+**Returns**: <code>Promise.&lt;function()&gt;</code> - A promise of the `resolve` service  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| services | <code>Object</code> | The services to inject |
+| services.MAIN_FILE_URL | <code>String</code> | An URL pointing to the main file run |
+| [services.log] | <code>function</code> | A logging function |
+
+**Example**  
+```js
+import {
+  DEFAULT_LOGGER,
+  initLog,
+  initResolve,
+} from 'common-services';
+
+const log = await initLog({
+  logger: DEFAULT_LOGGER,
+});
+
+const resolve = initResolve({
+  MAIN_FILE_URL: import.meta.url,
+  log,
+});
+
+resolve('./myfile.ts');
+}
+```
+<a name="resolve"></a>
+
+## resolve(path) ⇒ <code>Promise.&lt;string&gt;</code>
 Allow to resolve a path with the module system.
 
 **Kind**: global function  
@@ -394,10 +476,18 @@ Instantiate the time service
 
 **Example**  
 ```js
-import initTime from 'common-services/dist/time';
+import {
+  DEFAULT_LOGGER,
+  initLog,
+  initTime,
+} from 'common-services';
+
+const log = await initLog({
+  logger: DEFAULT_LOGGER,
+});
 
 const time = await initTime({
-  log: console.log.bind(console),
+  log,
 });
 ```
 <a name="initTime..time"></a>
