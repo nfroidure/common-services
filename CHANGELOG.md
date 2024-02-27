@@ -1,3 +1,12 @@
+## [16.0.1](https://github.com/nfroidure/common-services/compare/v16.0.0...v16.0.1) (2024-02-27)
+
+
+### Bug Fixes
+
+* **log:** avoid logging resolve service initialization ([8fe1cbc](https://github.com/nfroidure/common-services/commit/8fe1cbc8961dee9657f8fe3bb82a5f61839a3ad0))
+
+
+
 # [16.0.0](https://github.com/nfroidure/common-services/compare/v15.1.0...v16.0.0) (2024-02-27)
 
 
