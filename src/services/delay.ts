@@ -31,10 +31,18 @@ export default singleton(autoProvider(initDelay));
  * @return {Promise<Object>}
  * A promise of the delay service
  * @example
- * import initDelay from 'common-services/dist/delay';
+ * import {
+ *   DEFAULT_LOGGER,
+ *   initDelay,
+ *   initLog,
+ * } from 'common-services';
+ *
+ * const log = await initLog({
+ *   logger: DEFAULT_LOGGER
+ * });
  *
  * const delay = await initDelay({
- *   log: console.log.bind(console)
+ *   log,
  * });
  */
 async function initDelay({

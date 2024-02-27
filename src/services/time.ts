@@ -23,10 +23,18 @@ export default singleton(autoService(initTime));
  * @param  {Object}   [services.log = noop]     A logging function
  * @return {Promise<Function>}           A promise of the time function
  * @example
- * import initTime from 'common-services/dist/time';
+ * import {
+ *   DEFAULT_LOGGER,
+ *   initLog,
+ *   initTime,
+ * } from 'common-services';
+ *
+ * const log = await initLog({
+ *   logger: DEFAULT_LOGGER,
+ * });
  *
  * const time = await initTime({
- *   log: console.log.bind(console),
+ *   log,
  * });
  */
 async function initTime({

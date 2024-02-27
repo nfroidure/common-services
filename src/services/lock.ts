@@ -56,19 +56,23 @@ export default singleton(autoService(initLock)) as typeof initLock;
  * @return {Promise<Object>}
  * A promise of the lock service
  * @example
- * import initLog from 'common-services/dist/log';
- * import initDelayService from 'common-services/dist/delay';
- * import initLock from 'common-services/dist/lock';
+ * import {
+ *   DEFAULT_LOGGER,
+ *   initLog,
+ *   initDelay,
+ *   initLock
+ * } from 'common-services';
  * import ms from 'ms';
- * import winston from 'winston';
- * import debug from 'debug';
  *
- * const log = await initLogService({
- *   logger: winston,
- *   debug: debug('myapp'),
+ * const log = await initLog({
+ *   logger: DEFAULT_LOGGER
  * });
- * const delay = await initDelayService({ log });
- * const lock = await initLock ({ LOCK_TIMEOUT: ms('5s'), delay, log });
+ * const delay = await initDelay({ log });
+ * const lock = await initLock({
+ *   LOCK_TIMEOUT: ms('5s'),
+ *   delay,
+ *   log,
+ * });
  *
  *
  * run();

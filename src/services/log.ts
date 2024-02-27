@@ -1,5 +1,6 @@
 import { autoService, singleton } from 'knifecycle';
 import type { JsonValue } from 'type-fest';
+import { DEFAULT_LOGGER } from './logger.js';
 
 export type LogConfig = {
   stringify: boolean;
@@ -16,6 +17,7 @@ export enum LogOutputTypes {
   OUTPUT = 'output',
   ERROR = 'error',
   DEBUG = 'debug',
+  NONE = 'none',
 }
 export type LogTypes =
   | 'debug'
@@ -42,6 +44,7 @@ export const DEFAULT_LOG_ROUTING: Record<LogTypes, LogOutputTypes> = {
   'error-stack': LogOutputTypes.ERROR,
   'debug-stack': LogOutputTypes.DEBUG,
 };
+
 export type LogServiceConfig = {
   LOG_CONFIG?: LogConfig;
   LOG_ROUTING?: { [type: string]: LogOutputTypes };
@@ -75,19 +78,19 @@ export default singleton(autoService(initLog));
  * @return {Promise<Function>}
  * A promise of the logging function
  * @example
- * import initLog from 'common-services/dist/log';
- * import debug from 'debug';
- * import winston from 'winston';
+ * import {
+ *   DEFAULT_LOGGER,
+ *   initLog,
+ * } from 'common-services';
  *
  * const log = await initLog({
- *   logger: winston,
- *   debug: debug('myapp'),
- *  });
+ *   logger: DEFAULT_LOGGER,
+ * });
  */
 async function initLog({
   LOG_CONFIG = DEFAULT_LOG_CONFIG,
   LOG_ROUTING = DEFAULT_LOG_ROUTING,
-  logger,
+  logger = DEFAULT_LOGGER,
 }: LogServiceDependencies) {
   log('debug', '👣 - Logging service initialized.');
 
@@ -114,6 +117,9 @@ async function initLog({
       )
       .join(' ');
 
+    if (LOG_ROUTING[type] === LogOutputTypes.NONE) {
+      return;
+    }
     if (LOG_ROUTING[type] === LogOutputTypes.ERROR) {
       logger.error(output);
       return;

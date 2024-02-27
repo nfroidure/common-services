@@ -46,10 +46,18 @@ export default autoService(initCodeGenerator);
  * @return {Promise<Function>}
  * A promise of the codeGenerator function
  * @example
- * import initCodeGenerator from 'common-services/dist/codeGenerator';
+ * import {
+ *   DEFAULT_LOGGER,
+ *   initCodeGenerator,
+ *   initLog,
+ * } from 'common-services';
+ *
+ * const log = await initLog({
+ *   logger: DEFAULT_LOGGER,
+ * });
  *
  * const codeGenerator = await initCodeGenerator({
- *   log: console.log.bind(console),
+ *   log,
  * });
  */
 async function initCodeGenerator({

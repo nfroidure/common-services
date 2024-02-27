@@ -23,10 +23,18 @@ export default singleton(autoService(initRandom));
  * @param  {Object}   [services.log = noop]     A logging function
  * @return {Promise<Function>}           A promise of the random function
  * @example
- * import initRandom from 'common-services/dist/random';
+ * import {
+ *   DEFAULT_LOGGER,
+ *   initLog,
+ *   initRandom
+ * } from 'common-services';
+ *
+ * const log = await initLog({
+ *   logger: DEFAULT_LOGGER,
+ * });
  *
  * const random = await initRandom({
- *   log: console.log.bind(console),
+ *   log,
  * });
  */
 async function initRandom({

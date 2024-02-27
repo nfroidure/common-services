@@ -11,18 +11,19 @@ Their goal is to encapsulate unpredictible states and
  but should be usable with any DI system or even rawly.
 */
 
-import initCodeGeneratorService from './services/codeGenerator.js';
-import initCounterService from './services/counter.js';
-import initDelayService from './services/delay.js';
-import initLockService from './services/lock.js';
-import initLogService, {
+import initCodeGenerator from './services/codeGenerator.js';
+import initCounter from './services/counter.js';
+import initDelay from './services/delay.js';
+import initLock from './services/lock.js';
+import initLog, {
   DEFAULT_LOG_ROUTING,
   DEFAULT_LOG_CONFIG,
 } from './services/log.js';
-import initTimeService from './services/time.js';
-import initRandomService from './services/random.js';
-import initResolveService from './services/resolve.js';
-import initImporterService from './services/importer.js';
+import initLogger, { DEFAULT_LOGGER } from './services/logger.js';
+import initTime from './services/time.js';
+import initRandom from './services/random.js';
+import initResolve from './services/resolve.js';
+import initImporter from './services/importer.js';
 import { noop } from './utils/utils.js';
 
 /**
@@ -62,15 +63,17 @@ export type { ResolveService } from './services/resolve.js';
 export type { ImporterService } from './services/importer.js';
 export {
   noop,
-  initCodeGeneratorService,
-  initCounterService,
-  initDelayService,
-  initLockService,
-  initLogService,
+  initCodeGenerator,
+  initCounter,
+  initDelay,
+  initLock,
+  initLog,
   DEFAULT_LOG_CONFIG,
   DEFAULT_LOG_ROUTING,
-  initTimeService,
-  initRandomService,
-  initResolveService,
-  initImporterService,
+  initLogger,
+  DEFAULT_LOGGER,
+  initTime,
+  initRandom,
+  initResolve,
+  initImporter,
 };

@@ -55,13 +55,13 @@
     "jsarch": "^6.0.3",
     "jsdoc-to-markdown": "^8.0.0",
     "metapak": "^5.1.8",
-    "metapak-nfroidure": "16.0.0",
+    "metapak-nfroidure": "17.0.0",
     "prettier": "^3.0.3",
     "rimraf": "^5.0.5",
     "typescript": "^5.2.2"
   },
   "dependencies": {
-    "@types/node": "^18.11.9",
+    "@types/node": "^20.11.20",
     "knifecycle": "^17.0.1",
     "type-fest": "^4.10.3",
     "yerror": "^8.0.0"
@@ -100,7 +100,7 @@
   },
   "homepage": "https://github.com/nfroidure/common-services#readme",
   "engines": {
-    "node": ">=18.16.0"
+    "node": ">=20.11.1"
   },
   "config": {
     "commitizen": {

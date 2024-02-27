@@ -10,41 +10,66 @@ The `resolve` service is just proxying [`import.meta.resolve`
 */
 export default singleton(autoService(initResolve));
 
-export type ResolveService = (
-  id: string,
-  options?: { paths?: string[] },
-) => string;
+export type ResolveService = (id: string) => string;
 
 /**
- * Allow to resolve a path with the module system.
- * @param  {string} path
- * The serializable constants to gather
- * @return {Promise<string>}
- * A promise of a fully qualified module path
+ * Instantiate the `resolve` service
+ * @name initResolve
+ * @function
+ * @param  {Object}     services
+ * The services to inject
+ * @param  {String}   services.MAIN_FILE_URL
+ * An URL pointing to the main file run
+ * @param  {Function}   [services.log]
+ * A logging function
+ * @return {Promise<Function>}
+ * A promise of the `resolve` service
+ * @example
+ * import {
+ *   DEFAULT_LOGGER,
+ *   initLog,
+ *   initResolve,
+ * } from 'common-services';
+ *
+ * const log = await initLog({
+ *   logger: DEFAULT_LOGGER,
+ * });
+ *
+ * const resolve = initResolve({
+ *   MAIN_FILE_URL: import.meta.url,
+ *   log,
+ * });
+ *
+ * resolve('./myfile.ts');
+ * }
  */
 async function initResolve({
-  PROJECT_DIR,
+  MAIN_FILE_URL,
   log = noop,
 }: {
-  PROJECT_DIR: string;
+  MAIN_FILE_URL: string;
   log: LogService;
 }): Promise<ResolveService> {
-  log('debug', '🛂 - Initializing the resolve service!');
-  // createRequire function can be injected by the compiler
-  // and produce a reference error (duplicate identifier)
-  // By importing it in the service directly, we avoid this potential error
-  const module = await import('node:module');
-  const require = module.default.createRequire(import.meta.url);
+  log(
+    'warning',
+    `🛂 - Initializing the resolve service (resolving from "${MAIN_FILE_URL}")!`,
+  );
 
-  return (
-    path: Parameters<ResolveService>[0],
-    options: Parameters<ResolveService>[1] = { paths: [PROJECT_DIR] },
-  ) => {
-    // To be replaced by import.meta.resolve
-    // https://nodejs.org/api/esm.html#esm_import_meta_resolve_specifier_parent
-    // We currently resolve and remove .(c)js on the fly to
-    // give a chance to the compiler to resolve to esm modules
-    const fqPath = require.resolve(path, options);
+  /**
+   * Allow to resolve a path with the module system.
+   * @name resolve
+   * @function
+   * @param  {string} path
+   * The serializable constants to gather
+   * @return {Promise<string>}
+   * A promise of a fully qualified module path
+   */
+  return (path) => {
+    const moduleIsRelative = path.startsWith('.');
+
+    const fqPath = import.meta.resolve(
+      moduleIsRelative ? new URL(path, MAIN_FILE_URL).toString() : path,
+    );
 
     log('debug', `🛂 - Resolving "${path}" to "${fqPath}".`);
     return fqPath;
