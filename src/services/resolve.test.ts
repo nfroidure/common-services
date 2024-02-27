@@ -21,7 +21,7 @@ describe('initResolveService', () => {
     expect(filterLogs(log.mock.calls)).toMatchInlineSnapshot(`
 [
   [
-    "warning",
+    "debug",
     "🛂 - Initializing the resolve service (resolving from file://.../src/services/resolve.test.ts)!",
   ],
 ]
@@ -58,7 +58,7 @@ describe('initResolveService', () => {
     expect(filterLogs(log.mock.calls)).toMatchInlineSnapshot(`
 [
   [
-    "warning",
+    "debug",
     "🛂 - Initializing the resolve service (resolving from file://.../src/services/resolve.test.ts)!",
   ],
 ]

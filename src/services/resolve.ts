@@ -51,7 +51,7 @@ async function initResolve({
   log: LogService;
 }): Promise<ResolveService> {
   log(
-    'warning',
+    'debug',
     `🛂 - Initializing the resolve service (resolving from "${MAIN_FILE_URL}")!`,
   );
 
