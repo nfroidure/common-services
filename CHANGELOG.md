@@ -1,3 +1,12 @@
+# [16.0.0](https://github.com/nfroidure/common-services/compare/v15.1.0...v16.0.0) (2024-02-27)
+
+
+### Features
+
+* **esm:** full esm support ([5380d51](https://github.com/nfroidure/common-services/commit/5380d517b775d9c95b3974c76316383a05b2d602))
+
+
+
 # [15.1.0](https://github.com/nfroidure/common-services/compare/v15.0.0...v15.1.0) (2024-02-24)
 
 
