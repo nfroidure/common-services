@@ -1,3 +1,12 @@
+## [16.0.3](https://github.com/nfroidure/common-services/compare/v16.0.2...v16.0.3) (2024-05-28)
+
+
+### Bug Fixes
+
+* **dependencies:** fix dependencies updates ([b973966](https://github.com/nfroidure/common-services/commit/b97396638c58470b048300e0dd9ecaa6b2a7589a))
+
+
+
 ## [16.0.2](https://github.com/nfroidure/common-services/compare/v16.0.1...v16.0.2) (2024-05-28)
 
 
