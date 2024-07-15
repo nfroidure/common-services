@@ -1,3 +1,12 @@
+## [16.0.4](https://github.com/nfroidure/common-services/compare/v16.0.3...v16.0.4) (2024-07-15)
+
+
+### Features
+
+* **lrupool:** add a LRU pool service ([cf3a8cf](https://github.com/nfroidure/common-services/commit/cf3a8cf31ec8f4aa6fe4dc19ed1ee4f84c55e760))
+
+
+
 ## [16.0.3](https://github.com/nfroidure/common-services/compare/v16.0.2...v16.0.3) (2024-05-28)
 
 
