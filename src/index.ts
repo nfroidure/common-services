@@ -11,6 +11,7 @@ Their goal is to encapsulate unpredictible states and
  but should be usable with any DI system or even rawly.
 */
 
+import initLRUPool from './services/lruPool.js';
 import initCodeGenerator from './services/codeGenerator.js';
 import initCounter from './services/counter.js';
 import initDelay from './services/delay.js';
@@ -41,6 +42,13 @@ import { noop } from './utils/utils.js';
  * );
  */
 export type {
+  LRUPoolProvider,
+  LRUPoolService,
+  LRUPoolServiceConfig,
+  LRUPoolServiceDependencies,
+  LRUPoolManagerService,
+} from './services/lruPool.js';
+export type {
   CodeGeneratorService,
   CodeGeneratorServiceConfig,
 } from './services/codeGenerator.js';
@@ -63,6 +71,7 @@ export type { ResolveService } from './services/resolve.js';
 export type { ImporterService } from './services/importer.js';
 export {
   noop,
+  initLRUPool,
   initCodeGenerator,
   initCounter,
   initDelay,

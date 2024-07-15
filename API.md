@@ -21,6 +21,9 @@
 <dd><p>Instantiate the logging service</p>
 </dd>
 <dt><a href="#initRandom">initRandom(services)</a> ⇒ <code>Promise.&lt;function()&gt;</code></dt>
+<dd><p>Instantiate the LRU Pool service</p>
+</dd>
+<dt><a href="#initRandom">initRandom(services)</a> ⇒ <code>Promise.&lt;function()&gt;</code></dt>
 <dd><p>Instantiate the random service</p>
 </dd>
 <dt><a href="#initResolve">initResolve(services)</a> ⇒ <code>Promise.&lt;function()&gt;</code></dt>
@@ -343,6 +346,51 @@ Logging function
 **Example**  
 ```js
 log('debug', 'Luke, I am your father!')
+```
+<a name="initRandom"></a>
+
+## initRandom(services) ⇒ <code>Promise.&lt;function()&gt;</code>
+Instantiate the LRU Pool service
+
+**Kind**: global function  
+**Returns**: <code>Promise.&lt;function()&gt;</code> - A promise of the LRUPool service  
+
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| services | <code>Object</code> |  | The services to inject |
+| [services.log] | <code>Object</code> | <code>noop</code> | A logging function |
+
+**Example**  
+```js
+import {
+  DEFAULT_LOGGER,
+  initLog,
+  initLRUPool
+} from 'common-services';
+
+const log = await initLog({
+  logger: DEFAULT_LOGGER,
+});
+
+const random = await initLRUPool({
+  MAX_POOL_SIZE: 50,
+  poolManager: {
+    // ...
+  },
+  log,
+});
+```
+<a name="initRandom..random"></a>
+
+### initRandom~random() ⇒ <code>number</code>
+Returns a new random number
+
+**Kind**: inner method of [<code>initRandom</code>](#initRandom)  
+**Returns**: <code>number</code> - The random number  
+**Example**  
+```js
+random()
+// Prints: 0.3141592653589793
 ```
 <a name="initRandom"></a>
 

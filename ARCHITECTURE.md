@@ -17,6 +17,7 @@
    7. [Code generator](#17-code-generator)
    8. [Lock](#18-lock)
    9. [Counter](#19-counter)
+   10. [LRU Pool](#110-lru-pool)
 
 
 ## 1. Services
@@ -139,4 +140,16 @@ The count are returned asynchronously in order
  surface API.
 
 [See in context](./src/services/counter.ts#L20-L29)
+
+
+
+### 1.10. LRU Pool
+
+The `lruPool` service allows to maintain a pool of
+  resources. It is meant to be used with resources
+  like file descriptors that are limited in most
+  OSes but are pointing to completely different
+  kind of resources (files paths varies).
+
+[See in context](./src/services/lruPool.ts#L33-L40)
 
