@@ -1,3 +1,7 @@
+# [17.0.0](https://github.com/nfroidure/common-services/compare/v16.0.4...v17.0.0) (2024-12-04)
+
+
+
 ## [16.0.4](https://github.com/nfroidure/common-services/compare/v16.0.3...v16.0.4) (2024-07-15)
 
 
