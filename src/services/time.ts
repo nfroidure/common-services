@@ -1,4 +1,4 @@
-import { autoService, singleton } from 'knifecycle';
+import { autoService, singleton, location } from 'knifecycle';
 import { noop } from '../utils/utils.js';
 import type { LogService } from './log.js';
 
@@ -13,7 +13,7 @@ The `time` service is just proxying [`Date.now`
  in a stubbable manner.
 */
 
-export default singleton(autoService(initTime));
+export default location(singleton(autoService(initTime)), import.meta.url);
 
 /**
  * Instantiate the time service

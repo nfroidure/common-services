@@ -1,4 +1,4 @@
-import { autoProvider, name } from 'knifecycle';
+import { autoProvider, name, location } from 'knifecycle';
 import { noop } from '../utils/utils.js';
 import type { LogService } from './log.js';
 import { type JsonValue } from 'type-fest';
@@ -39,7 +39,10 @@ The `lruPool` service allows to maintain a pool of
   kind of resources (files paths varies).
 */
 
-export default name('lruPool', autoProvider(initLRUPool)) as typeof initLRUPool;
+export default location(
+  name('lruPool', autoProvider(initLRUPool)),
+  import.meta.url,
+) as typeof initLRUPool;
 
 /**
  * Instantiate the LRU Pool service

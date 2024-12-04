@@ -1,5 +1,5 @@
 import { YError } from 'yerror';
-import { autoProvider, singleton } from 'knifecycle';
+import { autoProvider, singleton, location } from 'knifecycle';
 import { noop } from '../utils/utils.js';
 import type { LogService } from './log.js';
 
@@ -18,7 +18,7 @@ The `delay` service is `setTimeout` like I would like it
  to be.
 */
 
-export default singleton(autoProvider(initDelay));
+export default location(singleton(autoProvider(initDelay)), import.meta.url);
 
 /**
  * Instantiate the delay service

@@ -1,4 +1,4 @@
-import { autoService, singleton } from 'knifecycle';
+import { autoService, singleton, location } from 'knifecycle';
 import { noop } from '../utils/utils.js';
 import type { LogService } from './log.js';
 
@@ -28,7 +28,10 @@ The count are returned asynchronously in order
  surface API.
 */
 
-export default singleton(autoService(initCounter), true);
+export default location(
+  singleton(autoService(initCounter), true),
+  import.meta.url,
+);
 
 /**
  * Instantiate the counter service

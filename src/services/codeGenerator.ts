@@ -1,7 +1,7 @@
-import { autoService } from 'knifecycle';
+import { autoService, location } from 'knifecycle';
 import { noop } from '../utils/utils.js';
-import type { LogService } from './log.js';
-import type { RandomService } from './random.js';
+import { type LogService } from './log.js';
+import { type RandomService } from './random.js';
 
 export type CodeGeneratorServiceConfig = {
   CHARS_SET?: string;
@@ -27,7 +27,7 @@ It generates codes that contains only easily
 
 const EXPLICIT_CHARS = 'ABCDEFGHJKMNPRSTUVWXYZ23456789';
 
-export default autoService(initCodeGenerator);
+export default location(autoService(initCodeGenerator), import.meta.url);
 
 /**
  * Instantiate the codeGenerator service

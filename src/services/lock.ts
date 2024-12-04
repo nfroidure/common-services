@@ -1,5 +1,5 @@
 import { YError } from 'yerror';
-import { autoService, singleton } from 'knifecycle';
+import { autoService, singleton, location } from 'knifecycle';
 import { noop } from '../utils/utils.js';
 import type { LogService } from './log.js';
 import type { DelayService } from './delay.js';
@@ -36,7 +36,10 @@ The release is done by its key and the current lock is removed. There
  said, it should not be hard to handle since the actual behavior of
  the library makes your code run sequentially.
 */
-export default singleton(autoService(initLock)) as typeof initLock;
+export default location(
+  singleton(autoService(initLock)),
+  import.meta.url,
+) as typeof initLock;
 
 /**
  * Instantiate the lock service

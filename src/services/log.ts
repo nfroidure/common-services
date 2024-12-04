@@ -1,4 +1,4 @@
-import { autoService, singleton } from 'knifecycle';
+import { autoService, singleton, location } from 'knifecycle';
 import type { JsonValue } from 'type-fest';
 import { DEFAULT_LOGGER } from './logger.js';
 
@@ -65,7 +65,7 @@ If provided, I route debug messages to the `debug`
 
 */
 
-export default singleton(autoService(initLog));
+export default location(singleton(autoService(initLog)), import.meta.url);
 
 /**
  * Instantiate the logging service

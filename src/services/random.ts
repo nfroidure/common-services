@@ -1,4 +1,4 @@
-import { autoService, singleton } from 'knifecycle';
+import { autoService, singleton, location } from 'knifecycle';
 import { noop } from '../utils/utils.js';
 import type { LogService } from './log.js';
 
@@ -13,7 +13,7 @@ The `random` service is just proxying [`Math.random`
  in a stubbable manner.
 */
 
-export default singleton(autoService(initRandom));
+export default location(singleton(autoService(initRandom)), import.meta.url);
 
 /**
  * Instantiate the random service
