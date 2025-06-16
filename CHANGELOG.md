@@ -1,3 +1,12 @@
+# [17.1.0](https://github.com/nfroidure/common-services/compare/v17.0.1...v17.1.0) (2025-06-16)
+
+
+### Features
+
+* **services:** add a password and an encryption service ([caaf995](https://github.com/nfroidure/common-services/commit/caaf9955c762af63698c2fe83e12de570d8e80c7))
+
+
+
 ## [17.0.1](https://github.com/nfroidure/common-services/compare/v17.0.0...v17.0.1) (2024-12-06)
 
 
