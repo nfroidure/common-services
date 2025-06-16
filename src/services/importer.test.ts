@@ -1,9 +1,9 @@
 import { describe, test, beforeEach, jest, expect } from '@jest/globals';
 import { YError } from 'yerror';
 import initImporter from './importer.js';
-import type { LogService } from './log.js';
+import { type LogService } from './log.js';
 
-describe('Importer', () => {
+describe('initImporter', () => {
   const log = jest.fn<LogService>();
 
   beforeEach(() => {

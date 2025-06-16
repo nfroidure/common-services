@@ -8,10 +8,10 @@ import {
   jest,
 } from '@jest/globals';
 import { Knifecycle, constant } from 'knifecycle';
-import initDelayService from './delay.js';
-import type { LogService } from './log.js';
+import initDelay, { type DelayService } from './delay.js';
+import { type LogService } from './log.js';
 
-describe('initDelayService', () => {
+describe('initDelay', () => {
   const log = jest.fn<LogService>();
 
   beforeEach(() => {
@@ -19,7 +19,7 @@ describe('initDelayService', () => {
   });
 
   test('should work', async () => {
-    const delay = await initDelayService({
+    const delay = await initDelay({
       log,
     });
 
@@ -48,7 +48,7 @@ describe('initDelayService', () => {
     });
 
     test('should work', async () => {
-      const { service: delay } = await initDelayService({
+      const { service: delay } = await initDelay({
         log,
       });
 
@@ -89,7 +89,7 @@ describe('initDelayService', () => {
     });
 
     test('should fail with bad promise', async () => {
-      const { service: delay } = await initDelayService({
+      const { service: delay } = await initDelay({
         log,
       });
 
@@ -101,7 +101,7 @@ describe('initDelayService', () => {
     });
 
     test('should work', async () => {
-      const { service: delay } = await initDelayService({
+      const { service: delay } = await initDelay({
         log,
       });
       const delayPromise = delay.create(10000);
@@ -128,19 +128,27 @@ describe('initDelayService', () => {
   });
 
   test('should work with Knifecycle', async () => {
-    const { delay } = await new Knifecycle()
-      .register(initDelayService)
+    const $ = new Knifecycle();
+    const { delay } = await $.register(initDelay)
       .register(constant('log', log))
-      .run(['delay']);
+      .run<{ delay: DelayService }>(['delay']);
 
     expect(delay);
+
+    await $.destroy();
+
     expect(log.mock.calls).toMatchInlineSnapshot(`
-      [
-        [
-          "debug",
-          "⌛ - Delay service initialized.",
-        ],
-      ]
-    `);
+[
+  [
+    "debug",
+    "⌛ - Delay service initialized.",
+  ],
+  [
+    "debug",
+    "⏳ - Cancelling pending timeouts:",
+    0,
+  ],
+]
+`);
   });
 });

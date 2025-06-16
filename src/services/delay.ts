@@ -1,7 +1,7 @@
 import { YError } from 'yerror';
 import { autoProvider, singleton, location } from 'knifecycle';
 import { noop } from '../utils/utils.js';
-import type { LogService } from './log.js';
+import { type LogService } from './log.js';
 
 export interface DelayProvider {
   service: DelayService;
@@ -11,14 +11,6 @@ export interface DelayService {
   create: (delay: number) => Promise<void>;
   clear: (promise: Promise<void>) => Promise<void>;
 }
-
-/* Architecture Note #1.4: Delay
-
-The `delay` service is `setTimeout` like I would like it
- to be.
-*/
-
-export default location(singleton(autoProvider(initDelay)), import.meta.url);
 
 /**
  * Instantiate the delay service
@@ -129,3 +121,11 @@ async function initDelay({
     });
   }
 }
+
+/* Architecture Note #1.4: Delay
+
+The `delay` service is `setTimeout` like I would like it
+ to be.
+*/
+
+export default location(singleton(autoProvider(initDelay)), import.meta.url);

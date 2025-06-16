@@ -1,14 +1,6 @@
 import { autoService, singleton, location } from 'knifecycle';
 import { noop } from '../utils/utils.js';
-import type { LogService } from './log.js';
-
-/* Architecture Note #1.5: Resolve
-
-The `resolve` service is just proxying [`import.meta.resolve`
-](https://developer.mozilla.org/fr/docs/Web/JavaScript/Reference/Operators/import.meta/resolve)
- in a stubbable manner.
-*/
-export default location(singleton(autoService(initResolve)), import.meta.url);
+import { type LogService } from './log.js';
 
 export type ResolveService = (id: string) => string;
 
@@ -75,3 +67,11 @@ async function initResolve({
     return fqPath;
   };
 }
+
+/* Architecture Note #1.5: Resolve
+
+The `resolve` service is just proxying [`import.meta.resolve`
+](https://developer.mozilla.org/fr/docs/Web/JavaScript/Reference/Operators/import.meta/resolve)
+ in a stubbable manner.
+*/
+export default location(singleton(autoService(initResolve)), import.meta.url);

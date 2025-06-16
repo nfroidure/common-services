@@ -1,6 +1,6 @@
 import { autoService, singleton, location } from 'knifecycle';
 import { noop } from '../utils/utils.js';
-import type { LogService } from './log.js';
+import { type LogService } from './log.js';
 
 export interface CounterService {
   (): Promise<number>;
@@ -16,22 +16,6 @@ export type CounterServiceDependencies = CounterServiceConfig & {
 const DEFAULT_COUNTER = {
   firstCount: 1,
 };
-
-/* Architecture Note #1.9: Counter
-
-The `counter` service provide a simple, local and
- stubbable counter.
-
-The count are returned asynchronously in order
- to be easily maintained across several instances
- if needed later via another service with the same
- surface API.
-*/
-
-export default location(
-  singleton(autoService(initCounter), true),
-  import.meta.url,
-);
 
 /**
  * Instantiate the counter service
@@ -87,3 +71,19 @@ async function initCounter({
     return currentCount++;
   }
 }
+
+/* Architecture Note #1.9: Counter
+
+The `counter` service provide a simple, local and
+ stubbable counter.
+
+The count are returned asynchronously in order
+ to be easily maintained across several instances
+ if needed later via another service with the same
+ surface API.
+*/
+
+export default location(
+  singleton(autoService(initCounter), true),
+  import.meta.url,
+);

@@ -8,7 +8,4 @@ export const DEFAULT_LOGGER = {
   debug,
 } as Logger;
 
-export default location(
-  constant('logger', DEFAULT_LOGGER),
-  import.meta.url,
-);
+export default location(constant('logger', DEFAULT_LOGGER), import.meta.url);

@@ -1,9 +1,9 @@
 import { describe, beforeEach, test, expect, jest } from '@jest/globals';
 import { Knifecycle, constant } from 'knifecycle';
-import initRandomService from './random.js';
-import type { LogService } from './log.js';
+import initRandom from './random.js';
+import { type LogService } from './log.js';
 
-describe('initRandomService', () => {
+describe('initRandom', () => {
   const log = jest.fn<LogService>();
 
   beforeEach(() => {
@@ -11,7 +11,7 @@ describe('initRandomService', () => {
   });
 
   test('should work', async () => {
-    const random = await initRandomService({
+    const random = await initRandom({
       log,
     });
 
@@ -28,7 +28,7 @@ describe('initRandomService', () => {
 
   describe('random', () => {
     test('should work', async () => {
-      const random = await initRandomService({
+      const random = await initRandom({
         log,
       });
 
@@ -44,7 +44,7 @@ describe('initRandomService', () => {
 
   test('should work with Knifecycle', async () => {
     const { random } = await new Knifecycle()
-      .register(initRandomService)
+      .register(initRandom)
       .register(constant('log', log))
       .run(['random']);
 

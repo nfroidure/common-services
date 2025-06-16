@@ -1,19 +1,10 @@
 import { autoService, singleton, location } from 'knifecycle';
 import { noop } from '../utils/utils.js';
-import type { LogService } from './log.js';
+import { type LogService } from './log.js';
 
 export interface TimeService {
   (): number;
 }
-
-/* Architecture Note #1.2: Time
-
-The `time` service is just proxying [`Date.now`
-](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Date/now)
- in a stubbable manner.
-*/
-
-export default location(singleton(autoService(initTime)), import.meta.url);
 
 /**
  * Instantiate the time service
@@ -60,3 +51,12 @@ async function initTime({
     return now;
   }
 }
+
+/* Architecture Note #1.2: Time
+
+The `time` service is just proxying [`Date.now`
+](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Date/now)
+ in a stubbable manner.
+*/
+
+export default location(singleton(autoService(initTime)), import.meta.url);

@@ -1,6 +1,6 @@
 import { autoProvider, name, location } from 'knifecycle';
 import { noop } from '../utils/utils.js';
-import type { LogService } from './log.js';
+import { type LogService } from './log.js';
 import { type JsonValue } from 'type-fest';
 import { type DelayService } from './delay.js';
 import { type YError, printStackTrace } from 'yerror';
@@ -29,20 +29,6 @@ export interface LRUPoolProvider<T, U extends JsonValue> {
   service: LRUPoolService<T, U>;
   dispose: () => Promise<void>;
 }
-
-/* Architecture Note #1.10: LRU Pool
-
-The `lruPool` service allows to maintain a pool of
-  resources. It is meant to be used with resources
-  like file descriptors that are limited in most
-  OSes but are pointing to completely different
-  kind of resources (files paths varies).
-*/
-
-export default location(
-  name('lruPool', autoProvider(initLRUPool)),
-  import.meta.url,
-) as typeof initLRUPool;
 
 /**
  * Instantiate the LRU Pool service
@@ -154,3 +140,17 @@ export async function initLRUPool<T, U extends JsonValue>({
 
   return { service, dispose };
 }
+
+/* Architecture Note #1.10: LRU Pool
+
+The `lruPool` service allows to maintain a pool of
+  resources. It is meant to be used with resources
+  like file descriptors that are limited in most
+  OSes but are pointing to completely different
+  kind of resources (files paths varies).
+*/
+
+export default location(
+  name('lruPool', autoProvider(initLRUPool)),
+  import.meta.url,
+) as typeof initLRUPool;

@@ -1,9 +1,9 @@
 import { describe, beforeEach, test, expect, jest } from '@jest/globals';
 import { Knifecycle, constant } from 'knifecycle';
-import initResolveService from './resolve.js';
-import type { LogService } from './log.js';
+import initResolve from './resolve.js';
+import { type LogService } from './log.js';
 
-describe('initResolveService', () => {
+describe('initResolve', () => {
   const MAIN_FILE_URL = import.meta.url;
   const log = jest.fn<LogService>();
 
@@ -12,7 +12,7 @@ describe('initResolveService', () => {
   });
 
   test('should work', async () => {
-    const resolve = await initResolveService({
+    const resolve = await initResolve({
       MAIN_FILE_URL,
       log,
     });
@@ -31,7 +31,7 @@ describe('initResolveService', () => {
   // TODO: enable it when Jest will fully support `import`
   describe.skip('resolve', () => {
     test('should work', async () => {
-      const resolve = await initResolveService({
+      const resolve = await initResolve({
         MAIN_FILE_URL,
         log,
       });
@@ -49,7 +49,7 @@ describe('initResolveService', () => {
 
   test('should work with Knifecycle', async () => {
     const { resolve } = await new Knifecycle()
-      .register(initResolveService)
+      .register(initResolve)
       .register(constant('log', log))
       .register(constant('MAIN_FILE_URL', import.meta.url))
       .run(['resolve']);

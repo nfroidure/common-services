@@ -1,9 +1,9 @@
 import { describe, beforeEach, test, expect, jest } from '@jest/globals';
 import { Knifecycle, constant } from 'knifecycle';
-import initTimeService from './time.js';
-import type { LogService } from './log.js';
+import initTime from './time.js';
+import { type LogService } from './log.js';
 
-describe('initTimeService', () => {
+describe('initTime', () => {
   const log = jest.fn<LogService>();
 
   beforeEach(() => {
@@ -11,7 +11,7 @@ describe('initTimeService', () => {
   });
 
   test('should work', async () => {
-    const time = await initTimeService({
+    const time = await initTime({
       log,
     });
 
@@ -28,7 +28,7 @@ describe('initTimeService', () => {
 
   describe('time', () => {
     test('should work', async () => {
-      const time = await initTimeService({
+      const time = await initTime({
         log,
       });
 
@@ -44,7 +44,7 @@ describe('initTimeService', () => {
 
   test('should work with Knifecycle', async () => {
     const { time } = await new Knifecycle()
-      .register(initTimeService)
+      .register(initTime)
       .register(constant('log', log))
       .run(['time']);
 

@@ -14,20 +14,7 @@ export interface CodeGeneratorService {
   (length?: number): Promise<string>;
 }
 
-/* Architecture Note #1.7: Code generator
-
-The `codeGenerator` service provide a service
- that generate random strings composed of
- a character set that avoid recognition
- mistake by humans.
-
-It generates codes that contains only easily
- recognizable chars (by example, no `0` nor `O`).
-*/
-
 const EXPLICIT_CHARS = 'ABCDEFGHJKMNPRSTUVWXYZ23456789';
-
-export default location(autoService(initCodeGenerator), import.meta.url);
 
 /**
  * Instantiate the codeGenerator service
@@ -93,3 +80,15 @@ async function initCodeGenerator({
     return code;
   }
 }
+
+/* Architecture Note #1.7: Code generator
+
+The `codeGenerator` service provide a service
+ that generate random strings composed of
+ a character set that avoid recognition
+ mistake by humans.
+
+It generates codes that contains only easily
+ recognizable chars (by example, no `0` nor `O`).
+*/
+export default location(autoService(initCodeGenerator), import.meta.url);

@@ -1,12 +1,12 @@
 import { describe, beforeEach, test, expect, jest } from '@jest/globals';
 import { Knifecycle, constant } from 'knifecycle';
-import initLockService from './lock.js';
-import initDelayService from './delay.js';
+import initLock from './lock.js';
+import initDelay from './delay.js';
 import { YError } from 'yerror';
-import type { DelayService } from './delay.js';
-import type { LogService } from './log.js';
+import { type DelayService } from './delay.js';
+import { type LogService } from './log.js';
 
-describe('initLockService', () => {
+describe('initLock', () => {
   const log = jest.fn<LogService>();
   const delay = {
     create: jest.fn<DelayService['create']>(),
@@ -20,8 +20,8 @@ describe('initLockService', () => {
   });
 
   test('should work', async () => {
-    const testDelay = await initDelayService({});
-    const lock = await initLockService<string>({
+    const testDelay = await initDelay({});
+    const lock = await initLock<string>({
       log,
       delay,
     });
@@ -183,7 +183,7 @@ describe('initLockService', () => {
   });
 
   test('should fail when no lock', async () => {
-    const lock = await initLockService({
+    const lock = await initLock({
       log,
       delay,
     });
@@ -216,7 +216,7 @@ describe('initLockService', () => {
 
   test('should work with Knifecycle', async () => {
     const { lock } = await new Knifecycle()
-      .register(initLockService)
+      .register(initLock)
       .register(constant('log', log))
       .register(constant('delay', delay))
       .run(['lock']);

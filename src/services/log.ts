@@ -1,5 +1,5 @@
 import { autoService, singleton, location } from 'knifecycle';
-import type { JsonValue } from 'type-fest';
+import { type JsonValue } from 'type-fest';
 import { DEFAULT_LOGGER } from './logger.js';
 
 export type LogConfig = {
@@ -52,20 +52,6 @@ export type LogServiceConfig = {
 export type LogServiceDependencies = LogServiceConfig & {
   logger: Logger;
 };
-
-/* Architecture Note #1.1: Log
-
-I prefer using a unique function with the `log` type
- in parameter instead of several methods for each
- log types. It is far easyer to mock and to assert
- on logs in my tests.
-
-If provided, I route debug messages to the `debug`
- node module.
-
-*/
-
-export default location(singleton(autoService(initLog)), import.meta.url);
 
 /**
  * Instantiate the logging service
@@ -131,3 +117,17 @@ async function initLog({
     logger.debug(...args);
   }
 }
+
+/* Architecture Note #1.1: Log
+
+I prefer using a unique function with the `log` type
+ in parameter instead of several methods for each
+ log types. It is far easyer to mock and to assert
+ on logs in my tests.
+
+If provided, I route debug messages to the `debug`
+ node module.
+
+*/
+
+export default location(singleton(autoService(initLog)), import.meta.url);

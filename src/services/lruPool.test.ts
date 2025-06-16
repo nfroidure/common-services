@@ -1,6 +1,6 @@
 import { describe, beforeEach, test, expect, jest } from '@jest/globals';
 import { Knifecycle, constant } from 'knifecycle';
-import initLRUPoolService, { type LRUPoolManagerService } from './lruPool.js';
+import initLRUPool, { type LRUPoolManagerService } from './lruPool.js';
 import { type LogService } from './log.js';
 import { type DelayService } from './delay.js';
 
@@ -9,7 +9,7 @@ const instances = ['i1', 'i2', 'i3', 'i4'] as const;
 type V = number;
 type U = (typeof instances)[V];
 
-describe('initLRUPoolService', () => {
+describe('initLRUPool', () => {
   const MAX_POOL_SIZE = 3;
   const POOL_TTL = 30000;
   const poolManager = {
@@ -32,7 +32,7 @@ describe('initLRUPoolService', () => {
   });
 
   test('should work', async () => {
-    const lruPool = await initLRUPoolService({
+    const lruPool = await initLRUPool({
       MAX_POOL_SIZE,
       poolManager,
       delay,
@@ -60,7 +60,7 @@ describe('initLRUPoolService', () => {
 
   describe('lruPool', () => {
     test('should work without ttl', async () => {
-      const lruPool = await initLRUPoolService({
+      const lruPool = await initLRUPool({
         MAX_POOL_SIZE,
         poolManager,
         delay,
@@ -130,7 +130,7 @@ describe('initLRUPoolService', () => {
   });
 
   test('should work with ttl', async () => {
-    const lruPool = await initLRUPoolService({
+    const lruPool = await initLRUPool({
       MAX_POOL_SIZE,
       POOL_TTL,
       poolManager,
@@ -238,7 +238,7 @@ describe('initLRUPoolService', () => {
   });
 
   test('should work with realized ttl', async () => {
-    const lruPool = await initLRUPoolService({
+    const lruPool = await initLRUPool({
       MAX_POOL_SIZE,
       POOL_TTL,
       poolManager,
@@ -350,7 +350,7 @@ describe('initLRUPoolService', () => {
 
   test('should work with Knifecycle', async () => {
     const { lruPool } = await new Knifecycle()
-      .register(initLRUPoolService)
+      .register(initLRUPool)
       .register(constant('MAX_POOL_SIZE', MAX_POOL_SIZE))
       .register(constant('POOL_TTL', POOL_TTL))
       .register(constant('delay', delay))

@@ -1,18 +1,7 @@
 import { autoService, singleton, location } from 'knifecycle';
 import { printStackTrace, YError } from 'yerror';
 import { noop } from '../utils/utils.js';
-import type { LogService } from './log.js';
-
-/* Architecture Note #1.6: Importer
-
-The `importer` service is just proxying [`import`
-](https://developer.mozilla.org/fr/docs/Web/JavaScript/Reference/Operators/import)
- in a simply stubbable manner.
-*/
-export default location(
-  singleton(autoService(initImporter)),
-  import.meta.url,
-) as typeof initImporter;
+import { type LogService } from './log.js';
 
 export type ImporterService<M> = (path: string) => Promise<M>;
 
@@ -43,3 +32,14 @@ async function initImporter<M>({
 
   return importer;
 }
+
+/* Architecture Note #1.6: Importer
+
+The `importer` service is just proxying [`import`
+](https://developer.mozilla.org/fr/docs/Web/JavaScript/Reference/Operators/import)
+ in a simply stubbable manner.
+*/
+export default location(
+  singleton(autoService(initImporter)),
+  import.meta.url,
+) as typeof initImporter;

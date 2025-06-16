@@ -1,8 +1,8 @@
 import { YError } from 'yerror';
 import { autoService, singleton, location } from 'knifecycle';
 import { noop } from '../utils/utils.js';
-import type { LogService } from './log.js';
-import type { DelayService } from './delay.js';
+import { type LogService } from './log.js';
+import { type DelayService } from './delay.js';
 
 interface Lock {
   releasePromise: Promise<void>;
@@ -23,23 +23,6 @@ export interface LockService<K> {
   take: (key: K, timeout?: number) => Promise<void>;
   release: (key: K) => Promise<void>;
 }
-
-/* Architecture Note #1.8: Lock
-
-The `lock` service allows to maintain a lock on a given
- resource in order to ensure a sequential access to it in
- asynchronous code.
-
-The release is done by its key and the current lock is removed. There
- is no check on the fact the lock is well released. By design, it is
- your responsibility to ensure you release the locks properly. That
- said, it should not be hard to handle since the actual behavior of
- the library makes your code run sequentially.
-*/
-export default location(
-  singleton(autoService(initLock)),
-  import.meta.url,
-) as typeof initLock;
 
 /**
  * Instantiate the lock service
@@ -186,3 +169,20 @@ async function initLock<T>({
     }
   }
 }
+
+/* Architecture Note #1.8: Lock
+
+The `lock` service allows to maintain a lock on a given
+ resource in order to ensure a sequential access to it in
+ asynchronous code.
+
+The release is done by its key and the current lock is removed. There
+ is no check on the fact the lock is well released. By design, it is
+ your responsibility to ensure you release the locks properly. That
+ said, it should not be hard to handle since the actual behavior of
+ the library makes your code run sequentially.
+*/
+export default location(
+  singleton(autoService(initLock)),
+  import.meta.url,
+) as typeof initLock;

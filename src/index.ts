@@ -25,7 +25,12 @@ import initTime from './services/time.js';
 import initRandom from './services/random.js';
 import initResolve from './services/resolve.js';
 import initImporter from './services/importer.js';
+import initPassword, { DEFAULT_PASSWORD_OPTIONS } from './services/password.js';
+import initSymmetricEncryption, {
+  DEFAULT_SYMMETRIC_ENCRYPTION_SECRET_ENV_NAME,
+} from './services/symmetricEncryption.js';
 import { noop } from './utils/utils.js';
+import { randomBytes } from './utils/crypto.js';
 
 /**
  * All services of the `common-services` module as
@@ -41,36 +46,21 @@ import { noop } from './utils/utils.js';
  *   .map(serviceName => COMMON_SERVICES[serviceName])
  * );
  */
-export type {
-  LRUPoolProvider,
-  LRUPoolService,
-  LRUPoolServiceConfig,
-  LRUPoolServiceDependencies,
-  LRUPoolManagerService,
-} from './services/lruPool.js';
-export type {
-  CodeGeneratorService,
-  CodeGeneratorServiceConfig,
-} from './services/codeGenerator.js';
-export type {
-  CounterService,
-  CounterServiceConfig,
-} from './services/counter.js';
-export type { DelayProvider, DelayService } from './services/delay.js';
-export type { LockService, LockServiceConfig } from './services/lock.js';
-export type {
-  LogService,
-  LogServiceConfig,
-  LogTypes,
-  LogFunction,
-  Logger,
-} from './services/log.js';
-export type { TimeService } from './services/time.js';
-export type { RandomService } from './services/random.js';
-export type { ResolveService } from './services/resolve.js';
-export type { ImporterService } from './services/importer.js';
+export type * from './services/lruPool.js';
+export type * from './services/codeGenerator.js';
+export type * from './services/counter.js';
+export type * from './services/delay.js';
+export type * from './services/lock.js';
+export type * from './services/log.js';
+export type * from './services/time.js';
+export type * from './services/random.js';
+export type * from './services/resolve.js';
+export type * from './services/importer.js';
+export type * from './services/password.js';
+export type * from './services/symmetricEncryption.js';
 export {
   noop,
+  randomBytes,
   initLRUPool,
   initCodeGenerator,
   initCounter,
@@ -85,4 +75,8 @@ export {
   initRandom,
   initResolve,
   initImporter,
+  DEFAULT_PASSWORD_OPTIONS,
+  initPassword,
+  DEFAULT_SYMMETRIC_ENCRYPTION_SECRET_ENV_NAME,
+  initSymmetricEncryption,
 };

@@ -1,19 +1,10 @@
 import { autoService, singleton, location } from 'knifecycle';
 import { noop } from '../utils/utils.js';
-import type { LogService } from './log.js';
+import { type LogService } from './log.js';
 
 export interface RandomService {
   (): number;
 }
-
-/* Architecture Note #1.3: Random
-
-The `random` service is just proxying [`Math.random`
-](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Math/random)
- in a stubbable manner.
-*/
-
-export default location(singleton(autoService(initRandom)), import.meta.url);
 
 /**
  * Instantiate the random service
@@ -61,3 +52,12 @@ async function initRandom({
     return num;
   }
 }
+
+/* Architecture Note #1.3: Random
+
+The `random` service is just proxying [`Math.random`
+](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Math/random)
+ in a stubbable manner.
+*/
+
+export default location(singleton(autoService(initRandom)), import.meta.url);

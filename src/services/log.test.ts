@@ -1,9 +1,9 @@
 import { describe, beforeEach, test, expect, jest } from '@jest/globals';
 import { Knifecycle, constant } from 'knifecycle';
-import initLogService from './log.js';
-import type { LogService } from '../index.js';
+import initLog from './log.js';
+import { type LogService } from '../index.js';
 
-describe('initLogService', () => {
+describe('initLog', () => {
   const logger = { output: jest.fn(), error: jest.fn(), debug: jest.fn() };
 
   beforeEach(() => {
@@ -13,7 +13,7 @@ describe('initLogService', () => {
   });
 
   test('should work', async () => {
-    const log = await initLogService({
+    const log = await initLog({
       logger,
     });
 
@@ -31,7 +31,7 @@ describe('initLogService', () => {
 
   describe('log', () => {
     test('should work', async () => {
-      const log = await initLogService({
+      const log = await initLog({
         logger,
       });
 
@@ -77,7 +77,7 @@ describe('initLogService', () => {
 
   test('should work with Knifecycle', async () => {
     const { log } = await new Knifecycle()
-      .register(initLogService)
+      .register(initLog)
       .register(constant('logger', logger))
       .run<{ log: LogService }>(['log']);
 

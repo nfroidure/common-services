@@ -18,6 +18,8 @@
    8. [Lock](#18-lock)
    9. [Counter](#19-counter)
    10. [LRU Pool](#110-lru-pool)
+   11. [SymmetricEncryption](#111-symmetricencryption)
+   12. [Password](#112-password)
 
 
 ## 1. Services
@@ -46,7 +48,7 @@ I prefer using a unique function with the `log` type
 If provided, I route debug messages to the `debug`
  node module.
 
-[See in context](./src/services/log.ts#L56-L66)
+[See in context](./src/services/log.ts#L121-L131)
 
 
 
@@ -56,7 +58,7 @@ The `time` service is just proxying [`Date.now`
 ](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Date/now)
  in a stubbable manner.
 
-[See in context](./src/services/time.ts#L9-L14)
+[See in context](./src/services/time.ts#L55-L60)
 
 
 
@@ -66,7 +68,7 @@ The `random` service is just proxying [`Math.random`
 ](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Math/random)
  in a stubbable manner.
 
-[See in context](./src/services/random.ts#L9-L14)
+[See in context](./src/services/random.ts#L56-L61)
 
 
 
@@ -75,7 +77,7 @@ The `random` service is just proxying [`Math.random`
 The `delay` service is `setTimeout` like I would like it
  to be.
 
-[See in context](./src/services/delay.ts#L15-L19)
+[See in context](./src/services/delay.ts#L125-L129)
 
 
 
@@ -85,7 +87,7 @@ The `resolve` service is just proxying [`import.meta.resolve`
 ](https://developer.mozilla.org/fr/docs/Web/JavaScript/Reference/Operators/import.meta/resolve)
  in a stubbable manner.
 
-[See in context](./src/services/resolve.ts#L5-L10)
+[See in context](./src/services/resolve.ts#L71-L76)
 
 
 
@@ -95,7 +97,7 @@ The `importer` service is just proxying [`import`
 ](https://developer.mozilla.org/fr/docs/Web/JavaScript/Reference/Operators/import)
  in a simply stubbable manner.
 
-[See in context](./src/services/importer.ts#L6-L11)
+[See in context](./src/services/importer.ts#L36-L41)
 
 
 
@@ -109,7 +111,7 @@ The `codeGenerator` service provide a service
 It generates codes that contains only easily
  recognizable chars (by example, no `0` nor `O`).
 
-[See in context](./src/services/codeGenerator.ts#L17-L26)
+[See in context](./src/services/codeGenerator.ts#L84-L93)
 
 
 
@@ -125,7 +127,7 @@ The release is done by its key and the current lock is removed. There
  said, it should not be hard to handle since the actual behavior of
  the library makes your code run sequentially.
 
-[See in context](./src/services/lock.ts#L27-L38)
+[See in context](./src/services/lock.ts#L173-L184)
 
 
 
@@ -139,7 +141,7 @@ The count are returned asynchronously in order
  if needed later via another service with the same
  surface API.
 
-[See in context](./src/services/counter.ts#L20-L29)
+[See in context](./src/services/counter.ts#L75-L84)
 
 
 
@@ -151,5 +153,21 @@ The `lruPool` service allows to maintain a pool of
   OSes but are pointing to completely different
   kind of resources (files paths varies).
 
-[See in context](./src/services/lruPool.ts#L33-L40)
+[See in context](./src/services/lruPool.ts#L144-L151)
+
+
+
+### 1.11. SymmetricEncryption
+
+A simple, easy configurable symmetric encryption service.
+
+[See in context](./src/services/symmetricEncryption.ts#L109-L112)
+
+
+
+### 1.12. Password
+
+A simple, easy configurable, password management service.
+
+[See in context](./src/services/password.ts#L95-L98)
 

@@ -1,9 +1,9 @@
 import { describe, beforeEach, test, expect, jest } from '@jest/globals';
 import initCodeGenerator from './codeGenerator.js';
-import type { RandomService } from './random.js';
-import type { LogService } from './log.js';
+import { type RandomService } from './random.js';
+import { type LogService } from './log.js';
 
-describe('codeGenerator', () => {
+describe('initCodeGenerator', () => {
   const log = jest.fn<LogService>();
   const random = jest.fn<RandomService>();
 
