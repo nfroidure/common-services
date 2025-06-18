@@ -1,3 +1,12 @@
+## [17.1.1](https://github.com/nfroidure/common-services/compare/v17.1.0...v17.1.1) (2025-06-18)
+
+
+### Bug Fixes
+
+* **types:** fix types generation types ([9be0420](https://github.com/nfroidure/common-services/commit/9be04201df3097c17d50e35c8438b3715ab50930))
+
+
+
 # [17.1.0](https://github.com/nfroidure/common-services/compare/v17.0.1...v17.1.0) (2025-06-16)
 
 
