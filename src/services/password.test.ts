@@ -61,6 +61,7 @@ describe('initPassword', () => {
         PASSWORD_OPTIONS: {
           ...DEFAULT_PASSWORD_OPTIONS,
           passwordEncoding: 'base64',
+          passwordLength: 128,
         },
         log,
       });
@@ -93,6 +94,7 @@ describe('initPassword', () => {
           PASSWORD_OPTIONS: {
             ...DEFAULT_PASSWORD_OPTIONS,
             passwordEncoding: 'base64',
+            passwordLength: 128,
           },
           log,
         });
@@ -107,6 +109,7 @@ describe('initPassword', () => {
           PASSWORD_OPTIONS: {
             ...DEFAULT_PASSWORD_OPTIONS,
             passwordEncoding: 'base64',
+            passwordLength: 128,
           },
           log,
         });

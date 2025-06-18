@@ -1,19 +1,25 @@
 import { type LogService } from 'common-services';
-import { pbkdf2, getHashes } from 'crypto';
+import { pbkdf2, getHashes } from 'node:crypto';
 import { location, autoService } from 'knifecycle';
 import { YError } from 'yerror';
 import { randomBytes } from '../utils/crypto.js';
 
 export type PasswordServiceOptions = {
   iterations: number;
-  passwordLength: number;
-  passwordEncoding: 'utf-8' | 'hex' | 'base64';
   saltLength: number;
   saltEncoding: 'hex' | 'base64';
   hashLength: number;
   hashDigest: string;
   hashEncoding: 'hex' | 'base64';
-};
+} & (
+  | {
+      passwordLength: number;
+      passwordEncoding: 'hex' | 'base64';
+    }
+  | {
+      passwordEncoding: 'utf-8';
+    }
+);
 export type PasswordServiceConfig = {
   PASSWORD_OPTIONS: PasswordServiceOptions;
 };
@@ -23,7 +29,6 @@ export type PasswordServiceDependencies = Partial<PasswordServiceConfig> & {
 
 export const DEFAULT_PASSWORD_OPTIONS = {
   iterations: 4096,
-  passwordLength: 256,
   passwordEncoding: 'utf-8',
   saltLength: 128,
   saltEncoding: 'base64',
