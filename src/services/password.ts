@@ -20,9 +20,9 @@ export type PasswordServiceOptions = {
       passwordEncoding: 'utf-8';
     }
 );
-export type PasswordServiceConfig = {
+export interface PasswordServiceConfig {
   PASSWORD_OPTIONS: PasswordServiceOptions;
-};
+}
 export type PasswordServiceDependencies = Partial<PasswordServiceConfig> & {
   log: LogService;
 };
@@ -37,11 +37,11 @@ export const DEFAULT_PASSWORD_OPTIONS = {
   hashEncoding: 'base64',
 } as const satisfies PasswordServiceOptions;
 
-export type PasswordService = {
+export interface PasswordService {
   generateSalt: () => Promise<string>;
   generatePassword: () => Promise<string>;
   hashPassword: (password: string, salt: string) => Promise<string>;
-};
+}
 
 export async function initPasswordService({
   PASSWORD_OPTIONS = DEFAULT_PASSWORD_OPTIONS,
@@ -54,7 +54,7 @@ export async function initPasswordService({
       'error',
       `💥 - Unavailable password hash digest (${PASSWORD_OPTIONS.hashDigest})!`,
     );
-    throw new YError('E_BAD_HASH_DIGEST', PASSWORD_OPTIONS.hashDigest);
+    throw new YError('E_BAD_HASH_DIGEST', [PASSWORD_OPTIONS.hashDigest]);
   }
 
   const passwordservice: PasswordService = {
@@ -65,10 +65,9 @@ export async function initPasswordService({
     generatePassword: async () => {
       if (PASSWORD_OPTIONS.passwordEncoding === 'utf-8') {
         log('error', `💥 - Cannot generate UTF-8 passwords!`);
-        throw new YError(
-          'E_BAD_PASSWORD_ENCODING',
+        throw new YError('E_BAD_PASSWORD_ENCODING', [
           PASSWORD_OPTIONS.passwordEncoding,
-        );
+        ]);
       }
       return (await randomBytes(PASSWORD_OPTIONS.passwordLength)).toString(
         PASSWORD_OPTIONS.passwordEncoding,

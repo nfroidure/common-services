@@ -67,7 +67,7 @@ async function initDelay({
   function create(delay: number): Promise<void> {
     let timeoutId;
     let _reject;
-    const promise: Promise<void> = new Promise((resolve, reject) => {
+    const promise = new Promise<void>((resolve, reject) => {
       _reject = reject;
       timeoutId = setTimeout(() => {
         resolve();
@@ -102,7 +102,7 @@ async function initDelay({
    * }
    * // Prints: Cancelled!
    */
-  async function clear(promise) {
+  async function clear(promise: Promise<void>) {
     if (!pendingPromises.has(promise)) {
       return Promise.reject(new YError('E_BAD_DELAY'));
     }

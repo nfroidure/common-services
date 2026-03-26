@@ -1,5 +1,10 @@
 import { YError } from 'yerror';
-import { autoService, singleton, location } from 'knifecycle';
+import {
+  autoService,
+  singleton,
+  location,
+  ServiceProperties,
+} from 'knifecycle';
 import { noop } from '../utils/utils.js';
 import { type LogService } from './log.js';
 import { type DelayService } from './delay.js';
@@ -9,10 +14,10 @@ interface Lock {
   release: () => void;
 }
 
-export type LockServiceConfig<K> = {
+export interface LockServiceConfig<K> {
   LOCKS_MAP?: Map<K, Lock[]>;
   LOCK_TIMEOUT?: number;
-};
+}
 
 type LockServiceDependencies<K> = LockServiceConfig<K> & {
   log?: LogService;
@@ -99,7 +104,7 @@ async function initLock<T>({
    *  is gained or rejected if the lock release
    *  timeout is reached.
    */
-  async function take(key, timeout = LOCK_TIMEOUT) {
+  async function take(key: T, timeout = LOCK_TIMEOUT) {
     const keyLocks = LOCKS_MAP.get(key) || [];
     const locksLength = keyLocks.length;
     const previousLock = keyLocks[locksLength - 1];
@@ -114,13 +119,13 @@ async function initLock<T>({
     );
 
     let _resolve: () => void = () => undefined;
-    const releasePromise: Promise<void> = new Promise((resolve, reject) => {
+    const releasePromise = new Promise<void>((resolve, reject) => {
       _resolve = resolve;
 
       if (timeout !== Infinity) {
         delay
           .create(timeout)
-          .then(() => reject(new YError('E_LOCK_TIMEOUT', timeout)));
+          .then(() => reject(new YError('E_LOCK_TIMEOUT', [timeout])));
       }
     });
 
@@ -150,12 +155,12 @@ async function initLock<T>({
    * @param  {String}   key  A unique key for the resource to release
    * @return {void}
    */
-  async function release(key) {
+  async function release(key: T) {
     const keyLocks = LOCKS_MAP.get(key) || [];
     const locksLength = keyLocks.length;
 
     if (!locksLength) {
-      throw new YError('E_NO_LOCK', key);
+      throw new YError('E_NO_LOCK', [key]);
     }
 
     log(
@@ -185,4 +190,4 @@ The release is done by its key and the current lock is removed. There
 export default location(
   singleton(autoService(initLock)),
   import.meta.url,
-) as typeof initLock;
+) as unknown as ServiceProperties & typeof initLock;

@@ -3,16 +3,14 @@ import { noop } from '../utils/utils.js';
 import { type LogService } from './log.js';
 import { type RandomService } from './random.js';
 
-export type CodeGeneratorServiceConfig = {
+export interface CodeGeneratorServiceConfig {
   CHARS_SET?: string;
-};
+}
 export type CodeGeneratorServiceDependencies = CodeGeneratorServiceConfig & {
   random: RandomService;
   log?: LogService;
 };
-export interface CodeGeneratorService {
-  (length?: number): Promise<string>;
-}
+export type CodeGeneratorService = (length?: number) => Promise<string>;
 
 const EXPLICIT_CHARS = 'ABCDEFGHJKMNPRSTUVWXYZ23456789';
 

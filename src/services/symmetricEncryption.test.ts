@@ -32,24 +32,24 @@ describe('initSymmetricEncryption', () => {
     } catch (err) {
       expect({
         errorCode: (err as YError).code,
-        errorParams: (err as YError).params,
+        errorDebugValues: (err as YError).debugValues,
         logCalls: log.mock.calls,
       }).toMatchInlineSnapshot(`
-{
-  "errorCode": "E_NO_SYMMETRIC_ENCRYPTION_SECRET",
-  "errorParams": [],
-  "logCalls": [
-    [
-      "warning",
-      "🔐 - Initializing the symmetric encryption service!",
-    ],
-    [
-      "error",
-      "💥 - The encryption secret must be set in the process environment (SYMMETRIC_ENCRYPTION_SECRET)!",
-    ],
-  ],
-}
-`);
+       {
+         "errorCode": "E_NO_SYMMETRIC_ENCRYPTION_SECRET",
+         "errorDebugValues": [],
+         "logCalls": [
+           [
+             "warning",
+             "🔐 - Initializing the symmetric encryption service!",
+           ],
+           [
+             "error",
+             "💥 - The encryption secret must be set in the process environment (SYMMETRIC_ENCRYPTION_SECRET)!",
+           ],
+         ],
+       }
+      `);
     }
   });
 
@@ -67,26 +67,26 @@ describe('initSymmetricEncryption', () => {
     } catch (err) {
       expect({
         errorCode: (err as YError).code,
-        errorParams: (err as YError).params,
+        errorDebugValues: (err as YError).debugValues,
         logCalls: log.mock.calls,
       }).toMatchInlineSnapshot(`
-{
-  "errorCode": "E_BAD_CIPHER",
-  "errorParams": [
-    "this_cipher_algorithm_should_not_exist",
-  ],
-  "logCalls": [
-    [
-      "warning",
-      "🔐 - Initializing the symmetric encryption service!",
-    ],
-    [
-      "error",
-      "💥 - Unavailable encryption algorithm (this_cipher_algorithm_should_not_exist)!",
-    ],
-  ],
-}
-`);
+       {
+         "errorCode": "E_BAD_CIPHER",
+         "errorDebugValues": [
+           "this_cipher_algorithm_should_not_exist",
+         ],
+         "logCalls": [
+           [
+             "warning",
+             "🔐 - Initializing the symmetric encryption service!",
+           ],
+           [
+             "error",
+             "💥 - Unavailable encryption algorithm (this_cipher_algorithm_should_not_exist)!",
+           ],
+         ],
+       }
+      `);
     }
   });
 
@@ -105,16 +105,16 @@ describe('initSymmetricEncryption', () => {
         ),
         logCalls: log.mock.calls,
       }).toMatchInlineSnapshot(`
-{
-  "encoded": "64b107e5373b313b22f92b4ad865aa86",
-  "logCalls": [
-    [
-      "warning",
-      "🔐 - Initializing the symmetric encryption service!",
-    ],
-  ],
-}
-`);
+       {
+         "encoded": "64b107e5373b313b22f92b4ad865aa86",
+         "logCalls": [
+           [
+             "warning",
+             "🔐 - Initializing the symmetric encryption service!",
+           ],
+         ],
+       }
+      `);
     });
   });
 
@@ -133,16 +133,16 @@ describe('initSymmetricEncryption', () => {
         ),
         logCalls: log.mock.calls,
       }).toMatchInlineSnapshot(`
-{
-  "decoded": "my-secret-data",
-  "logCalls": [
-    [
-      "warning",
-      "🔐 - Initializing the symmetric encryption service!",
-    ],
-  ],
-}
-`);
+       {
+         "decoded": "my-secret-data",
+         "logCalls": [
+           [
+             "warning",
+             "🔐 - Initializing the symmetric encryption service!",
+           ],
+         ],
+       }
+      `);
     });
   });
 });

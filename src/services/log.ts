@@ -2,12 +2,10 @@ import { autoService, singleton, location } from 'knifecycle';
 import { type JsonValue } from 'type-fest';
 import { DEFAULT_LOGGER } from './logger.js';
 
-export type LogConfig = {
+export interface LogConfig {
   stringify: boolean;
-};
-export interface LogFunction {
-  (...args: JsonValue[]): void;
 }
+export type LogFunction = (...args: JsonValue[]) => void;
 export interface Logger {
   error: (message: string) => void;
   output: (message: string) => void;
@@ -26,9 +24,7 @@ export type LogTypes =
   | 'warning'
   | 'error-stack'
   | 'debug-stack';
-export interface LogService {
-  (type: LogTypes, ...args: JsonValue[]): void;
-}
+export type LogService = (type: LogTypes, ...args: JsonValue[]) => void;
 
 export const DEFAULT_LOG_CONFIG: LogConfig = {
   stringify: false,
@@ -45,10 +41,10 @@ export const DEFAULT_LOG_ROUTING: Record<LogTypes, LogOutputTypes> = {
   'debug-stack': LogOutputTypes.DEBUG,
 };
 
-export type LogServiceConfig = {
+export interface LogServiceConfig {
   LOG_CONFIG?: LogConfig;
-  LOG_ROUTING?: { [type: string]: LogOutputTypes };
-};
+  LOG_ROUTING?: Record<string, LogOutputTypes>;
+}
 export type LogServiceDependencies = LogServiceConfig & {
   logger: Logger;
 };

@@ -1,18 +1,18 @@
-import { autoProvider, name, location } from 'knifecycle';
+import { autoProvider, name, location, ServiceProperties } from 'knifecycle';
 import { noop } from '../utils/utils.js';
 import { type LogService } from './log.js';
 import { type JsonValue } from 'type-fest';
 import { type DelayService } from './delay.js';
 import { type YError, printStackTrace } from 'yerror';
 
-export type LRUPoolManagerService<T, U extends JsonValue> = {
+export interface LRUPoolManagerService<T, U extends JsonValue> {
   create: (config: U) => Promise<T>;
   release: (item: T) => Promise<void>;
-};
-export type LRUPoolServiceConfig = {
+}
+export interface LRUPoolServiceConfig {
   MAX_POOL_SIZE: number;
   POOL_TTL?: number;
-};
+}
 export type LRUPoolServiceDependencies<
   T,
   U extends JsonValue,
@@ -21,9 +21,9 @@ export type LRUPoolServiceDependencies<
   delay: DelayService;
   log?: LogService;
 };
-export type LRUPoolService<T, U extends JsonValue> = {
+export interface LRUPoolService<T, U extends JsonValue> {
   use: (config: U) => Promise<T>;
-};
+}
 
 export interface LRUPoolProvider<T, U extends JsonValue> {
   service: LRUPoolService<T, U>;
@@ -153,4 +153,4 @@ The `lruPool` service allows to maintain a pool of
 export default location(
   name('lruPool', autoProvider(initLRUPool)),
   import.meta.url,
-) as typeof initLRUPool;
+) as unknown as ServiceProperties & typeof initLRUPool;

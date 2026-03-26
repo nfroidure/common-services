@@ -193,15 +193,15 @@ describe('initLock', () => {
       throw new YError('E_UNEXPECTED_SUCCESS');
     } catch (err) {
       expect({
-        code: (err as YError).code,
-        params: (err as YError).params,
+        errorCode: (err as YError).code,
+        errorDebugValues: (err as YError).debugValues,
       }).toMatchInlineSnapshot(`
-        {
-          "code": "E_NO_LOCK",
-          "params": [
-            "key",
-          ],
-        }
+       {
+         "errorCode": "E_NO_LOCK",
+         "errorDebugValues": [
+           "key",
+         ],
+       }
       `);
       expect(log.mock.calls).toMatchInlineSnapshot(`
         [

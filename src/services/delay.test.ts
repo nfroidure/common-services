@@ -37,10 +37,10 @@ describe('initDelay', () => {
   });
 
   describe('delay.create', () => {
-    let setTimeoutStub;
+    const setTimeoutStub = jest.spyOn(global, 'setTimeout');
 
     beforeEach(() => {
-      setTimeoutStub = jest.spyOn(global, 'setTimeout');
+      setTimeoutStub.mockClear();
     });
 
     afterEach(() => {
@@ -75,13 +75,8 @@ describe('initDelay', () => {
   });
 
   describe('delay.clear', () => {
-    let setTimeoutStub;
-    let clearTimeoutStub;
-
-    beforeEach(() => {
-      setTimeoutStub = jest.spyOn(global, 'setTimeout');
-      clearTimeoutStub = jest.spyOn(global, 'clearTimeout');
-    });
+    const setTimeoutStub = jest.spyOn(global, 'setTimeout');
+    const clearTimeoutStub = jest.spyOn(global, 'clearTimeout');
 
     afterEach(() => {
       setTimeoutStub.mockClear();

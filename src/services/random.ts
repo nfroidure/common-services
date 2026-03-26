@@ -2,9 +2,7 @@ import { autoService, singleton, location } from 'knifecycle';
 import { noop } from '../utils/utils.js';
 import { type LogService } from './log.js';
 
-export interface RandomService {
-  (): number;
-}
+export type RandomService = () => number;
 
 /**
  * Instantiate the random service

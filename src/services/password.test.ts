@@ -24,26 +24,26 @@ describe('initPassword', () => {
     } catch (err) {
       expect({
         errorCode: (err as YError).code,
-        errorParams: (err as YError).params,
+        errorDebugValues: (err as YError).debugValues,
         logCalls: log.mock.calls,
       }).toMatchInlineSnapshot(`
-{
-  "errorCode": "E_BAD_HASH_DIGEST",
-  "errorParams": [
-    "would_be_surprising_a_digest_like_this_exist_someday",
-  ],
-  "logCalls": [
-    [
-      "warning",
-      "🔐 - Initializing the password service!",
-    ],
-    [
-      "error",
-      "💥 - Unavailable password hash digest (would_be_surprising_a_digest_like_this_exist_someday)!",
-    ],
-  ],
-}
-`);
+       {
+         "errorCode": "E_BAD_HASH_DIGEST",
+         "errorDebugValues": [
+           "would_be_surprising_a_digest_like_this_exist_someday",
+         ],
+         "logCalls": [
+           [
+             "warning",
+             "🔐 - Initializing the password service!",
+           ],
+           [
+             "error",
+             "💥 - Unavailable password hash digest (would_be_surprising_a_digest_like_this_exist_someday)!",
+           ],
+         ],
+       }
+      `);
     }
   });
 

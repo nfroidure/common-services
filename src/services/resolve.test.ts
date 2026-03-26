@@ -2,6 +2,7 @@ import { describe, beforeEach, test, expect, jest } from '@jest/globals';
 import { Knifecycle, constant } from 'knifecycle';
 import initResolve from './resolve.js';
 import { type LogService } from './log.js';
+import { type JsonValue } from 'type-fest';
 
 describe('initResolve', () => {
   const MAIN_FILE_URL = import.meta.url;
@@ -66,7 +67,7 @@ describe('initResolve', () => {
   });
 });
 
-function filterLogs(calls) {
+function filterLogs(calls: JsonValue[][]) {
   return calls.map((args) =>
     args.map((s) =>
       s

@@ -67,7 +67,7 @@ describe('initLRUPool', () => {
         log,
       });
 
-      delay.create.mockImplementation(() => new Promise(() => {}));
+      delay.create.mockImplementation(() => new Promise(() => undefined));
       log.mockClear();
 
       for (let i = 0; i < 6; i++) {
@@ -139,7 +139,7 @@ describe('initLRUPool', () => {
     });
 
     log.mockClear();
-    delay.create.mockImplementation(() => new Promise(() => {}));
+    delay.create.mockImplementation(() => new Promise(() => undefined));
 
     for (let i = 0; i < 6; i++) {
       const instance = await lruPool.service.use(i % instances.length);
@@ -249,7 +249,7 @@ describe('initLRUPool', () => {
     log.mockClear();
 
     for (let i = 0; i < 6; i++) {
-      let resolve;
+      let resolve: (value: void | PromiseLike<void>) => void;
       const promise = new Promise<void>((_resolve) => {
         resolve = _resolve;
       });
@@ -258,6 +258,7 @@ describe('initLRUPool', () => {
 
       const instance = await lruPool.service.use(i % instances.length);
 
+      // @ts-expect-error Will always have a value
       resolve();
 
       await promise;

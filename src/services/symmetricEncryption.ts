@@ -16,27 +16,27 @@ export type SymmetricEncryptionEnvVars<
   T extends string = typeof DEFAULT_SYMMETRIC_ENCRYPTION_SECRET_ENV_NAME,
 > = Partial<Record<T, string>>;
 
-export type SymmetricEncryptionOptions = {
+export interface SymmetricEncryptionOptions {
   algorithm: string;
   secretEncoding: 'hex' | 'base64';
   ivEncoding: 'hex' | 'base64';
-};
-export type SymmetricEncryptionConfig<
+}
+export interface SymmetricEncryptionConfig<
   T extends string = typeof DEFAULT_SYMMETRIC_ENCRYPTION_SECRET_ENV_NAME,
-> = {
+> {
   SYMMETRIC_ENCRYPTION_OPTIONS?: SymmetricEncryptionOptions;
   SYMMETRIC_ENCRYPTION_SECRET_ENV_NAME?: T;
-};
+}
 export type SymmetricEncryptionDependencies<
   T extends string = typeof DEFAULT_SYMMETRIC_ENCRYPTION_SECRET_ENV_NAME,
 > = SymmetricEncryptionConfig<T> & {
   ENV: SymmetricEncryptionEnvVars<T>;
   log?: LogService;
 };
-export type SymmetricEncryptionService = {
+export interface SymmetricEncryptionService {
   encrypt: (encodedIV: string, data: string) => Promise<string>;
   decrypt: (encodedIV: string, token: string) => Promise<string>;
-};
+}
 
 async function initSymmetricEncryption<
   T extends string = typeof DEFAULT_SYMMETRIC_ENCRYPTION_SECRET_ENV_NAME,
@@ -55,7 +55,7 @@ async function initSymmetricEncryption<
       'error',
       `💥 - Unavailable encryption algorithm (${SYMMETRIC_ENCRYPTION_OPTIONS.algorithm})!`,
     );
-    throw new YError('E_BAD_CIPHER', SYMMETRIC_ENCRYPTION_OPTIONS.algorithm);
+    throw new YError('E_BAD_CIPHER', [SYMMETRIC_ENCRYPTION_OPTIONS.algorithm]);
   }
 
   if (

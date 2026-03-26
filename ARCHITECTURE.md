@@ -48,7 +48,7 @@ I prefer using a unique function with the `log` type
 If provided, I route debug messages to the `debug`
  node module.
 
-[See in context](./src/services/log.ts#L121-L131)
+[See in context](./src/services/log.ts#L117-L127)
 
 
 
@@ -58,7 +58,7 @@ The `time` service is just proxying [`Date.now`
 ](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Date/now)
  in a stubbable manner.
 
-[See in context](./src/services/time.ts#L55-L60)
+[See in context](./src/services/time.ts#L53-L58)
 
 
 
@@ -68,7 +68,7 @@ The `random` service is just proxying [`Math.random`
 ](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Math/random)
  in a stubbable manner.
 
-[See in context](./src/services/random.ts#L56-L61)
+[See in context](./src/services/random.ts#L54-L59)
 
 
 
@@ -111,7 +111,7 @@ The `codeGenerator` service provide a service
 It generates codes that contains only easily
  recognizable chars (by example, no `0` nor `O`).
 
-[See in context](./src/services/codeGenerator.ts#L84-L93)
+[See in context](./src/services/codeGenerator.ts#L82-L91)
 
 
 
@@ -127,7 +127,7 @@ The release is done by its key and the current lock is removed. There
  said, it should not be hard to handle since the actual behavior of
  the library makes your code run sequentially.
 
-[See in context](./src/services/lock.ts#L173-L184)
+[See in context](./src/services/lock.ts#L178-L189)
 
 
 
@@ -141,7 +141,7 @@ The count are returned asynchronously in order
  if needed later via another service with the same
  surface API.
 
-[See in context](./src/services/counter.ts#L75-L84)
+[See in context](./src/services/counter.ts#L72-L81)
 
 
 
@@ -169,5 +169,5 @@ A simple, easy configurable symmetric encryption service.
 
 A simple, easy configurable, password management service.
 
-[See in context](./src/services/password.ts#L100-L103)
+[See in context](./src/services/password.ts#L99-L102)
 
