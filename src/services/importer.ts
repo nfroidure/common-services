@@ -1,4 +1,9 @@
-import { autoService, singleton, location } from 'knifecycle';
+import {
+  autoService,
+  singleton,
+  location,
+  type ServiceProperties,
+} from 'knifecycle';
 import { printStackTrace, YError } from 'yerror';
 import { noop } from '../utils/utils.js';
 import { type LogService } from './log.js';
@@ -42,4 +47,4 @@ The `importer` service is just proxying [`import`
 export default location(
   singleton(autoService(initImporter)),
   import.meta.url,
-) as typeof initImporter;
+) as unknown as ServiceProperties & typeof initImporter;
