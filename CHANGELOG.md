@@ -1,3 +1,10 @@
+## [18.0.1](https://github.com/nfroidure/common-services/compare/v18.0.0...v18.0.1) (2026-03-26)
+
+
+### Bug Fixes
+
+* **core:** fix importer typing ([047cddd](https://github.com/nfroidure/common-services/commit/047cdddd1bc5d4fe4496377465e4440ed3bba840))
+
 # [18.0.0](https://github.com/nfroidure/common-services/compare/v17.1.2...v18.0.0) (2026-03-26)
 
 ## [17.1.2](https://github.com/nfroidure/common-services/compare/v17.1.1...v17.1.2) (2025-11-06)
