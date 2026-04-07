@@ -31,6 +31,7 @@ import initSymmetricEncryption, {
 } from './services/symmetricEncryption.js';
 import { noop } from './utils/utils.js';
 import { randomBytes } from './utils/crypto.js';
+import './utils/errors.js';
 
 /**
  * All services of the `common-services` module as

@@ -37,7 +37,7 @@ describe('initImporter', () => {
     `);
   });
 
-  test('should fail with unexisting module', async () => {
+  test('should fail with not existing module', async () => {
     const importer = await initImporter({
       log,
     });
@@ -48,12 +48,12 @@ describe('initImporter', () => {
     } catch (err) {
       expect({
         errorCode: (err as YError).code,
-        errorDebugValues: (err as YError).debugValues,
+        errorDebug: (err as YError).debug,
         logCalls: log.mock.calls.filter(([type]) => !type.startsWith('debug-')),
       }).toMatchInlineSnapshot(`
        {
          "errorCode": "E_RUNTIME_IMPORT_FAILURE",
-         "errorDebugValues": [
+         "errorDebug": [
            "@nowhere/anywhere",
          ],
          "logCalls": [

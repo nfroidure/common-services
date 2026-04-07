@@ -32,12 +32,12 @@ describe('initSymmetricEncryption', () => {
     } catch (err) {
       expect({
         errorCode: (err as YError).code,
-        errorDebugValues: (err as YError).debugValues,
+        errorDebug: (err as YError).debug,
         logCalls: log.mock.calls,
       }).toMatchInlineSnapshot(`
        {
          "errorCode": "E_NO_SYMMETRIC_ENCRYPTION_SECRET",
-         "errorDebugValues": [],
+         "errorDebug": [],
          "logCalls": [
            [
              "warning",
@@ -67,12 +67,12 @@ describe('initSymmetricEncryption', () => {
     } catch (err) {
       expect({
         errorCode: (err as YError).code,
-        errorDebugValues: (err as YError).debugValues,
+        errorDebug: (err as YError).debug,
         logCalls: log.mock.calls,
       }).toMatchInlineSnapshot(`
        {
          "errorCode": "E_BAD_CIPHER",
-         "errorDebugValues": [
+         "errorDebug": [
            "this_cipher_algorithm_should_not_exist",
          ],
          "logCalls": [

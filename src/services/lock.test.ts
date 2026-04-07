@@ -194,11 +194,11 @@ describe('initLock', () => {
     } catch (err) {
       expect({
         errorCode: (err as YError).code,
-        errorDebugValues: (err as YError).debugValues,
+        errorDebug: (err as YError).debug,
       }).toMatchInlineSnapshot(`
        {
          "errorCode": "E_NO_LOCK",
-         "errorDebugValues": [
+         "errorDebug": [
            "key",
          ],
        }

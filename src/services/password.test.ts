@@ -24,12 +24,12 @@ describe('initPassword', () => {
     } catch (err) {
       expect({
         errorCode: (err as YError).code,
-        errorDebugValues: (err as YError).debugValues,
+        errorDebug: (err as YError).debug,
         logCalls: log.mock.calls,
       }).toMatchInlineSnapshot(`
        {
          "errorCode": "E_BAD_HASH_DIGEST",
-         "errorDebugValues": [
+         "errorDebug": [
            "would_be_surprising_a_digest_like_this_exist_someday",
          ],
          "logCalls": [
