@@ -1,3 +1,5 @@
+# [19.0.0](https://github.com/nfroidure/common-services/compare/v18.0.1...v19.0.0) (2026-04-07)
+
 ## [18.0.1](https://github.com/nfroidure/common-services/compare/v18.0.0...v18.0.1) (2026-03-26)
 
 
