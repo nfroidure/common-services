@@ -90,7 +90,7 @@ describe('initDelay', () => {
 
       log.mockReset();
 
-      await delay.clear(Promise.resolve()).catch((err) => {
+      await delay.clear(Promise.resolve('cancel')).catch((err) => {
         expect(err.code).toEqual('E_BAD_DELAY');
       });
     });
@@ -107,8 +107,8 @@ describe('initDelay', () => {
 
       await Promise.all([
         delay.clear(delayPromise),
-        delayPromise.catch((err) => {
-          expect(err.code).toEqual('E_DELAY_CLEARED');
+        delayPromise.then((result) => {
+          expect(result).toEqual('cancel');
         }),
       ]);
       expect(log.mock.calls).toMatchInlineSnapshot(`

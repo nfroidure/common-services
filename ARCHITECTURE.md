@@ -77,7 +77,7 @@ The `random` service is just proxying [`Math.random`
 The `delay` service is `setTimeout` like I would like it
  to be.
 
-[See in context](./src/services/delay.ts#L125-L129)
+[See in context](./src/services/delay.ts#L127-L131)
 
 
 
@@ -153,7 +153,7 @@ The `lruPool` service allows to maintain a pool of
   OSes but are pointing to completely different
   kind of resources (files paths varies).
 
-[See in context](./src/services/lruPool.ts#L144-L151)
+[See in context](./src/services/lruPool.ts#L145-L152)
 
 
 

@@ -61,7 +61,7 @@
     "typescript-eslint": "^8.58.0"
   },
   "dependencies": {
-    "knifecycle": "^21.0.0",
+    "knifecycle": "^21.1.0",
     "type-fest": "^5.5.0",
     "yerror": "^11.0.0"
   },

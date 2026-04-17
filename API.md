@@ -200,17 +200,12 @@ Cancel an earlier created delay
 
 **Example**  
 ```js
-try {
-  const delayPromise = delay.create(1000);
-  await Promise.all(delayPromise, delay.clear(delayPromise));
+const delayPromise = delay.create(1000);
+
+if('timeout' === await delayPromise)
   console.log('1000 ms elapsed!');
-} catch (err) {
-  if(err.code != 'E_DELAY_CLEARED') {
-    trow err;
-  }
+else
   console.log('Cancelled!'));
-}
-// Prints: Cancelled!
 ```
 <a name="initImporter"></a>
 

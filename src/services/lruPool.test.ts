@@ -2,7 +2,7 @@ import { describe, beforeEach, test, expect, jest } from '@jest/globals';
 import { Knifecycle, constant } from 'knifecycle';
 import initLRUPool, { type LRUPoolManagerService } from './lruPool.js';
 import { type LogService } from './log.js';
-import { type DelayService } from './delay.js';
+import { DelayResult, type DelayService } from './delay.js';
 
 const instances = ['i1', 'i2', 'i3', 'i4'] as const;
 
@@ -249,10 +249,7 @@ describe('initLRUPool', () => {
     log.mockClear();
 
     for (let i = 0; i < 6; i++) {
-      let resolve: (value: void | PromiseLike<void>) => void;
-      const promise = new Promise<void>((_resolve) => {
-        resolve = _resolve;
-      });
+      const { promise, resolve } = Promise.withResolvers<DelayResult>();
 
       delay.create.mockReturnValueOnce(promise);
 

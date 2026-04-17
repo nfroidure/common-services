@@ -2,8 +2,8 @@ import { autoProvider, name, location, ServiceProperties } from 'knifecycle';
 import { noop } from '../utils/utils.js';
 import { type LogService } from './log.js';
 import { type JsonValue } from 'type-fest';
-import { type DelayService } from './delay.js';
-import { type YError, printStackTrace } from 'yerror';
+import { DelayResult, type DelayService } from './delay.js';
+import { printStackTrace } from 'yerror';
 
 export interface LRUPoolManagerService<T, U extends JsonValue> {
   create: (config: U) => Promise<T>;
@@ -67,7 +67,7 @@ export async function initLRUPool<T, U extends JsonValue>({
   log('warning', `✅ - Initializing a LRU pool service.`);
 
   const poolMap = new Map<string, T>();
-  const delayMap = new Map<string, Promise<void>>();
+  const delayMap = new Map<string, Promise<DelayResult>>();
   const poolLRUQueue: string[] = [];
   const service = {
     async use(config: U): Promise<T> {
@@ -80,7 +80,7 @@ export async function initLRUPool<T, U extends JsonValue>({
         await poolManager.release(item);
         poolMap.delete(key);
         if (delayMap.has(key)) {
-          delay.clear(delayMap.get(key) as Promise<void>);
+          delay.clear(delayMap.get(key) as Promise<DelayResult>);
           delayMap.delete(key);
         }
       }
@@ -102,7 +102,11 @@ export async function initLRUPool<T, U extends JsonValue>({
 
           delayMap.set(key, delayPromise);
           delayPromise
-            .then(() => {
+            .then((result) => {
+              if (result === 'cancel') {
+                return;
+              }
+
               if (poolMap.has(key)) {
                 poolLRUQueue.splice(poolLRUQueue.indexOf(key), 1);
                 poolMap.delete(key);
@@ -112,9 +116,6 @@ export async function initLRUPool<T, U extends JsonValue>({
               }
             })
             .catch((err) => {
-              if ((err as YError).code === 'E_DELAY_CLEARED') {
-                return;
-              }
               log('error', `🛑 - Delayed release error (${key}).`);
               log('error-stack', printStackTrace(err));
             });

@@ -3,13 +3,19 @@ import { autoProvider, singleton, location } from 'knifecycle';
 import { noop } from '../utils/utils.js';
 import { type LogService } from './log.js';
 
+export type DelayResult = 'timeout' | 'cancel';
+export interface DelayInfo {
+  timeoutId: NodeJS.Timeout;
+  resolve: (value: DelayResult | PromiseLike<DelayResult>) => void;
+}
+
 export interface DelayProvider {
   service: DelayService;
   dispose: () => Promise<void>;
 }
 export interface DelayService {
-  create: (delay: number) => Promise<void>;
-  clear: (promise: Promise<void>) => Promise<void>;
+  create: (delay: number) => Promise<DelayResult>;
+  clear: (promise: Promise<DelayResult>) => Promise<DelayResult>;
 }
 
 /**
@@ -42,7 +48,13 @@ async function initDelay({
 }: {
   log?: LogService;
 }): Promise<DelayProvider> {
-  const pendingPromises = new Map();
+  const pendingPromises = new Map<
+    Promise<DelayResult>,
+    {
+      timeoutId: NodeJS.Timeout;
+      resolve: (value: DelayResult | PromiseLike<DelayResult>) => void;
+    }
+  >();
 
   log('debug', '⌛ - Delay service initialized.');
 
@@ -64,20 +76,16 @@ async function initDelay({
    * await delay.create(1000);
    * console.log('1000 ms elapsed!');
    */
-  function create(delay: number): Promise<void> {
-    let timeoutId;
-    let _reject;
-    const promise = new Promise<void>((resolve, reject) => {
-      _reject = reject;
-      timeoutId = setTimeout(() => {
-        resolve();
-        pendingPromises.delete(promise);
-      }, delay);
-    });
+  function create(delay: number) {
+    const { promise, resolve } = Promise.withResolvers<DelayResult>();
+    const timeoutId = setTimeout(() => {
+      resolve('timeout');
+      pendingPromises.delete(promise);
+    }, delay);
 
     pendingPromises.set(promise, {
       timeoutId,
-      reject: _reject,
+      resolve,
     });
     log('debug', '⏳ - Created a delay:', delay);
     return promise;
@@ -90,35 +98,29 @@ async function initDelay({
    * @return {Promise}
    * A promise resolved when cancellation is done.
    * @example
-   * try {
-   *   const delayPromise = delay.create(1000);
-   *   await Promise.all(delayPromise, delay.clear(delayPromise));
+   * const delayPromise = delay.create(1000);
+   *
+   * if('timeout' === await delayPromise)
    *   console.log('1000 ms elapsed!');
-   * } catch (err) {
-   *   if(err.code != 'E_DELAY_CLEARED') {
-   *     trow err;
-   *   }
+   * else
    *   console.log('Cancelled!'));
-   * }
-   * // Prints: Cancelled!
    */
-  async function clear(promise: Promise<void>) {
+  function clear(promise: Promise<DelayResult>) {
     if (!pendingPromises.has(promise)) {
       return Promise.reject(new YError('E_BAD_DELAY'));
     }
-    const { timeoutId, reject } = pendingPromises.get(promise);
+    const { timeoutId, resolve } = pendingPromises.get(promise) as DelayInfo;
 
     clearTimeout(timeoutId);
-    reject(new YError('E_DELAY_CLEARED'));
+    resolve('cancel');
     pendingPromises.delete(promise);
     log('debug', '⏳ - Cleared a delay');
+    return promise;
   }
 
-  async function dispose(): Promise<void> {
-    await new Promise((resolve) => {
-      log('debug', '⏳ - Cancelling pending timeouts:', pendingPromises.size);
-      resolve(Promise.all([...pendingPromises.keys()].map(clear)));
-    });
+  async function dispose() {
+    log('debug', '⏳ - Cancelling pending timeouts:', pendingPromises.size);
+    await Promise.all([...pendingPromises.keys()].map(clear));
   }
 }
 
