@@ -72,6 +72,6 @@ async function initResolve({
 
 The `resolve` service is just proxying [`import.meta.resolve`
 ](https://developer.mozilla.org/fr/docs/Web/JavaScript/Reference/Operators/import.meta/resolve)
- in a stubbable manner.
+ in a mockable manner.
 */
 export default location(singleton(autoService(initResolve)), import.meta.url);
