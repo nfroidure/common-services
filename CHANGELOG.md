@@ -1,3 +1,10 @@
+## [20.1.0](https://github.com/nfroidure/common-services/compare/v20.0.0...v20.1.0) (2026-08-10)
+
+### Features
+
+* add a random bytes service ([4d82d24](https://github.com/nfroidure/common-services/commit/4d82d2460d07cf75814e388e2be705ead4c2227d))
+* add a random UUID service ([76e1881](https://github.com/nfroidure/common-services/commit/76e18815067bc328666a4df7c5d8a1516a5ecc73))
+
 # [20.0.0](https://github.com/nfroidure/common-services/compare/v19.0.0...v20.0.0) (2026-04-17)
 
 # [19.0.0](https://github.com/nfroidure/common-services/compare/v18.0.1...v19.0.0) (2026-04-07)
