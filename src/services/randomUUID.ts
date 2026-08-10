@@ -1,13 +1,13 @@
 import { autoService, singleton, location } from 'knifecycle';
 import { noop } from '../utils/utils.js';
 import { type LogService } from './log.js';
-import { randomUUID as _randomUUID, RandomUUIDOptions } from 'node:crypto';
+import { randomUUID as _randomUUID, type RandomUUIDOptions } from 'node:crypto';
 
 export type RandomUUIDService = typeof _randomUUID;
 
 /**
  * Instantiate the random UUID service
- * @name initRandom
+ * @name initRandomUUID
  * @function
  * @param  {Object}   services           The services to inject
  * @param  {Object}   [services.log = noop]     A logging function
@@ -23,7 +23,7 @@ export type RandomUUIDService = typeof _randomUUID;
  *   logger: DEFAULT_LOGGER,
  * });
  *
- * const random = await initRandomUUID({
+ * const randomUUID = await initRandomUUID({
  *   log,
  * });
  */
@@ -58,7 +58,7 @@ async function initRandomUUID({
 /* Architecture Note #1.13: Random UUID
 
 The `randomUUID` service is just proxying NodeJS
- randomUUID in a easily mockable manner.
+ randomUUID in an easily mockable manner.
 */
 
 export default location(

@@ -15,7 +15,7 @@ describe('initTime', () => {
       log,
     });
 
-    expect('function' === typeof time);
+    expect('function' === typeof time).toBeTruthy();
     expect(log.mock.calls).toMatchInlineSnapshot(`
           [
             [

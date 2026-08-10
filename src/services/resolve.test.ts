@@ -18,7 +18,7 @@ describe('initResolve', () => {
       log,
     });
 
-    expect('function' === typeof resolve);
+    expect('function' === typeof resolve).toBeTruthy();
     expect(filterLogs(log.mock.calls)).toMatchInlineSnapshot(`
 [
   [

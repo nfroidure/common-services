@@ -21,6 +21,7 @@
    11. [SymmetricEncryption](#111-symmetricencryption)
    12. [Password](#112-password)
    13. [Random UUID](#113-random-uuid)
+   14. [Random Bytes](#114-random-bytes)
 
 
 ## 1. Services
@@ -177,7 +178,16 @@ A simple, easy configurable, password management service.
 ### 1.13. Random UUID
 
 The `randomUUID` service is just proxying NodeJS
- randomUUID in a easily mockable manner.
+ randomUUID in an easily mockable manner.
 
 [See in context](./src/services/randomUUID.ts#L58-L62)
+
+
+
+### 1.14. Random Bytes
+
+The `randomBytes` service is just proxying NodeJS
+ randomBytes in an easily mockable manner.
+
+[See in context](./src/services/randomBytes.ts#L56-L60)
 

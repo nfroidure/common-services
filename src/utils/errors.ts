@@ -71,6 +71,6 @@ declare module 'yerror' {
     /**
      * Thrown when random byte generation fails in the crypto layer.
      */
-    E_PASSWORD_RANDOM_BYTES: [];
+    E_RANDOM_BYTES_FAILURE: [length: number];
   }
 }

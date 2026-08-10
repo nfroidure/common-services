@@ -17,7 +17,7 @@ describe('initLog', () => {
       logger,
     });
 
-    expect('function' === typeof log);
+    expect('function' === typeof log).toBeTruthy();
     expect(logger.debug.mock.calls).toMatchInlineSnapshot(`
           [
             [

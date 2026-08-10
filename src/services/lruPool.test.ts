@@ -39,7 +39,7 @@ describe('initLRUPool', () => {
       log,
     });
 
-    expect('function' === typeof lruPool);
+    expect('function' === typeof lruPool.service.use).toBeTruthy();
     expect({
       delayCreateCalls: delay.create.mock.calls,
       delayClearCalls: delay.clear.mock.calls,
