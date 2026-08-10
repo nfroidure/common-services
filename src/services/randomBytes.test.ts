@@ -1,9 +1,9 @@
 import { describe, beforeEach, test, expect, jest } from '@jest/globals';
 import { Knifecycle, constant } from 'knifecycle';
-import initTime from './time.js';
+import initRandomBytes from './randomBytes.js';
 import { type LogService } from './log.js';
 
-describe('initTime', () => {
+describe('initRandomBytes', () => {
   const log = jest.fn<LogService>();
 
   beforeEach(() => {
@@ -11,49 +11,49 @@ describe('initTime', () => {
   });
 
   test('should work', async () => {
-    const time = await initTime({
+    const randomBytes = await initRandomBytes({
       log,
     });
 
-    expect('function' === typeof time).toBeTruthy();
+    expect('function' === typeof randomBytes).toBeTruthy();
     expect(log.mock.calls).toMatchInlineSnapshot(`
           [
             [
               "debug",
-              "⏰ - Time service initialized.",
+              "🎲 - Random bytes service initialized.",
             ],
           ]
         `);
   });
 
-  describe('time', () => {
+  describe('randomBytes', () => {
     test('should work', async () => {
-      const time = await initTime({
+      const randomBytes = await initRandomBytes({
         log,
       });
 
       log.mockClear();
 
-      const now = time();
+      expect(await randomBytes(16)).toHaveLength(16);
 
       expect(log.mock.calls).toEqual([
-        ['debug', '⏰ - Picked a timestamp:', now],
+        ['debug', '🎲 - Created random bytes (length: 16).'],
       ]);
     });
   });
 
   test('should work with Knifecycle', async () => {
-    const { time } = await new Knifecycle()
-      .register(initTime)
+    const { randomBytes } = await new Knifecycle()
+      .register(initRandomBytes)
       .register(constant('log', log))
-      .run(['time']);
+      .run(['randomBytes']);
 
-    expect(time).toBeDefined();
+    expect(randomBytes).toBeDefined();
     expect(log.mock.calls).toMatchInlineSnapshot(`
           [
             [
               "debug",
-              "⏰ - Time service initialized.",
+              "🎲 - Random bytes service initialized.",
             ],
           ]
         `);

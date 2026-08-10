@@ -4,7 +4,7 @@ Since the services in this module are very common, we
  provide a helper to import them all with a single
  line of code.
 
-Their goal is to encapsulate unpredictible states and
+Their goal is to encapsulate unpredictable states and
  inputs/outputs of the software they are part of. They
  are primarily meant to be used with
  [`knifecycle`](https://github.com/nfroidure/knifecycle)
@@ -23,6 +23,8 @@ import initLog, {
 import initLogger, { DEFAULT_LOGGER } from './services/logger.js';
 import initTime from './services/time.js';
 import initRandom from './services/random.js';
+import initRandomUUID from './services/randomUUID.js';
+import initRandomBytes from './services/randomBytes.js';
 import initResolve from './services/resolve.js';
 import initImporter from './services/importer.js';
 import initPassword, { DEFAULT_PASSWORD_OPTIONS } from './services/password.js';
@@ -55,6 +57,8 @@ export type * from './services/lock.js';
 export type * from './services/log.js';
 export type * from './services/time.js';
 export type * from './services/random.js';
+export type * from './services/randomUUID.js';
+export type * from './services/randomBytes.js';
 export type * from './services/resolve.js';
 export type * from './services/importer.js';
 export type * from './services/password.js';
@@ -74,6 +78,8 @@ export {
   DEFAULT_LOGGER,
   initTime,
   initRandom,
+  initRandomUUID,
+  initRandomBytes,
   initResolve,
   initImporter,
   DEFAULT_PASSWORD_OPTIONS,

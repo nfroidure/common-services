@@ -72,7 +72,7 @@ async function initCounter({
 /* Architecture Note #1.9: Counter
 
 The `counter` service provide a simple, local and
- stubbable counter.
+ mockable counter.
 
 The count are returned asynchronously in order
  to be easily maintained across several instances

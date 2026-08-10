@@ -15,7 +15,7 @@ describe('initRandom', () => {
       log,
     });
 
-    expect('function' === typeof random);
+    expect('function' === typeof random).toBeTruthy();
     expect(log.mock.calls).toMatchInlineSnapshot(`
           [
             [

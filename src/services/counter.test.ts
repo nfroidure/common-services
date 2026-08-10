@@ -15,7 +15,7 @@ describe('initCounter', () => {
       log,
     });
 
-    expect('function' === typeof counter);
+    expect('function' === typeof counter).toBeTruthy();
     expect(log.mock.calls).toMatchInlineSnapshot(`
       [
         [

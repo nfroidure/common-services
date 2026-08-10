@@ -1,9 +1,9 @@
 import { describe, beforeEach, test, expect, jest } from '@jest/globals';
 import { Knifecycle, constant } from 'knifecycle';
-import initTime from './time.js';
+import initRandomUUID from './randomUUID.js';
 import { type LogService } from './log.js';
 
-describe('initTime', () => {
+describe('initRandomUUID', () => {
   const log = jest.fn<LogService>();
 
   beforeEach(() => {
@@ -11,49 +11,49 @@ describe('initTime', () => {
   });
 
   test('should work', async () => {
-    const time = await initTime({
+    const randomUUID = await initRandomUUID({
       log,
     });
 
-    expect('function' === typeof time).toBeTruthy();
+    expect('function' === typeof randomUUID).toBeTruthy();
     expect(log.mock.calls).toMatchInlineSnapshot(`
           [
             [
               "debug",
-              "⏰ - Time service initialized.",
+              "🎲 - Random UUID service initialized.",
             ],
           ]
         `);
   });
 
-  describe('time', () => {
+  describe('randomUUID', () => {
     test('should work', async () => {
-      const time = await initTime({
+      const randomUUID = await initRandomUUID({
         log,
       });
 
       log.mockClear();
 
-      const now = time();
+      const uuid = randomUUID();
 
       expect(log.mock.calls).toEqual([
-        ['debug', '⏰ - Picked a timestamp:', now],
+        ['debug', '🎲 - Created a random UUID:', uuid],
       ]);
     });
   });
 
   test('should work with Knifecycle', async () => {
-    const { time } = await new Knifecycle()
-      .register(initTime)
+    const { randomUUID } = await new Knifecycle()
+      .register(initRandomUUID)
       .register(constant('log', log))
-      .run(['time']);
+      .run(['randomUUID']);
 
-    expect(time).toBeDefined();
+    expect(randomUUID).toBeDefined();
     expect(log.mock.calls).toMatchInlineSnapshot(`
           [
             [
               "debug",
-              "⏰ - Time service initialized.",
+              "🎲 - Random UUID service initialized.",
             ],
           ]
         `);

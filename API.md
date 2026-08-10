@@ -26,6 +26,12 @@
 <dt><a href="#initRandom">initRandom(services)</a> ⇒ <code>Promise.&lt;function()&gt;</code></dt>
 <dd><p>Instantiate the random service</p>
 </dd>
+<dt><a href="#initRandomBytes">initRandomBytes(services)</a> ⇒ <code>Promise.&lt;function()&gt;</code></dt>
+<dd><p>Instantiate the random bytes service</p>
+</dd>
+<dt><a href="#initRandomUUID">initRandomUUID(services)</a> ⇒ <code>Promise.&lt;function()&gt;</code></dt>
+<dd><p>Instantiate the random UUID service</p>
+</dd>
 <dt><a href="#initResolve">initResolve(services)</a> ⇒ <code>Promise.&lt;function()&gt;</code></dt>
 <dd><p>Instantiate the <code>resolve</code> service</p>
 </dd>
@@ -427,6 +433,98 @@ Returns a new random number
 ```js
 random()
 // Prints: 0.3141592653589793
+```
+<a name="initRandomBytes"></a>
+
+## initRandomBytes(services) ⇒ <code>Promise.&lt;function()&gt;</code>
+Instantiate the random bytes service
+
+**Kind**: global function  
+**Returns**: <code>Promise.&lt;function()&gt;</code> - A promise of the random bytes function  
+
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| services | <code>Object</code> |  | The services to inject |
+| [services.log] | <code>Object</code> | <code>noop</code> | A logging function |
+
+**Example**  
+```js
+import {
+  DEFAULT_LOGGER,
+  initLog,
+  initRandomBytes
+} from 'common-services';
+
+const log = await initLog({
+  logger: DEFAULT_LOGGER,
+});
+
+const randomBytes = await initRandomBytes({
+  log,
+});
+```
+<a name="initRandomBytes..randomBytes"></a>
+
+### initRandomBytes~randomBytes(length) ⇒ <code>Promise.&lt;Buffer&gt;</code>
+Returns new random bytes
+
+**Kind**: inner method of [<code>initRandomBytes</code>](#initRandomBytes)  
+**Returns**: <code>Promise.&lt;Buffer&gt;</code> - The random bytes  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| length | <code>number</code> | The random bytes size |
+
+**Example**  
+```js
+await randomBytes(16)
+// Prints: <buffer>
+```
+<a name="initRandomUUID"></a>
+
+## initRandomUUID(services) ⇒ <code>Promise.&lt;function()&gt;</code>
+Instantiate the random UUID service
+
+**Kind**: global function  
+**Returns**: <code>Promise.&lt;function()&gt;</code> - A promise of the random UUID function  
+
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| services | <code>Object</code> |  | The services to inject |
+| [services.log] | <code>Object</code> | <code>noop</code> | A logging function |
+
+**Example**  
+```js
+import {
+  DEFAULT_LOGGER,
+  initLog,
+  initRandomUUID
+} from 'common-services';
+
+const log = await initLog({
+  logger: DEFAULT_LOGGER,
+});
+
+const randomUUID = await initRandomUUID({
+  log,
+});
+```
+<a name="initRandomUUID..randomUUID"></a>
+
+### initRandomUUID~randomUUID(options) ⇒ <code>string</code>
+Returns a new random UUID
+
+**Kind**: inner method of [<code>initRandomUUID</code>](#initRandomUUID)  
+**Returns**: <code>string</code> - The random UUID  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| options | <code>object</code> | The node randomUUID options |
+
+**Example**  
+```js
+randomUUID()
+// Prints: abbacaca-abba-caca-abba-cacaabbacaca
 ```
 <a name="initResolve"></a>
 

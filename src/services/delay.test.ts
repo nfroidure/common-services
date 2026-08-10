@@ -23,9 +23,9 @@ describe('initDelay', () => {
       log,
     });
 
-    expect('function' === typeof delay.service.create);
-    expect('function' === typeof delay.service.clear);
-    expect('function' === typeof delay.dispose);
+    expect('function' === typeof delay.service.create).toBeTruthy();
+    expect('function' === typeof delay.service.clear).toBeTruthy();
+    expect('function' === typeof delay.dispose).toBeTruthy();
     expect(log.mock.calls).toMatchInlineSnapshot(`
       [
         [

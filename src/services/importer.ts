@@ -42,7 +42,7 @@ async function initImporter<M>({
 
 The `importer` service is just proxying [`import`
 ](https://developer.mozilla.org/fr/docs/Web/JavaScript/Reference/Operators/import)
- in a simply stubbable manner.
+ in a simply mockable manner.
 */
 export default location(
   singleton(autoService(initImporter)),

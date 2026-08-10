@@ -55,7 +55,7 @@ async function initRandom({
 
 The `random` service is just proxying [`Math.random`
 ](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Math/random)
- in a stubbable manner.
+ in a mockable manner.
 */
 
 export default location(singleton(autoService(initRandom)), import.meta.url);
