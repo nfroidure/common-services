@@ -1,9 +1,15 @@
 import { autoService, singleton, location } from 'knifecycle';
 import { noop } from '../utils/utils.js';
 import { type LogService } from './log.js';
-import { randomUUID as _randomUUID, type RandomUUIDOptions } from 'node:crypto';
+import {
+  randomUUID as _randomUUID,
+  type UUID,
+  type RandomUUIDOptions,
+} from 'node:crypto';
 
-export type RandomUUIDService = typeof _randomUUID;
+export type RandomUUIDService<TT extends UUID = UUID> = <T extends TT = TT>(
+  options?: RandomUUIDOptions | undefined,
+) => T;
 
 /**
  * Instantiate the random UUID service
@@ -27,11 +33,11 @@ export type RandomUUIDService = typeof _randomUUID;
  *   log,
  * });
  */
-async function initRandomUUID({
+async function initRandomUUID<T extends UUID = UUID>({
   log = noop,
 }: {
   log?: LogService;
-}): Promise<RandomUUIDService> {
+}): Promise<RandomUUIDService<T>> {
   log('debug', '🎲 - Random UUID service initialized.');
 
   /**
@@ -42,17 +48,17 @@ async function initRandomUUID({
    * randomUUID()
    * // Prints: abbacaca-abba-caca-abba-cacaabbacaca
    */
-  function randomUUID(
+  function randomUUID<T extends UUID = UUID>(
     options?: RandomUUIDOptions | undefined,
   ): ReturnType<RandomUUIDService> {
     const uuid = _randomUUID(options);
 
     log('debug', '🎲 - Created a random UUID:', uuid);
 
-    return uuid;
+    return uuid as T;
   }
 
-  return randomUUID;
+  return randomUUID as RandomUUIDService<T>;
 }
 
 /* Architecture Note #1.13: Random UUID
