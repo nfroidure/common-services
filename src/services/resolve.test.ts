@@ -1,6 +1,6 @@
 import { describe, beforeEach, test, expect, jest } from '@jest/globals';
 import { Knifecycle, constant } from 'knifecycle';
-import initResolve from './resolve.js';
+import initResolve, { type ResolveService } from './resolve.js';
 import { type LogService } from './log.js';
 import { type JsonValue } from 'type-fest';
 
@@ -29,22 +29,47 @@ describe('initResolve', () => {
 `);
   });
 
-  // TODO: enable it when Jest will fully support `import`
-  describe.skip('resolve', () => {
-    test('should work', async () => {
+  describe('resolve', () => {
+    test('should resolve relative paths before delegating', async () => {
+      const importMetaResolve = jest.fn<ResolveService>(() => 'file:///tmp/test');
+
       const resolve = await initResolve({
         MAIN_FILE_URL,
         log,
+        importMetaResolve,
       });
 
       log.mockClear();
 
       const result = resolve('./services/random.js');
 
-      expect({
-        result,
-        logCalls: filterLogs(log.mock.calls),
-      }).toMatchInlineSnapshot();
+      expect(result).toBe('file:///tmp/test');
+      expect(importMetaResolve).toHaveBeenCalledWith(
+        new URL('./services/random.js', MAIN_FILE_URL).toString(),
+      );
+      expect(filterLogs(log.mock.calls)).toEqual([
+        ['debug', '🛂 - Resolving "./services/random.js" to "file:///tmp/test".'],
+      ]);
+    });
+
+    test('should resolve absolute module identifiers as-is', async () => {
+      const importMetaResolve = jest.fn<ResolveService>(() => 'node:fs');
+
+      const resolve = await initResolve({
+        MAIN_FILE_URL,
+        log,
+        importMetaResolve,
+      });
+
+      log.mockClear();
+
+      const result = resolve('node:fs');
+
+      expect(result).toBe('node:fs');
+      expect(importMetaResolve).toHaveBeenCalledWith('node:fs');
+      expect(filterLogs(log.mock.calls)).toEqual([
+        ['debug', '🛂 - Resolving "node:fs" to "node:fs".'],
+      ]);
     });
   });
 

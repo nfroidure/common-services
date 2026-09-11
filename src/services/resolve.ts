@@ -14,6 +14,8 @@ export type ResolveService = (id: string) => string;
  * An URL pointing to the main file run
  * @param  {Function}   [services.log]
  * A logging function
+ * @param  {Function}   [services.importMetaResolve]
+ * A custom resolver function (defaults to `import.meta.resolve`)
  * @return {Promise<Function>}
  * A promise of the `resolve` service
  * @example
@@ -38,9 +40,11 @@ export type ResolveService = (id: string) => string;
 async function initResolve({
   MAIN_FILE_URL,
   log = noop,
+  importMetaResolve = import.meta.resolve,
 }: {
   MAIN_FILE_URL: string;
   log: LogService;
+  importMetaResolve?: ResolveService;
 }): Promise<ResolveService> {
   log(
     'debug',
@@ -58,10 +62,11 @@ async function initResolve({
    */
   return (path) => {
     const moduleIsRelative = path.startsWith('.');
+    const idToResolve = moduleIsRelative
+      ? new URL(path, MAIN_FILE_URL).toString()
+      : path;
 
-    const fqPath = import.meta.resolve(
-      moduleIsRelative ? new URL(path, MAIN_FILE_URL).toString() : path,
-    );
+    const fqPath = importMetaResolve(idToResolve);
 
     log('debug', `🛂 - Resolving "${path}" to "${fqPath}".`);
     return fqPath;
